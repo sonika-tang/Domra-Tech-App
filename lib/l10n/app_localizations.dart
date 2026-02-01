@@ -110,6 +110,60 @@ abstract class AppLocalizations {
   /// **'Your trilingual technical dictionary for Cambodia.'**
   String get onboardingSubTitle1;
 
+  /// No description provided for @title2.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Accurate Technical Terms Fast'**
+  String get title2;
+
+  /// No description provided for @subTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Search across Khmer – English – French with ease.'**
+  String get subTitle2;
+
+  /// No description provided for @title3.
+  ///
+  /// In en, this message translates to:
+  /// **'Contribute To Khmer Technical Vocabulary'**
+  String get title3;
+
+  /// No description provided for @subTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new terms or request corrections to improve the community.'**
+  String get subTitle3;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @getStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Get start'**
+  String get getStart;
+
+  /// No description provided for @welcomePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Page'**
+  String get welcomePage;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to'**
+  String get welcome;
+
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
@@ -122,11 +176,287 @@ abstract class AppLocalizations {
   /// **'Sign Up'**
   String get signUp;
 
+  /// No description provided for @guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as Guest'**
+  String get guest;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @enterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Email'**
+  String get enterEmail;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @enterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Password'**
+  String get enterPassword;
+
+  /// No description provided for @rememberMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember me'**
+  String get rememberMe;
+
+  /// No description provided for @forgetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget Password'**
+  String get forgetPassword;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t Have an Account?'**
+  String get dontHaveAccount;
+
+  /// No description provided for @continueWith.
+  ///
+  /// In en, this message translates to:
+  /// **'or continue with'**
+  String get continueWith;
+
+  /// No description provided for @haveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get haveAccount;
+
+  /// No description provided for @setupAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up Account'**
+  String get setupAccount;
+
+  /// No description provided for @firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get firstName;
+
+  /// No description provided for @enterFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your first name'**
+  String get enterFirstName;
+
+  /// No description provided for @lastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get lastName;
+
+  /// No description provided for @enterLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your last name'**
+  String get enterLastName;
+
+  /// No description provided for @gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your gender'**
+  String get gender;
+
+  /// No description provided for @select.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get select;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @dob.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dob;
+
+  /// No description provided for @chooseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Date'**
+  String get chooseDate;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @setupPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up Password'**
+  String get setupPassword;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// No description provided for @enterConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your confirm password'**
+  String get enterConfirmPassword;
+
+  /// No description provided for @agree.
+  ///
+  /// In en, this message translates to:
+  /// **'Agree with'**
+  String get agree;
+
+  /// No description provided for @finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get finish;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPassword;
+
+  /// No description provided for @verification.
+  ///
+  /// In en, this message translates to:
+  /// **'Send verification'**
+  String get verification;
+
+  /// No description provided for @backToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to login'**
+  String get backToLogin;
+
+  /// No description provided for @setPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Password'**
+  String get setPassword;
+
+  /// No description provided for @newPass.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPass;
+
+  /// No description provided for @enterNewPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get enterNewPass;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
   /// **'Search terms'**
   String get search;
+
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @navContribute.
+  ///
+  /// In en, this message translates to:
+  /// **'Contribute'**
+  String get navContribute;
+
+  /// No description provided for @navFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get navFavorite;
+
+  /// No description provided for @navProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get navProfile;
+
+  /// No description provided for @wordDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Word Detail'**
+  String get wordDetail;
+
+  /// No description provided for @definition.
+  ///
+  /// In en, this message translates to:
+  /// **'Definition'**
+  String get definition;
+
+  /// No description provided for @example.
+  ///
+  /// In en, this message translates to:
+  /// **'Example'**
+  String get example;
+
+  /// No description provided for @noExample.
+  ///
+  /// In en, this message translates to:
+  /// **'No example'**
+  String get noExample;
+
+  /// No description provided for @picture.
+  ///
+  /// In en, this message translates to:
+  /// **'Picture'**
+  String get picture;
+
+  /// No description provided for @reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get reference;
+
+  /// No description provided for @request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request'**
+  String get request;
+
+  /// No description provided for @newTermForm.
+  ///
+  /// In en, this message translates to:
+  /// **'New Term Form'**
+  String get newTermForm;
+
+  /// No description provided for @englishWord.
+  ///
+  /// In en, this message translates to:
+  /// **'English Word'**
+  String get englishWord;
 
   /// No description provided for @khmerWord.
   ///
@@ -134,11 +464,203 @@ abstract class AppLocalizations {
   /// **'Khmer Word'**
   String get khmerWord;
 
-  /// No description provided for @englishWord.
+  /// No description provided for @frenchWord.
   ///
   /// In en, this message translates to:
-  /// **'English Word'**
-  String get englishWord;
+  /// **'French Word'**
+  String get frenchWord;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @wordRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Word Request'**
+  String get wordRequest;
+
+  /// No description provided for @requestConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Request submitted successfully!'**
+  String get requestConfirm;
+
+  /// No description provided for @confirmDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Our team will review your contribution soon.'**
+  String get confirmDesc;
+
+  /// No description provided for @viewHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'View History'**
+  String get viewHistory;
+
+  /// No description provided for @returnHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Home'**
+  String get returnHome;
+
+  /// No description provided for @improveTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Improve Translation'**
+  String get improveTranslation;
+
+  /// No description provided for @guideline.
+  ///
+  /// In en, this message translates to:
+  /// **'Guideline'**
+  String get guideline;
+
+  /// No description provided for @requestNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Request now'**
+  String get requestNow;
+
+  /// No description provided for @improveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Improve now'**
+  String get improveNow;
+
+  /// No description provided for @g1Step1.
+  ///
+  /// In en, this message translates to:
+  /// **'STEP01 - Enter the Term'**
+  String get g1Step1;
+
+  /// No description provided for @g1Step1Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the new term you want to request in English, Khmer, or French.'**
+  String get g1Step1Sub;
+
+  /// No description provided for @g1Step2.
+  ///
+  /// In en, this message translates to:
+  /// **'STEP02 - Add Meaning (Optional)'**
+  String get g1Step2;
+
+  /// No description provided for @g1Step2Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide a short explanation or context to help reviewers understand your request.'**
+  String get g1Step2Sub;
+
+  /// No description provided for @g1Step3.
+  ///
+  /// In en, this message translates to:
+  /// **'STEP03 - Submit Request'**
+  String get g1Step3;
+
+  /// No description provided for @g1Step3Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Submit — your request will be reviewed and added if approved.'**
+  String get g1Step3Sub;
+
+  /// No description provided for @g2Step1.
+  ///
+  /// In en, this message translates to:
+  /// **'STEP01 - Search the Translation'**
+  String get g2Step1;
+
+  /// No description provided for @g2Step1Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate to the home page and search your preferred word.'**
+  String get g2Step1Sub;
+
+  /// No description provided for @g2Step2.
+  ///
+  /// In en, this message translates to:
+  /// **'STEP02 - Suggest a Better Version'**
+  String get g2Step2;
+
+  /// No description provided for @g2Step2Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your corrected term or improved definition with a short explanation.'**
+  String get g2Step2Sub;
+
+  /// No description provided for @g2Step3.
+  ///
+  /// In en, this message translates to:
+  /// **'STEP03 - Submit Your Improvement'**
+  String get g2Step3;
+
+  /// No description provided for @g2Step3Sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Submit Update and our team will verify and apply the improvement.'**
+  String get g2Step3Sub;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// No description provided for @emailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// No description provided for @saveChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Save change'**
+  String get saveChange;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePassword;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get currentPassword;
+
+  /// No description provided for @enterCurrentPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter current password'**
+  String get enterCurrentPass;
+
+  /// No description provided for @contributionHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Contribution History'**
+  String get contributionHistory;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @newWord.
+  ///
+  /// In en, this message translates to:
+  /// **'New Word'**
+  String get newWord;
+
+  /// No description provided for @wordCorrection.
+  ///
+  /// In en, this message translates to:
+  /// **'Word Correction'**
+  String get wordCorrection;
 
   /// No description provided for @language.
   ///
@@ -151,6 +673,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose your language'**
   String get chooseLanguage;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your preferred language to use in Domra Tech'**
+  String get description;
+
+  /// No description provided for @termOfCondition.
+  ///
+  /// In en, this message translates to:
+  /// **'Term of condition'**
+  String get termOfCondition;
+
+  /// No description provided for @subscriptionPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Plans'**
+  String get subscriptionPlans;
+
+  /// No description provided for @browsePlans.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse our subscription plans'**
+  String get browsePlans;
+
+  /// No description provided for @myPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'My subscription'**
+  String get myPlans;
+
+  /// No description provided for @seeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get seeAll;
+
+  /// No description provided for @monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get monthly;
+
+  /// No description provided for @yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get yearly;
+
+  /// No description provided for @weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weekly;
+
+  /// No description provided for @subscribeAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribed at'**
+  String get subscribeAt;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get expired;
+
+  /// No description provided for @newPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'New Subscription'**
+  String get newPlan;
+
+  /// No description provided for @pricing.
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing'**
+  String get pricing;
+
+  /// No description provided for @priceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get unlimited access to all features'**
+  String get priceDesc;
+
+  /// No description provided for @whatInclude.
+  ///
+  /// In en, this message translates to:
+  /// **'What’s included'**
+  String get whatInclude;
+
+  /// No description provided for @feature1.
+  ///
+  /// In en, this message translates to:
+  /// **'Get unlimited access to all features'**
+  String get feature1;
+
+  /// No description provided for @feature2.
+  ///
+  /// In en, this message translates to:
+  /// **'Get the offline Mode'**
+  String get feature2;
+
+  /// No description provided for @feature3.
+  ///
+  /// In en, this message translates to:
+  /// **'Use app without Ads'**
+  String get feature3;
+
+  /// No description provided for @subscriptionSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription summary'**
+  String get subscriptionSummary;
+
+  /// No description provided for @paymentConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Click confirm and pay through Bakong'**
+  String get paymentConfirm;
+
+  /// No description provided for @confirmAndPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm and Pay'**
+  String get confirmAndPay;
+
+  /// No description provided for @paymentSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Successful!'**
+  String get paymentSuccess;
+
+  /// No description provided for @paymentThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for subscription.'**
+  String get paymentThanks;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate
