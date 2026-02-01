@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "onboardingTitle1": "Welcome to Domra",
+  "onboardingSubTitle1": "Your trilingual technical dictionary for Cambodia.",
+  "login": "Login",
+  "signUp": "Sign Up",
+  "search": "Search terms",
+  "khmerWord": "Khmer Word",
+  "englishWord": "English Word",
+  "language": "Language",
+  "chooseLanguage": "Choose your language"
+}
