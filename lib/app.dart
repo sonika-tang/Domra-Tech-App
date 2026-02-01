@@ -1,5 +1,4 @@
 import 'package:domra_tech/core/config/theme.dart';
-import 'package:domra_tech/ui/screens/home_screen.dart';
 import 'package:domra_tech/ui/screens/test_language_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,7 @@ class DomraTech extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.lightTheme.copyWith(textTheme: AppTheme.lightTheme.textTheme.apply(fontFamily: languageProvider.locale.languageCode == 'km' ? 'NotoSansKhmer' : 'Roboto')),
       locale: languageProvider.locale,
       localizationsDelegates: const [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
       supportedLocales: AppLocalizations.supportedLocales,
