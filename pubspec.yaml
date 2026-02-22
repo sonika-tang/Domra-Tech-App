@@ -39,8 +39,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   provider: ^6.1.5+1
   flutter_gen: ^5.12.0
+  go_router: ^17.1.0 
   http: ^1.2.0
-  url_launcher: ^6.3.0
+  flutter_bakong_khqr: ^0.0.1+3
+  qr_flutter: ^4.1.0
+  url_launcher: ^6.3.2
+  flutter_secure_storage: ^10.0.0
 
 dev_dependencies:
   flutter_test:
