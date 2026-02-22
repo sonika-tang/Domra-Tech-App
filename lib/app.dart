@@ -1,10 +1,10 @@
 import 'package:domra_tech/core/config/theme.dart';
+import 'package:domra_tech/state/provider/language_provider.dart';
 import 'package:domra_tech/ui/screens/test_language_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
-import 'providers/language_provider.dart';
 
 class DomraTech extends StatelessWidget {
   const DomraTech({super.key});
