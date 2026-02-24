@@ -1,0 +1,10 @@
+import 'package:flutter/material.dart';
+
+class ChangePasswordScreen extends StatelessWidget {
+  const ChangePasswordScreen({super.key});
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Change Password')),
+    body: const Center(child: Text('Password Change Form')),
+  );
+}
