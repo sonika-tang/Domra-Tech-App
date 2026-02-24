@@ -1,13 +1,39 @@
 /// Main router implementation for the Domra app
 
 import 'package:domra_tech/routes/route_params.dart';
+import 'package:domra_tech/ui/screens/authentication/choose_language_screen.dart';
+import 'package:domra_tech/ui/screens/authentication/forgot_password_screen.dart';
+import 'package:domra_tech/ui/screens/authentication/login_screen.dart';
+import 'package:domra_tech/ui/screens/authentication/reset_password_screen.dart';
+import 'package:domra_tech/ui/screens/authentication/signup_1_screen.dart';
+import 'package:domra_tech/ui/screens/authentication/signup_2_screen.dart';
+import 'package:domra_tech/ui/screens/authentication/signup_3_screen.dart';
+import 'package:domra_tech/ui/screens/authentication/welcome_screen.dart';
+import 'package:domra_tech/ui/screens/contributions/contribution_confirmation_screen.dart';
+import 'package:domra_tech/ui/screens/contributions/contribution_guideline_screen.dart';
+import 'package:domra_tech/ui/screens/contributions/submit_correction_screen.dart';
+import 'package:domra_tech/ui/screens/contributions/submit_word_request_screen.dart';
+import 'package:domra_tech/ui/screens/favorites/favorites_screen.dart';
+import 'package:domra_tech/ui/screens/home/search_result_screen.dart';
+import 'package:domra_tech/ui/screens/home/word_detail_screen.dart';
+import 'package:domra_tech/ui/screens/home_screen.dart';
+import 'package:domra_tech/ui/screens/onboarding/onboarding_1_screen.dart';
+import 'package:domra_tech/ui/screens/onboarding/onboarding_2_screen.dart';
+import 'package:domra_tech/ui/screens/onboarding/onboarding_3_screen.dart';
+import 'package:domra_tech/ui/screens/profile/change_language_screen.dart';
+import 'package:domra_tech/ui/screens/profile/change_password_screen.dart';
+import 'package:domra_tech/ui/screens/profile/edit_profile_screen.dart';
+import 'package:domra_tech/ui/screens/profile/history_all_screen.dart';
+import 'package:domra_tech/ui/screens/profile/history_corrections_screen.dart';
+import 'package:domra_tech/ui/screens/profile/history_new_words_screen.dart';
+import 'package:domra_tech/ui/screens/profile/profile_screen.dart';
+import 'package:domra_tech/ui/screens/profile/terms_and_conditions_screen.dart';
+import 'package:domra_tech/ui/screens/subscription/choose_plan_screen.dart';
+import 'package:domra_tech/ui/screens/subscription/confirm_plan_screen.dart';
+import 'package:domra_tech/ui/screens/subscription/subscription_plans_screen.dart';
+import 'package:domra_tech/ui/screens/subscription/subscription_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'app_routes.dart';
-
-// TODO: Import all screens here
-// import 'package:domra/ui/screens/onboarding/onboarding_screen_1.dart';
-// import 'package:domra/ui/screens/authentication/login_screen.dart';
-// ... etc
 
 /// Main router class responsible for generating routes
 class AppRouter {
@@ -284,313 +310,4 @@ class AppRouter {
       transitionDuration: const Duration(milliseconds: 300),
     );
   }
-}
-
-///////
-// TODO: PLACEHOLDER SCREENS - Replace with actual screen later
-///////
-
-class OnboardingScreen1 extends StatelessWidget {
-  const OnboardingScreen1({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Onboarding 1')));
-}
-
-class OnboardingScreen2 extends StatelessWidget {
-  const OnboardingScreen2({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Onboarding 2')));
-}
-
-class OnboardingScreen3 extends StatelessWidget {
-  const OnboardingScreen3({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Onboarding 3')));
-}
-
-class ChooseLanguageScreen extends StatelessWidget {
-  const ChooseLanguageScreen({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Choose Language')));
-}
-
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Welcome')));
-}
-
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Login')));
-}
-
-class SignupScreen1 extends StatelessWidget {
-  const SignupScreen1({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Signup 1')));
-}
-
-class SignupScreen2 extends StatelessWidget {
-  const SignupScreen2({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Signup 2')));
-}
-
-class SignupScreen3 extends StatelessWidget {
-  const SignupScreen3({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Signup 3')));
-}
-
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Forgot Password')));
-}
-
-class ResetPasswordScreen extends StatelessWidget {
-  final String email;
-  const ResetPasswordScreen({super.key, required this.email});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Reset Password for $email')));
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Home - WordTranslation List')));
-}
-
-class WordDetailScreen extends StatelessWidget {
-  final int wordId;
-  final String? englishWord;
-  final String? khmerWord;
-  final String? frenchWord;
-  final String? definition;
-  final String? example;
-  final String? imageURL;
-  final String? reference;
-
-  const WordDetailScreen({
-    super.key,
-    required this.wordId,
-    this.englishWord,
-    this.khmerWord,
-    this.frenchWord,
-    this.definition,
-    this.example,
-    this.imageURL,
-    this.reference,
-  });
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Word Detail')),
-    body: Center(child: Text('Word #$wordId: $englishWord')),
-  );
-}
-
-class SearchResultsScreen extends StatelessWidget {
-  final String query;
-  final String? category;
-
-  const SearchResultsScreen({super.key, required this.query, this.category});
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text('Search: $query')),
-    body: Center(child: Text('Results for $query')),
-  );
-}
-
-class ContributionGuidelineScreen extends StatelessWidget {
-  const ContributionGuidelineScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Guidelines')),
-    body: const Center(child: Text('Contribution Guidelines')),
-  );
-}
-
-class SubmitWordRequestScreen extends StatelessWidget {
-  const SubmitWordRequestScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('New Word')),
-    body: const Center(child: Text('Submit WordRequest')),
-  );
-}
-
-class SubmitCorrectionScreen extends StatelessWidget {
-  final int? wordId;
-  const SubmitCorrectionScreen({super.key, this.wordId});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Correct Word')),
-    body: Center(child: Text('Correct word #$wordId')),
-  );
-}
-
-class ContributionConfirmationScreen extends StatelessWidget {
-  final String type;
-  final int? wordRequestId;
-  final int? correctionId;
-
-  const ContributionConfirmationScreen({
-    super.key,
-    required this.type,
-    this.wordRequestId,
-    this.correctionId,
-  });
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Confirmation')),
-    body: Center(child: Text('$type Confirmed')),
-  );
-}
-
-class FavoritesScreen extends StatelessWidget {
-  const FavoritesScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Favorites')),
-    body: const Center(child: Text('Favorite List')),
-  );
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Profile')),
-    body: const Center(child: Text('User Profile')),
-  );
-}
-
-class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Edit Profile')),
-    body: const Center(child: Text('Edit User Info')),
-  );
-}
-
-class ChangeLanguageScreen extends StatelessWidget {
-  const ChangeLanguageScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Language')),
-    body: const Center(child: Text('Change Language')),
-  );
-}
-
-class HistoryAllScreen extends StatelessWidget {
-  const HistoryAllScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('All Contributions')),
-    body: const Center(child: Text('WordRequest + CorrectionRequest')),
-  );
-}
-
-class HistoryNewWordsScreen extends StatelessWidget {
-  const HistoryNewWordsScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('New Words')),
-    body: const Center(child: Text('WordRequest List')),
-  );
-}
-
-class HistoryCorrectionScreen extends StatelessWidget {
-  const HistoryCorrectionScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Corrections')),
-    body: const Center(child: Text('CorrectionRequest List')),
-  );
-}
-
-class ChangePasswordScreen extends StatelessWidget {
-  const ChangePasswordScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Change Password')),
-    body: const Center(child: Text('Password Change Form')),
-  );
-}
-
-class TermsAndConditionsScreen extends StatelessWidget {
-  const TermsAndConditionsScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Terms & Conditions')),
-    body: const Center(child: Text('T&C Content')),
-  );
-}
-
-class SubscriptionPlansScreen extends StatelessWidget {
-  const SubscriptionPlansScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Plans')),
-    body: const Center(child: Text('Subscription Plans')),
-  );
-}
-
-class ChoosePlanScreen extends StatelessWidget {
-  final String planId;
-  const ChoosePlanScreen({super.key, required this.planId});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Choose Plan')),
-    body: Center(child: Text('Plan: $planId')),
-  );
-}
-
-class ConfirmPlanScreen extends StatelessWidget {
-  final String planId;
-  final String planName;
-  final String planPrice;
-  final double? amount;
-
-  const ConfirmPlanScreen({
-    super.key,
-    required this.planId,
-    required this.planName,
-    required this.planPrice,
-    this.amount,
-  });
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Confirm')),
-    body: Center(child: Text('PaymentModel: $planName at $planPrice')),
-  );
-}
-
-class SubscriptionSuccessScreen extends StatelessWidget {
-  final String planName;
-  const SubscriptionSuccessScreen({super.key, required this.planName});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Success')),
-    body: Center(child: Text('Welcome to $planName')),
-  );
 }
