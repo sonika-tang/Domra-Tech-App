@@ -1,15 +1,15 @@
+import 'package:domra_tech/model/word_translation.dart';
 import 'package:flutter/material.dart';
 import '../../../core/config/app_text_style.dart';
 
 class WordCard extends StatelessWidget {
   final VoidCallback onClick;
-  final String khmerWord;
-  final String englishWord;
+  final WordTranslation wordTranslation;
   final VoidCallback onFavorite;
   final VoidCallback onShare;
   final bool isFavorite;
 
-  const WordCard({super.key, required this.englishWord, required this.khmerWord, required this.onClick, required this.onFavorite, required this.onShare, this.isFavorite = false});
+  const WordCard({super.key, required this.wordTranslation, required this.onClick, required this.onFavorite, required this.onShare, this.isFavorite = false});
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +60,9 @@ class WordCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(englishWord, style: textTheme.bodyLarge),
+        Text(wordTranslation.englishWord!, style: textTheme.bodyLarge),
         const SizedBox(height: AppSpacing.s4),
-        Text(khmerWord, style: textTheme.bodyLarge?.copyWith(color: colorScheme.primary)),
+        Text(wordTranslation.khmerWord, style: textTheme.bodyLarge?.copyWith(color: colorScheme.primary)),
       ],
     );
   }
