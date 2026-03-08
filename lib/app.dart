@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'providers/language_provider.dart';
-import 'ui/screens/authentication/login_screen.dart';
+// import 'ui/screens/authentication/login_screen.dart';
+import 'routes/app_router.dart' show AppRouter;
+import 'routes/app_routes.dart';
 
 class DomraTech extends StatelessWidget {
   const DomraTech({super.key});
@@ -32,7 +34,10 @@ class DomraTech extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       // home: const TestLangScreen(),
-      home: const LoginScreen(),
+      // home: const WelcomeScreen(),
+      initialRoute: AppRoutes.welcome,
+      onGenerateRoute: AppRouter.generateRoute,
+
     );
   }
 }
