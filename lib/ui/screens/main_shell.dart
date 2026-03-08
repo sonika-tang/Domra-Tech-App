@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../l10n/app_localizations.dart';
 import 'contributions/contribution_guideline_screen.dart';
 import 'favorites/favorites_screen.dart';
@@ -6,7 +7,7 @@ import 'home/home_screen.dart';
 import 'profile/profile_screen.dart';
 
 class MainShell extends StatefulWidget {
-  /// Optional index to start on (default: 0 = Home)
+  /// Index of the tab to show first
   final int initialIndex;
 
   const MainShell({super.key, this.initialIndex = 0});
@@ -18,12 +19,6 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   late int _currentIndex;
 
-  @override
-  void initState() {
-    super.initState();
-    _currentIndex = widget.initialIndex;
-  }
-
   // The four main tab screens — preserved by IndexedStack
   static const List<Widget> _screens = [
     HomeScreen(),
@@ -31,6 +26,12 @@ class _MainShellState extends State<MainShell> {
     FavoritesScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
