@@ -35,9 +35,8 @@ class DomraTech extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       // home: const TestLangScreen(),
       // home: const WelcomeScreen(),
-      initialRoute: AppRoutes.welcome,
+      initialRoute: AppRoutes.onboarding1,
       onGenerateRoute: AppRouter.generateRoute,
-
     );
   }
 }
