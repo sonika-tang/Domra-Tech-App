@@ -9,7 +9,14 @@ class WordCard extends StatelessWidget {
   final VoidCallback onShare;
   final bool isFavorite;
 
-  const WordCard({super.key, required this.wordTranslation, required this.onClick, required this.onFavorite, required this.onShare, this.isFavorite = false});
+  const WordCard({
+    super.key,
+    required this.wordTranslation,
+    required this.onClick,
+    required this.onFavorite,
+    required this.onShare,
+    this.isFavorite = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,7 @@ class WordCard extends StatelessWidget {
 
     return Card(
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: InkWell(
         onTap: onClick, //click to see detail of each card
         child: Container(
@@ -28,14 +35,20 @@ class WordCard extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             border: Border(
-              top: BorderSide(color: colorScheme.secondary, width: AppSpacing.s4),
+              top: BorderSide(
+                color: colorScheme.secondary,
+                width: AppSpacing.s4,
+              ),
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_buildWordColumn(textTheme, colorScheme), _buildActionButtons()],
+            children: [
+              _buildWordColumn(textTheme, colorScheme),
+              _buildActionButtons(),
+            ],
           ),
         ),
       ),
@@ -47,10 +60,16 @@ class WordCard extends StatelessWidget {
       children: [
         IconButton(
           onPressed: onFavorite,
-          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border, color: isFavorite ? Colors.red : null),
+          icon: Icon(
+            isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: isFavorite ? Colors.red : null,
+          ),
         ),
         const SizedBox(width: AppSpacing.s4),
-        IconButton(onPressed: onShare, icon: const Icon(Icons.ios_share_rounded)),
+        IconButton(
+          onPressed: onShare,
+          icon: const Icon(Icons.ios_share_rounded),
+        ),
       ],
     );
   }
@@ -62,7 +81,10 @@ class WordCard extends StatelessWidget {
       children: [
         Text(wordTranslation.englishWord!, style: textTheme.bodyLarge),
         const SizedBox(height: AppSpacing.s4),
-        Text(wordTranslation.khmerWord, style: textTheme.bodyLarge?.copyWith(color: colorScheme.primary)),
+        Text(
+          wordTranslation.khmerWord,
+          style: textTheme.bodyLarge?.copyWith(color: colorScheme.primary),
+        ),
       ],
     );
   }
