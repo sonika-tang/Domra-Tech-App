@@ -3,8 +3,5 @@ import 'package:flutter/material.dart';
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Favorites')),
-    body: const Center(child: Text('Favorite List')),
-  );
+  Widget build(BuildContext context) => Scaffold(body: const Center(child: Text('Favorite List')));
 }

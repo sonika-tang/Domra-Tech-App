@@ -1,3 +1,4 @@
+import 'package:domra_tech/routes/navigation_helper.dart';
 import 'package:flutter/material.dart';
 import 'home/home_screen.dart';
 import 'favorites/favorites_screen.dart';
@@ -15,45 +16,58 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = const [HomeScreen(), ContributionScreen(), FavoritesScreen(), ProfileScreen()];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-  }
 
-  AppBar _buildAppBar(AppLocalizations loc) {
-    switch (_selectedIndex) {
-      case 0: // Home
-        return AppBar(
-          centerTitle: true,
-          title: Image.asset("assets/imgs/domra_logo.png", width: 128, height: 27),
-          actions: const [
-            Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Icon(Icons.notifications_none, color: Colors.white),
-            ),
-          ],
-        );
-      case 1: // Favorites
-        return AppBar(title: Text(loc.navContribute), centerTitle: true);
-      case 2: // Profile
-        return AppBar(title: Text(loc.navFavorite), centerTitle: true);
-      case 3: // Contributions
-        return AppBar(title: Text(loc.navProfile), centerTitle: true);
-      default:
-        return AppBar(title: const Text("Domra"));
+    // Use NavigationHelper extension methods
+    switch (index) {
+      case 0:
+        context.goToHome(clearStack: true);
+        break;
+      case 1:
+        context.goToContributionGuideline();
+        break;
+      case 2:
+        context.goToFavorites();
+        break;
+      case 3:
+        context.goToProfile();
+        break;
     }
   }
+
+  // AppBar _buildAppBar(AppLocalizations loc) {
+  //   switch (_selectedIndex) {
+  //     case 0: // Home
+  //       return AppBar(
+  //         centerTitle: true,
+  //         title: Image.asset("assets/imgs/domra_logo.png", width: 128, height: 27),
+  //         actions: const [
+  //           Padding(
+  //             padding: EdgeInsets.only(right: 16),
+  //             child: Icon(Icons.notifications_none, color: Colors.white),
+  //           ),
+  //         ],
+  //       );
+  //     case 1: // Favorites
+  //       return AppBar(title: Text(loc.navContribute), centerTitle: true);
+  //     case 2: // Profile
+  //       return AppBar(title: Text(loc.navFavorite), centerTitle: true);
+  //     case 3: // Contributions
+  //       return AppBar(title: Text(loc.navProfile), centerTitle: true);
+  //     default:
+  //       return AppBar(title: const Text("Domra"));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: _buildAppBar(loc),
-      body: IndexedStack(index: _selectedIndex, children: _screens),
+      body: IndexedStack(index: _selectedIndex, children: const [HomeScreen(), ContributionScreen(), FavoritesScreen(), ProfileScreen()]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

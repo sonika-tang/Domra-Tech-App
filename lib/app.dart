@@ -1,4 +1,7 @@
 import 'package:domra_tech/core/config/theme.dart';
+import 'package:domra_tech/routes/app_router.dart';
+import 'package:domra_tech/ui/screens/home/home_screen.dart';
+import 'package:domra_tech/ui/screens/main_navigation_screen.dart';
 import 'package:domra_tech/ui/screens/test_language_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +22,7 @@ class DomraTech extends StatelessWidget {
       locale: languageProvider.locale,
       localizationsDelegates: const [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const TestLangScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
