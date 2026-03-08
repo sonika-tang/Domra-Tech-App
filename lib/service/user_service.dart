@@ -26,4 +26,18 @@ class UserService {
       body: jsonEncode(data),
     );
   }
+
+  Future<http.Response> changePassword(
+    Map<String, dynamic> data,
+    String token,
+  ) async {
+    return await client.put(
+      Uri.parse('$baseUrl/profile/password'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(data),
+    );
+  }
 }
