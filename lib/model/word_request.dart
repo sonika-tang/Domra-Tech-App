@@ -9,6 +9,7 @@ class WordRequest {
   final int userId;
   final String? status;
   final bool check;
+  final DateTime? createdAt;
 
   WordRequest({
     required this.wordRequestId,
@@ -21,6 +22,7 @@ class WordRequest {
     required this.userId,
     this.status,
     required this.check,
+    this.createdAt,
   });
 
   factory WordRequest.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,9 @@ class WordRequest {
       userId: json['userId'],
       status: json['status'],
       check: json['check'] ?? false,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
     );
   }
 }

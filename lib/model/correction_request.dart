@@ -7,6 +7,7 @@ class CorrectionRequest {
   final String? correctKhmerWord;
   final String? reference;
   final String? status;
+  final DateTime? createdAt;
 
   CorrectionRequest({
     required this.correctionId,
@@ -17,6 +18,7 @@ class CorrectionRequest {
     this.correctKhmerWord,
     this.reference,
     this.status,
+    this.createdAt,
   });
 
   factory CorrectionRequest.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,9 @@ class CorrectionRequest {
       correctKhmerWord: json['correctKhmerWord'],
       reference: json['reference'],
       status: json['status'],
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
     );
   }
 }
