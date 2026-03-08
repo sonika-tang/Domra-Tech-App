@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../../routes/app_routes.dart';
+import '../../routes/navigation_helper.dart';
 import 'contributions/contribution_guideline_screen.dart';
 import 'favorites/favorites_screen.dart';
 import 'home/home_screen.dart';
@@ -52,7 +54,26 @@ class _MainShellState extends State<MainShell> {
         ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
-          onTap: (index) => setState(() => _currentIndex = index),
+          onTap: (index) {
+            if (index == _currentIndex) return;
+
+            setState(() => _currentIndex = index);
+
+            switch (index) {
+              case 0:
+                context.replaceWith(AppRoutes.home);
+                break;
+              case 1:
+                context.replaceWith(AppRoutes.contributionGuideline);
+                break;
+              case 2:
+                context.replaceWith(AppRoutes.favorites);
+                break;
+              case 3:
+                context.replaceWith(AppRoutes.profile);
+                break;
+            }
+          },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           selectedItemColor: colorScheme.primary,
