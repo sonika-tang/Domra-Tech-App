@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../providers/auth_provider.dart';
+import 'widgets/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,67 +11,49 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _loading = false;
-  String? _error;
+  String? _errorMessage;
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Test Firebase Login")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: "Email"),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: "Password"),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            if (_loading) const CircularProgressIndicator(),
-            if (_error != null)
-              Text(_error!, style: const TextStyle(color: Colors.red)),
-            ElevatedButton(
-              onPressed: () async {
+      body: Column(
+        children: [
+          const Spacer(),
+          Image.asset(
+            "assets/imgs/Domra_Tech-logo-Transparent.png",
+            height: 260,
+          ),
+          const Spacer(),
+          LoginForm(
+            errorMessage: _errorMessage,
+            onInputChanged: () {
+              if (_errorMessage != null) {
                 setState(() {
-                  _loading = true;
-                  _error = null;
+                  _errorMessage = null;
                 });
-                try {
-                  await authViewModel.loginWithFirebase(
-                    _emailController.text.trim(),
-                    _passwordController.text.trim(),
-                  );
-                  setState(() => _loading = false);
+              }
+            },
+            onSubmit: (email, password) async {
+              try {
+                await authProvider.loginWithFirebase(email, password);
+                setState(() {
+                  _errorMessage = null;
+                });
+                // Navigator.pushReplacementNamed(context, "/home");
 
-                  if (authViewModel.user != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          "Login successful: ${authViewModel.user!.email}",
-                        ),
-                      ),
-                    );
-                  }
-                } catch (e) {
-                  setState(() {
-                    _loading = false;
-                    _error = e.toString();
-                  });
-                }
-              },
-              child: const Text("Login with Firebase"),
-            ),
-          ],
-        ),
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text("Login successful")));
+              } catch (e) {
+                setState(() {
+                  _errorMessage = "Invalid credentials"; // show inline
+                });
+              }
+            },
+          ),
+        ],
       ),
     );
   }
