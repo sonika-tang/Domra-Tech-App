@@ -1,12 +1,15 @@
 import 'package:domra_tech/firebase_options.dart';
+import 'package:domra_tech/state/provider/auth_provider.dart';
+import 'package:domra_tech/state/provider/language_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'app.dart';
-import 'providers/auth_provider.dart';
-import 'providers/language_provider.dart';
 import 'service/auth_service.dart';
+import 'state/models/user_state.dart';
+import 'state/models/contribution_state.dart';
+import 'service/user_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +22,11 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => AuthProvider(AuthService(http.Client())),
         ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              UserNotifier(userService: UserService(http.Client())),
+        ),
+        ChangeNotifierProvider(create: (context) => ContributionNotifier()),
       ],
       child: const DomraTech(),
     ),

@@ -92,19 +92,21 @@ class ContributionNotifier extends ChangeNotifier {
       final wordRequests = [
         WordRequest(
           wordRequestId: 1,
-          newEnglishWord: 'Cloud Computing',
-          newKhmerWord: 'ចរាចរកម្មពេលហោះ',
+          newEnglishWord: 'Cloud',
+          newKhmerWord: 'ពពក',
           userId: 1,
           status: 'pending',
           check: false,
+          createdAt: DateTime.now().subtract(const Duration(days: 2)),
         ),
         WordRequest(
           wordRequestId: 2,
-          newEnglishWord: 'Blockchain',
-          newKhmerWord: 'ស្ទេចខ្សែ',
+          newEnglishWord: 'Backend',
+          newKhmerWord: 'អភិវឌ្ឍផ្នែកខាងក្រោយ',
           userId: 1,
           status: 'approved',
           check: true,
+          createdAt: DateTime.now().subtract(const Duration(days: 5)),
         ),
       ];
 
@@ -115,6 +117,7 @@ class ContributionNotifier extends ChangeNotifier {
           wordId: 1,
           correctEnglishWord: 'Software Engineering',
           status: 'pending',
+          createdAt: DateTime.now().subtract(const Duration(days: 1)),
         ),
       ];
 
@@ -160,6 +163,7 @@ class ContributionNotifier extends ChangeNotifier {
         userId: 1, // Should come from auth state
         status: 'pending',
         check: false,
+        createdAt: DateTime.now(),
       );
 
       final updatedRequests = [...state.wordRequests, newRequest];
@@ -210,6 +214,7 @@ class ContributionNotifier extends ChangeNotifier {
         correctFrenchWord: correctionData['correctFrench'] as String?,
         reference: correctionData['reference'] as String?,
         status: 'pending',
+        createdAt: DateTime.now(),
       );
 
       final updatedCorrections = [...state.corrections, newCorrection];

@@ -379,4 +379,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get sortBy => 'Sort By';
+
+  @override
+  String get newestToOldest => 'Newest to Oldest';
+
+  @override
+  String get oldestToNewest => 'Oldest to Newest';
+
+  @override
+  String get aToZ => 'A to Z';
+
+  @override
+  String get zToA => 'Z to A';
+
+  @override
+  String get noContributionsYet => 'No contributions yet';
+
+  @override
+  String get approved => 'Approved';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String submitted(String date) {
+    return 'Submitted $date';
+  }
+
+  @override
+  String get languageChangedSuccessfully => 'Language changed successfully';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully';
+
+  @override
+  String get changeProfilePicture => 'Change Profile Picture';
+
+  @override
+  String get selectNewImage => 'Select a new image for your profile.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get profilePictureUpdated => 'Profile picture updated';
+
+  @override
+  String get simulateGalleryPick => 'Simulate Gallery Pick';
+
+  @override
+  String get passwordChangedSuccessfully => 'Password changed successfully';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get continueBtn => 'Continue';
+
+  @override
+  String get pleaseEnterCurrentPassword => 'Please enter current password';
+
+  @override
+  String get pleaseEnterNewPassword => 'Please enter new password';
+
+  @override
+  String get pleaseConfirmPassword => 'Please confirm your password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 6 characters';
+
+  @override
+  String get newPassword => 'New password';
+
+  @override
+  String get confirmPasswordHint => 'Confirm password';
+
+  @override
+  String get enterNewPasswordHint => 'Enter new password';
+
+  @override
+  String get enterConfirmPasswordHint => 'Enter confirm password';
 }

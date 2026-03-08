@@ -16,7 +16,7 @@ import 'package:domra_tech/ui/screens/contributions/submit_word_request_screen.d
 import 'package:domra_tech/ui/screens/favorites/favorites_screen.dart';
 import 'package:domra_tech/ui/screens/home/search_result_screen.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen.dart';
-import 'package:domra_tech/ui/screens/home_screen.dart';
+import 'package:domra_tech/ui/screens/main_shell.dart';
 import 'package:domra_tech/ui/screens/onboarding/onboarding_1_screen.dart';
 import 'package:domra_tech/ui/screens/onboarding/onboarding_2_screen.dart';
 import 'package:domra_tech/ui/screens/onboarding/onboarding_3_screen.dart';
@@ -51,9 +51,9 @@ class AppRouter {
 
     // Route generation - map route names to screens
     switch (settings.name) {
-      // 
+      //
       // ONBOARDING ROUTES
-      // 
+      //
       case AppRoutes.onboarding1:
         return _fadeRoute(const OnboardingScreen1(), settings);
 
@@ -63,9 +63,9 @@ class AppRouter {
       case AppRoutes.onboarding3:
         return _fadeRoute(const OnboardingScreen3(), settings);
 
-      // 
+      //
       // AUTHENTICATION ROUTES
-      // 
+      //
       case AppRoutes.chooseLanguage:
         return _fadeRoute(const ChooseLanguageScreen(), settings);
 
@@ -91,11 +91,11 @@ class AppRouter {
         final email = args[RouteParams.email] as String? ?? '';
         return _slideRoute(ResetPasswordScreen(email: email), settings);
 
-      // 
+      //
       // HOME & BROWSING ROUTES (WordTranslation from WordService)
-      // 
+      //
       case AppRoutes.home:
-        return _fadeRoute(const HomeScreen(), settings);
+        return _fadeRoute(const MainShell(), settings);
 
       case AppRoutes.wordDetail:
         // Extract WordTranslation parameters from WordService.getWordById()
@@ -132,9 +132,9 @@ class AppRouter {
           settings,
         );
 
-      // 
+      //
       // CONTRIBUTION ROUTES (WordRequest & CorrectionRequest)
-      // 
+      //
       case AppRoutes.contributionGuideline:
         return _slideRoute(const ContributionGuidelineScreen(), settings);
 
@@ -166,17 +166,17 @@ class AppRouter {
           settings,
         );
 
-      // 
+      //
       // FAVORITES ROUTES (Favorite: userId + wordId pairs)
-      // 
+      //
       case AppRoutes.favorites:
         // From WordService.getAllFavorites(token)
         // Shows list of Favorite entries with wordId + userId
         return _slideRoute(const FavoritesScreen(), settings);
 
-      // 
+      //
       // PROFILE ROUTES (User model from UserService)
-      // 
+      //
       case AppRoutes.profile:
         // User from UserService.getProfile(token)
         // Shows: userId, email, firstName, lastName, profileURL, etc.
@@ -210,9 +210,9 @@ class AppRouter {
       case AppRoutes.termsAndConditions:
         return _slideRoute(const TermsAndConditionsScreen(), settings);
 
-      // 
+      //
       // SUBSCRIPTION ROUTES (PaymentModel from PaymentService)
-      // 
+      //
       case AppRoutes.subscriptionPlans:
         return _slideRoute(const SubscriptionPlansScreen(), settings);
 
@@ -248,9 +248,9 @@ class AppRouter {
           settings,
         );
 
-      // 
+      //
       // DEFAULT - 404 ROUTE
-      // 
+      //
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
@@ -262,9 +262,9 @@ class AppRouter {
     }
   }
 
-  // 
+  //
   // ROUTE ANIMATIONS
-  // 
+  //
 
   /// Fade transition animation (300ms)
   /// Used for: Onboarding screens, language selection
