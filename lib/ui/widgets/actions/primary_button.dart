@@ -13,7 +13,7 @@ class PrimaryButton extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return SizedBox(
-      height: 40,
+      height: 50,
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,

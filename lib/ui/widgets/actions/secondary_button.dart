@@ -10,7 +10,7 @@ class SecondaryButton extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return SizedBox(
-      height: 40,
+      height: 50,
       width: double.infinity,
       child: OutlinedButton(
         onPressed: onPressed,

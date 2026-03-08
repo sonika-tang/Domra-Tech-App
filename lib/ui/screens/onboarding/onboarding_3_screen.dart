@@ -18,7 +18,7 @@ class OnboardingScreen3 extends StatelessWidget {
       bottomWidget: PrimaryButton(
         label: "Get Start",
         onPressed: () {
-          Navigator.pushReplacementNamed(context, AppRoutes.welcome);
+          Navigator.pushReplacementNamed(context, AppRoutes.chooseLanguage);
         },
       ),
     );
