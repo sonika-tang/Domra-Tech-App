@@ -18,6 +18,11 @@ class AuthProvider extends ChangeNotifier {
 
     if (fbUser != null) {
       // Step 2: Send token to backend
+      final idToken = await fbUser.getIdToken();
+
+      if (idToken == null) {
+        throw Exception("Failed to get Firebase token");
+      }
       final response = await _authService.loginWithFirebase();
 
       if (response.statusCode == 200) {
