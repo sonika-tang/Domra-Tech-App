@@ -1,11 +1,35 @@
 import 'dart:convert'; // Essential for jsonEncode
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart'; // Helpful for Google OAuth
 import '../core/config/constants.dart';
 
 class AuthService {
   final http.Client client;
+  final fb.FirebaseAuth _firebaseAuth = fb.FirebaseAuth.instance;
   AuthService(this.client);
+
+  //Firebase Email/Password sign-in
+  Future<fb.User?> firebaseLogin(String email, String password) async {
+    final credential = await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return credential.user;
+  }
+
+  //Send Firebase ID token to backend
+  Future<http.Response> loginWithFirebase() async {
+    final token = await _firebaseAuth.currentUser?.getIdToken(true);
+    print("Firebase ID Token: $token");
+    return await client.post(
+      Uri.parse('$baseUrl/auth/firebase-login'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+  }
 
   Future<http.Response> register(Map<String, dynamic> userData) async {
     return await client.post(
