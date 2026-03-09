@@ -11,10 +11,8 @@ import 'package:domra_tech/ui/screens/authentication/signup_2_screen.dart';
 import 'package:domra_tech/ui/screens/authentication/signup_3_screen.dart';
 import 'package:domra_tech/ui/screens/authentication/welcome_screen.dart';
 import 'package:domra_tech/ui/screens/contributions/contribution_confirmation_screen.dart';
-import 'package:domra_tech/ui/screens/contributions/contribution_guideline_screen.dart';
 import 'package:domra_tech/ui/screens/contributions/submit_correction_screen.dart';
 import 'package:domra_tech/ui/screens/contributions/submit_word_request_screen.dart';
-import 'package:domra_tech/ui/screens/favorites/favorites_screen.dart';
 import 'package:domra_tech/ui/screens/home/search_result_screen.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen.dart';
 import 'package:domra_tech/ui/screens/main_shell.dart';
@@ -27,7 +25,6 @@ import 'package:domra_tech/ui/screens/profile/edit_profile_screen.dart';
 import 'package:domra_tech/ui/screens/profile/history_all_screen.dart';
 import 'package:domra_tech/ui/screens/profile/history_corrections_screen.dart';
 import 'package:domra_tech/ui/screens/profile/history_new_words_screen.dart';
-import 'package:domra_tech/ui/screens/profile/profile_screen.dart';
 import 'package:domra_tech/ui/screens/profile/terms_and_conditions_screen.dart';
 import 'package:domra_tech/ui/screens/subscription/choose_plan_screen.dart';
 import 'package:domra_tech/ui/screens/subscription/confirm_plan_screen.dart';
@@ -102,7 +99,7 @@ class AppRouter {
       //
       //
       case AppRoutes.home:
-        return _fadeRoute(const MainShell(), settings);
+        return _fadeRoute(const MainShell(initialIndex: 0), settings);
 
       case AppRoutes.wordDetail:
         // Cast the arguments directly to your model object
@@ -123,7 +120,8 @@ class AppRouter {
       //
       //
       case AppRoutes.contributionGuideline:
-        return _slideRoute(const ContributionGuidelineScreen(), settings);
+        // Show Contribution guidelines inside the main shell with bottom nav
+        return _fadeRoute(const MainShell(initialIndex: 1), settings);
 
       case AppRoutes.submitWordRequest:
         // Submit via RequestService.createWordRequest()
@@ -151,9 +149,8 @@ class AppRouter {
       //
       //
       case AppRoutes.favorites:
-        // From WordService.getAllFavorites(token)
-        // Shows list of Favorite entries with wordId + userId
-        return _slideRoute(const FavoritesScreen(), settings);
+        // Favorites list shown as the third tab in the main shell
+        return _fadeRoute(const MainShell(initialIndex: 2), settings);
 
       //
       //
@@ -161,9 +158,8 @@ class AppRouter {
       //
       //
       case AppRoutes.profile:
-        // User from UserService.getProfile(token)
-        // Shows: userId, email, firstName, lastName, profileURL, etc.
-        return _slideRoute(const ProfileScreen(), settings);
+        // Profile screen shown as the fourth tab in the main shell
+        return _fadeRoute(const MainShell(initialIndex: 3), settings);
 
       case AppRoutes.editProfile:
         // Update via UserService.updateProfile()
