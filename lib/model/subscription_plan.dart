@@ -3,14 +3,12 @@ class SubscriptionPlan {
   final String title;
   final String priceLabel;
   final double priceAmount;
-  final List<String> features;
 
   SubscriptionPlan({
     required this.id,
     required this.title,
     required this.priceLabel,
     required this.priceAmount,
-    required this.features,
   });
 
   // useful for Node.js backend connection later
@@ -20,7 +18,6 @@ class SubscriptionPlan {
       title: json['title'] ?? '',
       priceLabel: json['priceLabel'] ?? '',
       priceAmount: (json['priceAmount'] ?? 0).toDouble(),
-      features: List<String>.from(json['features'] ?? []),
     );
   }
 }
