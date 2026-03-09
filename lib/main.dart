@@ -7,9 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'app.dart';
 import 'service/auth_service.dart';
-import 'state/models/user_state.dart';
-import 'state/models/contribution_state.dart';
 import 'service/user_service.dart';
+import 'service/word_service.dart';
+import 'state/models/contribution_state.dart';
+import 'state/models/favorite_state.dart';
+import 'state/models/user_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +29,9 @@ void main() async {
               UserNotifier(userService: UserService(http.Client())),
         ),
         ChangeNotifierProvider(create: (context) => ContributionNotifier()),
+        ChangeNotifierProvider(
+          create: (context) => FavoriteNotifier(WordService(http.Client())),
+        ),
       ],
       child: const DomraTech(),
     ),
