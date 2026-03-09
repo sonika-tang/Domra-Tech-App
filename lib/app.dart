@@ -33,8 +33,6 @@ class DomraTech extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      // home: const TestLangScreen(),
-      // home: const WelcomeScreen(),
       initialRoute: AppRoutes.onboarding1,
       onGenerateRoute: AppRouter.generateRoute,
     );

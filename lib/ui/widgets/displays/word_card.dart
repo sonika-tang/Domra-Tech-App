@@ -1,3 +1,4 @@
+import 'package:domra_tech/core/config/app_colors.dart';
 import 'package:domra_tech/model/word_translation.dart';
 import 'package:flutter/material.dart';
 import '../../../core/config/app_text_style.dart';
@@ -47,10 +48,13 @@ class WordCard extends StatelessWidget {
       children: [
         IconButton(
           onPressed: onFavorite,
-          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border, color: isFavorite ? Colors.red : null),
+          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border, color: isFavorite ? Colors.red : AppColors.primary),
         ),
         const SizedBox(width: AppSpacing.s4),
-        IconButton(onPressed: onShare, icon: const Icon(Icons.ios_share_rounded)),
+        IconButton(
+          onPressed: onShare,
+          icon: Icon(Icons.ios_share_rounded, color: AppColors.primary),
+        ),
       ],
     );
   }

@@ -17,7 +17,7 @@ class InputTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //the title of the input  field
-        Text(title, style: textTheme.bodyMedium?.copyWith(color: colorTheme.onSecondary)),
+        Text(title, style: textTheme.bodyMedium?.copyWith(color: colorTheme.secondary)),
         const SizedBox(height: 8),
         //the input filed section
         TextFormField(

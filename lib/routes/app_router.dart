@@ -1,5 +1,6 @@
 /// Main router implementation for the Domra app
 
+import 'package:domra_tech/model/word_translation.dart';
 import 'package:domra_tech/routes/route_params.dart';
 import 'package:domra_tech/ui/screens/authentication/choose_language_screen.dart';
 import 'package:domra_tech/ui/screens/authentication/forgot_password_screen.dart';
@@ -15,7 +16,7 @@ import 'package:domra_tech/ui/screens/contributions/submit_correction_screen.dar
 import 'package:domra_tech/ui/screens/contributions/submit_word_request_screen.dart';
 import 'package:domra_tech/ui/screens/favorites/favorites_screen.dart';
 import 'package:domra_tech/ui/screens/home/search_result_screen.dart';
-import 'package:domra_tech/ui/screens/home/word_detail_screen.dart';
+import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen.dart';
 import 'package:domra_tech/ui/screens/main_shell.dart';
 import 'package:domra_tech/ui/screens/onboarding/onboarding_1_screen.dart';
 import 'package:domra_tech/ui/screens/onboarding/onboarding_2_screen.dart';
@@ -52,7 +53,9 @@ class AppRouter {
     // Route generation - map route names to screens
     switch (settings.name) {
       //
+      //
       // ONBOARDING ROUTES
+      //
       //
       case AppRoutes.onboarding1:
         return _fadeRoute(const OnboardingScreen1(), settings);
@@ -64,7 +67,9 @@ class AppRouter {
         return _fadeRoute(const OnboardingScreen3(), settings);
 
       //
+      //
       // AUTHENTICATION ROUTES
+      //
       //
       case AppRoutes.chooseLanguage:
         return _fadeRoute(const ChooseLanguageScreen(), settings);
@@ -92,48 +97,30 @@ class AppRouter {
         return _slideRoute(ResetPasswordScreen(email: email), settings);
 
       //
+      //
       // HOME & BROWSING ROUTES (WordTranslation from WordService)
+      //
       //
       case AppRoutes.home:
         return _fadeRoute(const MainShell(), settings);
 
       case AppRoutes.wordDetail:
-        // Extract WordTranslation parameters from WordService.getWordById()
-        final wordId = args[RouteParams.wordId] as int? ?? 0;
-        final englishWord = args[RouteParams.englishWord] as String?;
-        final khmerWord = args[RouteParams.khmerWord] as String?;
-        final frenchWord = args[RouteParams.frenchWord] as String?;
-        final definition = args[RouteParams.definition] as String?;
-        final example = args[RouteParams.example] as String?;
-        final imageURL = args[RouteParams.imageURL] as String?;
-        final reference = args[RouteParams.reference] as String?;
+        // Cast the arguments directly to your model object
+        final word = settings.arguments as WordTranslation;
 
-        return _slideRoute(
-          WordDetailScreen(
-            wordId: wordId,
-            englishWord: englishWord,
-            khmerWord: khmerWord,
-            frenchWord: frenchWord,
-            definition: definition,
-            example: example,
-            imageURL: imageURL,
-            reference: reference,
-          ),
-          settings,
-        );
+        return _slideRoute(WordDetailScreen(word: word), settings);
 
       case AppRoutes.searchResults:
         // Search from WordService.searchWords(query)
         final query = args[RouteParams.searchQuery] as String? ?? '';
         final category = args[RouteParams.selectedCategory] as String?;
 
-        return _slideRoute(
-          SearchResultsScreen(query: query, category: category),
-          settings,
-        );
+        return _slideRoute(SearchResultsScreen(query: query, category: category), settings);
 
       //
+      //
       // CONTRIBUTION ROUTES (WordRequest & CorrectionRequest)
+      //
       //
       case AppRoutes.contributionGuideline:
         return _slideRoute(const ContributionGuidelineScreen(), settings);
@@ -152,22 +139,16 @@ class AppRouter {
 
       case AppRoutes.contributionConfirmation:
         // Confirmation after WordRequest or CorrectionRequest submission
-        final type =
-            args[RouteParams.contributionType] as String? ?? 'word_request';
+        final type = args[RouteParams.contributionType] as String? ?? 'word_request';
         final wordRequestId = args[RouteParams.wordRequestId] as int?;
         final correctionId = args[RouteParams.correctionId] as int?;
 
-        return _scaleRoute(
-          ContributionConfirmationScreen(
-            type: type,
-            wordRequestId: wordRequestId,
-            correctionId: correctionId,
-          ),
-          settings,
-        );
+        return _scaleRoute(ContributionConfirmationScreen(type: type, wordRequestId: wordRequestId, correctionId: correctionId), settings);
 
       //
+      //
       // FAVORITES ROUTES (Favorite: userId + wordId pairs)
+      //
       //
       case AppRoutes.favorites:
         // From WordService.getAllFavorites(token)
@@ -175,7 +156,9 @@ class AppRouter {
         return _slideRoute(const FavoritesScreen(), settings);
 
       //
+      //
       // PROFILE ROUTES (User model from UserService)
+      //
       //
       case AppRoutes.profile:
         // User from UserService.getProfile(token)
@@ -229,24 +212,13 @@ class AppRouter {
         final planPrice = args[RouteParams.planPrice] as String? ?? '';
         final amount = args[RouteParams.paymentAmount] as double?;
 
-        return _slideRoute(
-          ConfirmPlanScreen(
-            planId: planId,
-            planName: planName,
-            planPrice: planPrice,
-            amount: amount,
-          ),
-          settings,
-        );
+        return _slideRoute(ConfirmPlanScreen(planId: planId, planName: planName, planPrice: planPrice, amount: amount), settings);
 
       case AppRoutes.subscriptionSuccess:
         // After PaymentModel status is processed via PaymentService.checkStatus()
         final planName = args[RouteParams.planName] as String? ?? '';
 
-        return _scaleRoute(
-          SubscriptionSuccessScreen(planName: planName),
-          settings,
-        );
+        return _scaleRoute(SubscriptionSuccessScreen(planName: planName), settings);
 
       //
       // DEFAULT - 404 ROUTE
@@ -270,8 +242,7 @@ class AppRouter {
   /// Used for: Onboarding screens, language selection
   static PageRoute<dynamic> _fadeRoute(Widget page, RouteSettings settings) {
     return PageRouteBuilder<dynamic>(
-      pageBuilder: (_, animation, __) =>
-          FadeTransition(opacity: animation, child: page),
+      pageBuilder: (_, animation, __) => FadeTransition(opacity: animation, child: page),
       settings: settings,
       transitionDuration: const Duration(milliseconds: 300),
     );
@@ -287,10 +258,7 @@ class AppRouter {
         const end = Offset.zero;
         const curve = Curves.easeInOut;
 
-        final tween = Tween(
-          begin: begin,
-          end: end,
-        ).chain(CurveTween(curve: curve));
+        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         final offsetAnimation = animation.drive(tween);
 
         return SlideTransition(position: offsetAnimation, child: child);
@@ -304,8 +272,7 @@ class AppRouter {
   /// Used for: Success/confirmation screens, dialogs
   static PageRoute<dynamic> _scaleRoute(Widget page, RouteSettings settings) {
     return PageRouteBuilder<dynamic>(
-      pageBuilder: (_, animation, __) =>
-          ScaleTransition(scale: animation, child: page),
+      pageBuilder: (_, animation, __) => ScaleTransition(scale: animation, child: page),
       settings: settings,
       transitionDuration: const Duration(milliseconds: 300),
     );

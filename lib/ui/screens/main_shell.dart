@@ -25,12 +25,7 @@ class _MainShellState extends State<MainShell> {
   }
 
   // The four main tab screens — preserved by IndexedStack
-  static const List<Widget> _screens = [
-    HomeScreen(),
-    ContributionGuidelineScreen(),
-    FavoritesScreen(),
-    ProfileScreen(),
-  ];
+  static const List<Widget> _screens = [HomeScreen(), ContributionGuidelineScreen(), FavoritesScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +36,7 @@ class _MainShellState extends State<MainShell> {
       body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 16,
-              offset: const Offset(0, -4),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 16, offset: const Offset(0, -4))],
         ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
@@ -56,36 +45,14 @@ class _MainShellState extends State<MainShell> {
           backgroundColor: Colors.white,
           selectedItemColor: colorScheme.primary,
           unselectedItemColor: const Color(0xFF9E9E9E),
-          selectedLabelStyle: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-          ),
+          selectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          unselectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
           elevation: 0,
           items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home_outlined),
-              activeIcon: const Icon(Icons.home),
-              label: t.navHome,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.mode_edit_outline_outlined),
-              activeIcon: const Icon(Icons.mode_edit_outline_rounded),
-              label: t.navContribute,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite_border),
-              activeIcon: const Icon(Icons.favorite),
-              label: t.navFavorite,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.person_outline),
-              activeIcon: const Icon(Icons.person),
-              label: t.navProfile,
-            ),
+            BottomNavigationBarItem(icon: const Icon(Icons.home_outlined), activeIcon: const Icon(Icons.home), label: t.navHome),
+            BottomNavigationBarItem(icon: const Icon(Icons.mode_edit_outline_outlined), activeIcon: const Icon(Icons.mode_edit_outline_rounded), label: t.navContribute),
+            BottomNavigationBarItem(icon: const Icon(Icons.favorite_border), activeIcon: const Icon(Icons.favorite), label: t.navFavorite),
+            BottomNavigationBarItem(icon: const Icon(Icons.person_outline), activeIcon: const Icon(Icons.person), label: t.navProfile),
           ],
         ),
       ),
