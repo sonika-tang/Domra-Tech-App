@@ -1,8 +1,7 @@
-import 'package:domra_tech/core/config/app_colors.dart';
 import 'package:domra_tech/core/config/app_text_style.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:domra_tech/model/word_translation.dart';
-import 'package:domra_tech/ui/screens/home/request_word_form/confirmation_screen.dart';
+import 'package:domra_tech/ui/screens/request_word_form/confirmation_screen.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:flutter/material.dart';
 
@@ -79,13 +78,13 @@ class _WordRequestFormState extends State<WordRequestForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // --- Rounded Filled Style Fields ---
-                    _buildLabel("English word"),
+                    _buildLabel(loc.englishWord),
                     _buildRoundedField(_englishController, "Machine learning (ml)"),
 
-                    _buildLabel("Khmer word"),
+                    _buildLabel(loc.khmerWord),
                     _buildRoundedField(_khmerController, "សិក្សាម៉ាស៊ីន"),
 
-                    _buildLabel("French word"),
+                    _buildLabel(loc.frenchWord),
                     _buildRoundedField(_frenchController, "machine learning (m.)/"),
 
                     const SizedBox(height: 20),

@@ -8,8 +8,7 @@ class HistoryCorrectionScreen extends StatefulWidget {
   const HistoryCorrectionScreen({super.key});
 
   @override
-  State<HistoryCorrectionScreen> createState() =>
-      _HistoryCorrectionScreenState();
+  State<HistoryCorrectionScreen> createState() => _HistoryCorrectionScreenState();
 }
 
 class _HistoryCorrectionScreenState extends State<HistoryCorrectionScreen> {
@@ -30,6 +29,7 @@ class _HistoryCorrectionScreenState extends State<HistoryCorrectionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(t.wordCorrection),
+        leading: IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back_ios, size: 20)),
         elevation: 0,
         backgroundColor: colorScheme.primary,
       ),
@@ -46,18 +46,9 @@ class _HistoryCorrectionScreenState extends State<HistoryCorrectionScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.edit,
-                    size: 64,
-                    color: colorScheme.outline.withValues(alpha: .3),
-                  ),
+                  Icon(Icons.edit, size: 64, color: colorScheme.outline.withValues(alpha: .3)),
                   const SizedBox(height: 16),
-                  Text(
-                    'No corrections yet',
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.outline,
-                    ),
-                  ),
+                  Text('No corrections yet', style: theme.textTheme.bodyLarge?.copyWith(color: colorScheme.outline)),
                 ],
               ),
             );
@@ -69,17 +60,13 @@ class _HistoryCorrectionScreenState extends State<HistoryCorrectionScreen> {
             itemBuilder: (context, index) {
               final correction = corrections[index];
               final parts = [
-                if (correction.correctEnglishWord != null)
-                  'EN: ${correction.correctEnglishWord}',
-                if (correction.correctKhmerWord != null)
-                  'KH: ${correction.correctKhmerWord}',
-                if (correction.correctFrenchWord != null)
-                  'FR: ${correction.correctFrenchWord}',
+                if (correction.correctEnglishWord != null) 'EN: ${correction.correctEnglishWord}',
+                if (correction.correctKhmerWord != null) 'KH: ${correction.correctKhmerWord}',
+                if (correction.correctFrenchWord != null) 'FR: ${correction.correctFrenchWord}',
               ];
               return HistoryItem(
                 title: 'Word ID: ${correction.wordId}',
-                description:
-                    parts.isNotEmpty ? parts.join('  •  ') : 'Correction submitted',
+                description: parts.isNotEmpty ? parts.join('  •  ') : 'Correction submitted',
                 status: correction.status ?? 'pending',
               );
             },

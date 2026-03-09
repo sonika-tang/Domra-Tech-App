@@ -2,7 +2,7 @@ import 'package:domra_tech/core/config/app_colors.dart';
 import 'package:domra_tech/core/config/app_text_style.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:domra_tech/model/word_translation.dart';
-import 'package:domra_tech/ui/screens/home/request_word_form/word_request_form.dart';
+import 'package:domra_tech/ui/screens/request_word_form/word_request_form.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

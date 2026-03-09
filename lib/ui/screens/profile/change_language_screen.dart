@@ -34,11 +34,9 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
       appBar: AppBar(
         title: Text(
           t.language,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
+        leading: IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back_ios, size: 20)),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
@@ -54,10 +52,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
               Text(
                 t.chooseLanguage,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: theme.textTheme.titleLarge?.copyWith(color: colorScheme.primary, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 12),
@@ -66,10 +61,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
               Text(
                 t.description,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                  height: 1.4,
-                ),
+                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[600], height: 1.4),
               ),
 
               const SizedBox(height: 48),
@@ -107,18 +99,12 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                   onPressed: () => _applyLanguage(context, localeProvider),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     elevation: 0,
                   ),
                   child: Text(
                     t.continueBtn,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
               ),
@@ -135,14 +121,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
     final locale = Locale(selectedLanguage);
     localeProvider.setLocale(locale);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          AppLocalizations.of(context)!.languageChangedSuccessfully,
-        ),
-        backgroundColor: AppColors.success,
-      ),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.languageChangedSuccessfully), backgroundColor: AppColors.success));
 
     context.goBack();
   }

@@ -1,6 +1,5 @@
 import 'package:domra_tech/core/config/app_text_style.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
-import 'package:domra_tech/ui/screens/home/home_screen.dart';
 import 'package:domra_tech/ui/screens/main_shell.dart';
 import 'package:domra_tech/ui/screens/profile/history_all_screen.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
