@@ -19,21 +19,16 @@ class TermsAndConditionsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(t.termOfCondition),
+        leading: IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back_ios, size: 20)),
         elevation: 0,
         backgroundColor: colorScheme.primary,
         iconTheme: const IconThemeData(color: Colors.white),
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-        ),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
       ),
       body: _buildTermsView(
         context: context,
         title: isKhmer ? 'លក្ខខណ្ឌប្រើប្រាស់' : 'Terms and Conditions',
-        lastUpdated: isKhmer
-            ? 'ធ្វើបច្ចុប្បន្នភាពចុងក្រោយ៖ $currentDate'
-            : 'Last Updated: $currentDate',
+        lastUpdated: isKhmer ? 'ធ្វើបច្ចុប្បន្នភាពចុងក្រោយ៖ $currentDate' : 'Last Updated: $currentDate',
         intro: isKhmer
             ? 'សូមស្វាគមន៍មកកាន់ Domra-Tech។ លក្ខខណ្ឌទាំងនេះគ្រប់គ្រងការចូលប្រើ និងប្រើប្រាស់កម្មវិធីទូរស័ព្ទ Domra-Tech និងសេវាកម្មពាក់ព័ន្ធ។ ដោយប្រើកម្មវិធីនេះ អ្នកយល់ព្រមគោរពតាមលក្ខខណ្ឌទាំងនេះ។ ប្រសិនបើអ្នកមិនយល់ព្រមជាមួយផ្នែកណាមួយនៃលក្ខខណ្ឌទាំងនេះទេ សូមបញ្ឈប់ការប្រើប្រាស់កម្មវិធី។'
             : 'Welcome to Domra-Tech. These Terms and Conditions govern your access to and use of the Domra-Tech mobile application and related services. By using the application, you agree to comply with these terms. If you do not agree with any part of these terms, please discontinue use of the application.',
@@ -42,42 +37,22 @@ class TermsAndConditionsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTermsView({
-    required BuildContext context,
-    required String title,
-    required String lastUpdated,
-    required String intro,
-    required List<TermsSectionModel> sections,
-  }) {
+  Widget _buildTermsView({required BuildContext context, required String title, required String lastUpdated, required String intro, required List<TermsSectionModel> sections}) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
+          Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          Text(
-            lastUpdated,
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
-          ),
+          Text(lastUpdated, style: const TextStyle(fontSize: 12, color: Colors.grey)),
           const SizedBox(height: 24),
-          Text(
-            intro,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(height: 1.5),
-          ),
+          Text(intro, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5)),
           const SizedBox(height: 24),
           ...sections.map(
             (section) => Padding(
               padding: const EdgeInsets.only(bottom: 24),
-              child: TermsSection(
-                title: section.title,
-                content: section.content,
-              ),
+              child: TermsSection(title: section.title, content: section.content),
             ),
           ),
           const SizedBox(height: 40),
@@ -146,8 +121,7 @@ final List<TermsSectionModel> _englishSections = [
   ),
   TermsSectionModel(
     title: '11. Contact Information',
-    content:
-        'If you have questions regarding these Terms and Conditions, please contact the Domra-Tech development team through the application support channel.',
+    content: 'If you have questions regarding these Terms and Conditions, please contact the Domra-Tech development team through the application support channel.',
   ),
 ];
 
@@ -202,9 +176,5 @@ final List<TermsSectionModel> _khmerSections = [
     content:
         'Domra-Tech រក្សាសិទ្ធិក្នុងការធ្វើបច្ចុប្បន្នភាព ឬកែប្រែលក្ខខណ្ឌទាំងនេះនៅពេលណាមួយ។ ការផ្លាស់ប្តូរណាមួយនឹងត្រូវបានឆ្លុះបញ្ចាំងនៅក្នុងកម្មវិធី និងចូលជាធរមានភ្លាមៗបន្ទាប់ពីការបោះពុម្ពផ្សាយ។\nអ្នកប្រើប្រាស់ត្រូវបានលើកទឹកចិត្តឲ្យពិនិត្យលក្ខខណ្ឌជាប្រចាំ។',
   ),
-  TermsSectionModel(
-    title: '១១. ព័ត៌មានទំនាក់ទំនង',
-    content:
-        'ប្រសិនបើអ្នកមានសំណួរទាក់ទងនឹងលក្ខខណ្ឌទាំងនេះ សូមទាក់ទងក្រុមអភិវឌ្ឍន៍ Domra-Tech តាមរយៈប្រព័ន្ធជំនួយកម្មវិធី។',
-  ),
+  TermsSectionModel(title: '១១. ព័ត៌មានទំនាក់ទំនង', content: 'ប្រសិនបើអ្នកមានសំណួរទាក់ទងនឹងលក្ខខណ្ឌទាំងនេះ សូមទាក់ទងក្រុមអភិវឌ្ឍន៍ Domra-Tech តាមរយៈប្រព័ន្ធជំនួយកម្មវិធី។'),
 ];

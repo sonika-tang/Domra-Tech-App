@@ -23,12 +23,12 @@ class CategoryFilter extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(right: 8),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(color: isSelected ? AppColors.primaryBackground : AppColors.lightGray, borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(color: isSelected ? AppColors.background : AppColors.lightGray, borderRadius: BorderRadius.circular(20)),
               child: Center(
                 child: Text(
                   categories[index].categoryName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: isSelected ? AppColors.primary : AppColors.gray, fontWeight: FontWeight.w500),
+                  style: TextStyle(color: isSelected ? AppColors.primary : AppColors.background, fontWeight: FontWeight.w500),
                 ),
               ),
             ),

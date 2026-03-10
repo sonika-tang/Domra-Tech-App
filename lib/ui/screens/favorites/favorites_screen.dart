@@ -1,9 +1,7 @@
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/config/app_text_style.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../state/models/favorite_state.dart';
 import '../../../state/provider/auth_provider.dart';
 import '../../widgets/displays/word_card.dart';

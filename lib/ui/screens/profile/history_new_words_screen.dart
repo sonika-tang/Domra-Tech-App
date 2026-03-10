@@ -27,11 +27,7 @@ class _HistoryNewWordsScreenState extends State<HistoryNewWordsScreen> {
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(t.newWord),
-        elevation: 0,
-        backgroundColor: colorScheme.primary,
-      ),
+      appBar: AppBar(title: Text(t.newWord), elevation: 0, backgroundColor: colorScheme.primary),
       body: Consumer<ContributionNotifier>(
         builder: (context, contribProvider, child) {
           final wordRequests = contribProvider.state.wordRequests;
@@ -45,18 +41,9 @@ class _HistoryNewWordsScreenState extends State<HistoryNewWordsScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.note_add,
-                    size: 64,
-                    color: colorScheme.outline.withValues(alpha: .3),
-                  ),
+                  Icon(Icons.note_add, size: 64, color: colorScheme.outline.withValues(alpha: .3)),
                   const SizedBox(height: 16),
-                  Text(
-                    'No word requests yet',
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.outline,
-                    ),
-                  ),
+                  Text('No word requests yet', style: theme.textTheme.bodyLarge?.copyWith(color: colorScheme.outline)),
                 ],
               ),
             );
@@ -69,8 +56,7 @@ class _HistoryNewWordsScreenState extends State<HistoryNewWordsScreen> {
               final wr = wordRequests[index];
               return HistoryItem(
                 title: wr.newEnglishWord ?? 'Untitled',
-                description:
-                    'Khmer: ${wr.newKhmerWord ?? '-'}  •  French: ${wr.newFrenchWord ?? '-'}',
+                description: 'Khmer: ${wr.newKhmerWord ?? '-'}  •  French: ${wr.newFrenchWord ?? '-'}',
                 status: wr.status ?? 'pending',
               );
             },
