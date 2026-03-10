@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../core/config/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentService {
   final http.Client client;
@@ -22,5 +23,14 @@ class PaymentService {
       Uri.parse('$baseUrl/payment/bakong/status/$paymentId'),
       headers: {'Authorization': 'Bearer $token'},
     );
+  }
+
+  Future<void> launchBakongApp(String deepLink) async {
+    final Uri url = Uri.parse(deepLink);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception(
+        'Could not launch payment app. Please scan the QR instead.',
+      );
+    }
   }
 }
