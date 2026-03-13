@@ -29,7 +29,9 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter 
+    sdk: flutter
+
+ 
   flutter_svg: ^2.0.10
   flutter_localizations: 
     sdk: flutter         
@@ -51,6 +53,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

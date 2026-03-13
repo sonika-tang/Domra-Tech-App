@@ -1,6 +1,7 @@
 class PaymentModel {
   final int? paymentId;
   final String? qrString;
+  final String? deepLink;
   final String? md5Hash;
   final String status;
   final double amount;
@@ -9,6 +10,7 @@ class PaymentModel {
   PaymentModel({
     this.paymentId,
     this.qrString,
+    this.deepLink,
     this.md5Hash,
     required this.status,
     required this.amount,
@@ -23,6 +25,7 @@ class PaymentModel {
     return PaymentModel(
       paymentId: source['paymentId'],
       qrString: source['qrString'],
+      deepLink: source['deepLink'],
       md5Hash: source['md5Hash'],
       status: source['status'] ?? 'pending',
       // Ensure amount is double regardless if Node sends it as int or string
@@ -38,6 +41,7 @@ class PaymentModel {
     return {
       'paymentId': paymentId,
       'qrString': qrString,
+      'deepLink': deepLink,
       'md5Hash': md5Hash,
       'status': status,
       'amount': amount,
