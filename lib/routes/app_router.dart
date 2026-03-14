@@ -26,7 +26,7 @@ import 'package:domra_tech/ui/screens/profile/history_all_screen.dart';
 import 'package:domra_tech/ui/screens/profile/history_corrections_screen.dart';
 import 'package:domra_tech/ui/screens/profile/history_new_words_screen.dart';
 import 'package:domra_tech/ui/screens/profile/terms_and_conditions_screen.dart';
-import 'package:domra_tech/ui/screens/subscription/choose_plan_screen.dart';
+// import 'package:domra_tech/ui/screens/subscription/choose_plan_screen.dart';
 import 'package:domra_tech/ui/screens/subscription/confirm_plan_screen.dart';
 import 'package:domra_tech/ui/screens/subscription/subscription_plans_screen.dart';
 import 'package:domra_tech/ui/screens/subscription/subscription_success_screen.dart';
@@ -193,12 +193,12 @@ class AppRouter {
       // SUBSCRIPTION ROUTES (PaymentModel from PaymentService)
       //
       case AppRoutes.subscriptionPlans:
-        return _slideRoute(const SubscriptionPlansScreen(), settings);
+        return _slideRoute(const SubscriptionScreen(), settings);
 
-      case AppRoutes.choosePlan:
-        final planId = args[RouteParams.planId] as String? ?? '';
+      // case AppRoutes.choosePlan:
+      //   final planId = args[RouteParams.planId] as String? ?? '';
 
-        return _slideRoute(ChoosePlanScreen(planId: planId), settings);
+      //   return _slideRoute(ChoosePlanScreen(planId: planId), settings);
 
       case AppRoutes.confirmPlan:
         // PaymentModel from PaymentService.generateBakongQR(amount)

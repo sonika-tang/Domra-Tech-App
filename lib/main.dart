@@ -21,17 +21,10 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LocaleProvider()),
-        ChangeNotifierProvider(
-          create: (context) => AuthProvider(AuthService(http.Client())),
-        ),
-        ChangeNotifierProvider(
-          create: (context) =>
-              UserNotifier(userService: UserService(http.Client())),
-        ),
+        ChangeNotifierProvider(create: (context) => AuthProvider(AuthService(http.Client()))),
+        ChangeNotifierProvider(create: (context) => UserNotifier(userService: UserService(http.Client()))),
         ChangeNotifierProvider(create: (context) => ContributionNotifier()),
-        ChangeNotifierProvider(
-          create: (context) => FavoriteNotifier(WordService(http.Client())),
-        ),
+        ChangeNotifierProvider(create: (context) => FavoriteNotifier(WordService(http.Client()))),
       ],
       child: const DomraTech(),
     ),
