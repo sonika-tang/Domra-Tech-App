@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../l10n/app_localizations.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/navigation_helper.dart';
