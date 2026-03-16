@@ -11,12 +11,11 @@ class AppTextStyle {
   static const body1 = TextStyle(fontSize: 16, fontWeight: FontWeight.normal, height: 1.2);
   static const body2 = TextStyle(fontSize: 14, fontWeight: FontWeight.normal, height: 1.2);
   static const small = TextStyle(fontSize: 12, fontWeight: FontWeight.normal, height: 1.2);
-
+  static const buttonText = TextStyle(fontSize: 14, fontWeight: FontWeight.bold, height: 1.2);
 }
 
-// app spacing 
+// app spacing
 class AppSpacing {
-
   static const s4 = 4.0;
   static const s8 = 8.0;
   static const s12 = 12.0;
@@ -24,5 +23,4 @@ class AppSpacing {
   static const s24 = 24.0;
   static const s32 = 32.0;
   static const s48 = 48.0;
-  
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //This primary button use accross all screen (eventhough the color is secondary color but it have primary action)
 class PrimaryButton extends StatelessWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? color;
   const PrimaryButton({super.key, required this.label, required this.onPressed, this.color});
 
@@ -13,7 +13,7 @@ class PrimaryButton extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return SizedBox(
-      height: 40,
+      height: 50,
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,

@@ -37,4 +37,6 @@ class WordTranslation {
       referenceText: json['referenceText'],
     );
   }
+
+  get categoryId => null;
 }

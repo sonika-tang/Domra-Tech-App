@@ -129,5 +129,41 @@
   "confirmAndPay": "Confirm and Pay",
   "paymentSuccess": "Payment Successful!",
   "paymentThanks": "Thank you for subscription.",
-  "logout": "Logout"
+  "logout": "Logout",
+  "sortBy": "Sort By",
+  "newestToOldest": "Newest to Oldest",
+  "oldestToNewest": "Oldest to Newest",
+  "aToZ": "A to Z",
+  "zToA": "Z to A",
+  "noContributionsYet": "No contributions yet",
+  "approved": "Approved",
+  "pending": "Pending",
+  "edit": "Edit",
+  "submitted": "Submitted {date}",
+  "@submitted": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "languageChangedSuccessfully": "Language changed successfully",
+  "profileUpdatedSuccessfully": "Profile updated successfully",
+  "changeProfilePicture": "Change Profile Picture",
+  "selectNewImage": "Select a new image for your profile.",
+  "cancel": "Cancel",
+  "profilePictureUpdated": "Profile picture updated",
+  "simulateGalleryPick": "Simulate Gallery Pick",
+  "passwordChangedSuccessfully": "Password changed successfully",
+  "other": "Other",
+  "continueBtn": "Continue",
+  "pleaseEnterCurrentPassword": "Please enter current password",
+  "pleaseEnterNewPassword": "Please enter new password",
+  "pleaseConfirmPassword": "Please confirm your password",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "passwordMinLength": "Password must be at least 6 characters",
+  "newPassword": "New password",
+  "confirmPasswordHint": "Confirm password",
+  "enterNewPasswordHint": "Enter new password",
+  "enterConfirmPasswordHint": "Enter confirm password"
 }

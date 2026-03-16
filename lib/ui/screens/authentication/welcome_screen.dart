@@ -1,8 +1,81 @@
+import 'package:domra_tech/routes/app_routes.dart';
+import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
+import 'package:domra_tech/ui/widgets/actions/secondary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:domra_tech/core/config/app_text_style.dart';
+import 'package:domra_tech/core/config/app_colors.dart';
+import 'package:domra_tech/l10n/app_localizations.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
+
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text('Welcome')));
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Logo at top
+          Image.asset("assets/imgs/Domra_Tech-logo-Transparent.png", height: 260),
+          const SizedBox(height: AppSpacing.s32),
+
+          // Main container styled like LoginForm
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(AppSpacing.s24),
+              decoration: const BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    loc.welcome,
+                    style: AppTextStyle.largeTitle.copyWith(color: AppColors.background),
+                    textAlign: TextAlign.start,
+                  ),
+                  Text(
+                    "Domra",
+                    style: AppTextStyle.largeTitle.copyWith(color: AppColors.background),
+                    textAlign: TextAlign.start,
+                  ),
+                  const SizedBox(height: AppSpacing.s48),
+
+                  // Login button
+                  PrimaryButton(
+                    label: loc.login,
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.login);
+                    },
+                  ),
+
+                  const SizedBox(height: AppSpacing.s32),
+
+                  // Sign up button
+                  SecondaryButton(
+                    label: loc.signUp,
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.signup1);
+                    },
+                  ),
+                  const Spacer(),
+
+                  // Continue as guest link
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.home);
+                    },
+                    child: Text("Continue as Guest", style: AppTextStyle.body2.copyWith(color: AppColors.background)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

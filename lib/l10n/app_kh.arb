@@ -129,5 +129,41 @@
   "confirmAndPay": "បញ្ជាក់ និងទូទាត់",
   "paymentSuccess": "ការទូទាត់ជោគជ័យ!",
   "paymentThanks": "សូមអរគុណសម្រាប់ការជាវរបស់អ្នក។",
-  "logout": "ចាកចេញ"
+  "logout": "ចាកចេញ",
+  "sortBy": "តម្រៀបតាម",
+  "newestToOldest": "ថ្មីបំផុតទៅចាស់បំផុត",
+  "oldestToNewest": "ចាស់បំផុតទៅថ្មីបំផុត",
+  "aToZ": "ក ដល់ អ (A-Z)",
+  "zToA": "អ ដល់ ក (Z-A)",
+  "noContributionsYet": "មិនទាន់មានការចូលរួមនៅឡើយទេ",
+  "approved": "បានអនុម័ត",
+  "pending": "រង់ចាំការអនុម័ត",
+  "edit": "កែកុន",
+  "submitted": "បានបញ្ជូន {date}",
+  "@submitted": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "languageChangedSuccessfully": "ផ្លាស់ប្តូរភាសាដោយជោគជ័យ",
+  "profileUpdatedSuccessfully": "ប្រវត្តិរូបត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ",
+  "changeProfilePicture": "ផ្លាស់ប្តូររូបថតប្រវត្តិរូប",
+  "selectNewImage": "ជ្រើសរើសរូបភាពថ្មីសម្រាប់ប្រវត្តិរូបរបស់អ្នក។",
+  "cancel": "បោះបង់",
+  "profilePictureUpdated": "រូបថតប្រវត្តិរូបត្រូវបានធ្វើបច្ចុប្បន្នភាព",
+  "simulateGalleryPick": "ការក្លែងធ្វើការជ្រើសរើសរូបភាពពីវិចិត្រសាល",
+  "passwordChangedSuccessfully": "ប្រាកដផ្លាស់ប្តូរលេខសម្ងាត់ដោយជោគជ័យ",
+  "other": "ផ្សេងៗ",
+  "continueBtn": "បន្ត្រាក់",
+  "pleaseEnterCurrentPassword": "សូមបញ្ចូលលេខសម្ងាត់បច្ចុប្បន្ន",
+  "pleaseEnterNewPassword": "សូមបញ្ចូលលេខសម្ងាត់ថ្មី",
+  "pleaseConfirmPassword": "សូមបញ្ជាក់ប្រកលេខសម្ងាត់របស់អ្នក",
+  "passwordsDoNotMatch": "លេខសម្ងាត់មិនត្រងគ្នាស័រគ្ន",
+  "passwordMinLength": "លេខសម្ងាត់ត្រូវការមានយ័ងៜចតᚷែងតិចច្រើន 6",
+  "newPassword": "លេខសម្ងាត់ថ្មី",
+  "confirmPasswordHint": "បញ្ជាក់ប្រកលេខសម្ងាត់",
+  "enterNewPasswordHint": "បញ្ចូលលេខសម្ងាត់ថ្មី",
+  "enterConfirmPasswordHint": "បញ្ចូលរលេខសម្ងាត់ដែរបស់អ្នក"
 }

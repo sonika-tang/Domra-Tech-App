@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "222024203248",
+    "project_id": "domra-7b540",
+    "storage_bucket": "domra-7b540.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222024203248:android:92e92e21b26777786dfb35",
+        "android_client_info": {
+          "package_name": "com.example.domra_tech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222024203248-2u908qmd7h03gudhdcctq8ojlhtcbedh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkDXiR1CZE7ylRBEGImZb7g3OK9e1Otuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222024203248-2u908qmd7h03gudhdcctq8ojlhtcbedh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222024203248:android:bb364fa687dd34046dfb35",
+        "android_client_info": {
+          "package_name": "domra_tech.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "222024203248-2u908qmd7h03gudhdcctq8ojlhtcbedh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkDXiR1CZE7ylRBEGImZb7g3OK9e1Otuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222024203248-2u908qmd7h03gudhdcctq8ojlhtcbedh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

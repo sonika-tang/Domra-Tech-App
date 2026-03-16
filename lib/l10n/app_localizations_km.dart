@@ -379,4 +379,96 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get logout => 'ចាកចេញ';
+
+  @override
+  String get sortBy => 'តម្រៀបតាម';
+
+  @override
+  String get newestToOldest => 'ថ្មីបំផុតទៅចាស់បំផុត';
+
+  @override
+  String get oldestToNewest => 'ចាស់បំផុតទៅថ្មីបំផុត';
+
+  @override
+  String get aToZ => 'ក ដល់ អ (A-Z)';
+
+  @override
+  String get zToA => 'អ ដល់ ក (Z-A)';
+
+  @override
+  String get noContributionsYet => 'មិនទាន់មានការចូលរួមនៅឡើយទេ';
+
+  @override
+  String get approved => 'បានអនុម័ត';
+
+  @override
+  String get pending => 'រង់ចាំការអនុម័ត';
+
+  @override
+  String get edit => 'កែកុន';
+
+  @override
+  String submitted(String date) {
+    return 'បានបញ្ជូន $date';
+  }
+
+  @override
+  String get languageChangedSuccessfully => 'ផ្លាស់ប្តូរភាសាដោយជោគជ័យ';
+
+  @override
+  String get profileUpdatedSuccessfully =>
+      'ប្រវត្តិរូបត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ';
+
+  @override
+  String get changeProfilePicture => 'ផ្លាស់ប្តូររូបថតប្រវត្តិរូប';
+
+  @override
+  String get selectNewImage => 'ជ្រើសរើសរូបភាពថ្មីសម្រាប់ប្រវត្តិរូបរបស់អ្នក។';
+
+  @override
+  String get cancel => 'បោះបង់';
+
+  @override
+  String get profilePictureUpdated =>
+      'រូបថតប្រវត្តិរូបត្រូវបានធ្វើបច្ចុប្បន្នភាព';
+
+  @override
+  String get simulateGalleryPick => 'ការក្លែងធ្វើការជ្រើសរើសរូបភាពពីវិចិត្រសាល';
+
+  @override
+  String get passwordChangedSuccessfully =>
+      'ប្រាកដផ្លាស់ប្តូរលេខសម្ងាត់ដោយជោគជ័យ';
+
+  @override
+  String get other => 'ផ្សេងៗ';
+
+  @override
+  String get continueBtn => 'បន្ត្រាក់';
+
+  @override
+  String get pleaseEnterCurrentPassword => 'សូមបញ្ចូលលេខសម្ងាត់បច្ចុប្បន្ន';
+
+  @override
+  String get pleaseEnterNewPassword => 'សូមបញ្ចូលលេខសម្ងាត់ថ្មី';
+
+  @override
+  String get pleaseConfirmPassword => 'សូមបញ្ជាក់ប្រកលេខសម្ងាត់របស់អ្នក';
+
+  @override
+  String get passwordsDoNotMatch => 'លេខសម្ងាត់មិនត្រងគ្នាស័រគ្ន';
+
+  @override
+  String get passwordMinLength => 'លេខសម្ងាត់ត្រូវការមានយ័ងៜចតᚷែងតិចច្រើន 6';
+
+  @override
+  String get newPassword => 'លេខសម្ងាត់ថ្មី';
+
+  @override
+  String get confirmPasswordHint => 'បញ្ជាក់ប្រកលេខសម្ងាត់';
+
+  @override
+  String get enterNewPasswordHint => 'បញ្ចូលលេខសម្ងាត់ថ្មី';
+
+  @override
+  String get enterConfirmPasswordHint => 'បញ្ចូលរលេខសម្ងាត់ដែរបស់អ្នក';
 }

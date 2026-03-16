@@ -823,6 +823,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort By'**
+  String get sortBy;
+
+  /// No description provided for @newestToOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest to Oldest'**
+  String get newestToOldest;
+
+  /// No description provided for @oldestToNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest to Newest'**
+  String get oldestToNewest;
+
+  /// No description provided for @aToZ.
+  ///
+  /// In en, this message translates to:
+  /// **'A to Z'**
+  String get aToZ;
+
+  /// No description provided for @zToA.
+  ///
+  /// In en, this message translates to:
+  /// **'Z to A'**
+  String get zToA;
+
+  /// No description provided for @noContributionsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No contributions yet'**
+  String get noContributionsYet;
+
+  /// No description provided for @approved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get approved;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @submitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted {date}'**
+  String submitted(String date);
+
+  /// No description provided for @languageChangedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Language changed successfully'**
+  String get languageChangedSuccessfully;
+
+  /// No description provided for @profileUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdatedSuccessfully;
+
+  /// No description provided for @changeProfilePicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Profile Picture'**
+  String get changeProfilePicture;
+
+  /// No description provided for @selectNewImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a new image for your profile.'**
+  String get selectNewImage;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @profilePictureUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile picture updated'**
+  String get profilePictureUpdated;
+
+  /// No description provided for @simulateGalleryPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulate Gallery Pick'**
+  String get simulateGalleryPick;
+
+  /// No description provided for @passwordChangedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordChangedSuccessfully;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @continueBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueBtn;
+
+  /// No description provided for @pleaseEnterCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter current password'**
+  String get pleaseEnterCurrentPassword;
+
+  /// No description provided for @pleaseEnterNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter new password'**
+  String get pleaseEnterNewPassword;
+
+  /// No description provided for @pleaseConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get pleaseConfirmPassword;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @passwordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMinLength;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPassword;
+
+  /// No description provided for @confirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPasswordHint;
+
+  /// No description provided for @enterNewPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get enterNewPasswordHint;
+
+  /// No description provided for @enterConfirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter confirm password'**
+  String get enterConfirmPasswordHint;
 }
 
 class _AppLocalizationsDelegate
