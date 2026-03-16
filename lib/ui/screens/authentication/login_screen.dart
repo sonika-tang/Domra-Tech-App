@@ -1,6 +1,7 @@
 import 'package:domra_tech/state/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../routes/app_routes.dart';
 import 'widgets/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -41,11 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 setState(() {
                   _errorMessage = null;
                 });
-                // Navigator.pushReplacementNamed(context, "/home");
-
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(SnackBar(content: Text("Login successful")));
+                Navigator.pushReplacementNamed(context, AppRoutes.home);
               } catch (e) {
                 setState(() {
                   _errorMessage = "Invalid credentials"; // show inline

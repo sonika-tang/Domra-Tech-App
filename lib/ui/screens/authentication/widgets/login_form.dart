@@ -1,4 +1,5 @@
 import 'package:domra_tech/l10n/app_localizations.dart';
+import 'package:domra_tech/routes/app_routes.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:domra_tech/ui/widgets/inputs/password_field.dart';
 import 'package:domra_tech/ui/widgets/inputs/text_field.dart';
@@ -10,7 +11,12 @@ class LoginForm extends StatefulWidget {
   final void Function(String email, String password) onSubmit;
   final String? errorMessage;
   final VoidCallback? onInputChanged;
-  const LoginForm({super.key, required this.onSubmit, this.errorMessage, this.onInputChanged});
+  const LoginForm({
+    super.key,
+    required this.onSubmit,
+    this.errorMessage,
+    this.onInputChanged,
+  });
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -30,7 +36,10 @@ class _LoginFormState extends State<LoginForm> {
       padding: const EdgeInsets.all(AppSpacing.s24),
       decoration: BoxDecoration(
         color: AppColors.primary,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
       ),
       child: Form(
         key: _formKey,
@@ -39,7 +48,12 @@ class _LoginFormState extends State<LoginForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //Title
-              Text(loc.login, style: AppTextStyle.heading1.copyWith(color: AppColors.background)),
+              Text(
+                loc.login,
+                style: AppTextStyle.heading1.copyWith(
+                  color: AppColors.background,
+                ),
+              ),
 
               const SizedBox(height: AppSpacing.s24),
 
@@ -93,14 +107,27 @@ class _LoginFormState extends State<LoginForm> {
                           width: 1,
                         ),
                       ),
-                      Text(loc.rememberMe, style: AppTextStyle.body2.copyWith(color: AppColors.background)),
+                      Text(
+                        loc.rememberMe,
+                        style: AppTextStyle.body2.copyWith(
+                          color: AppColors.background,
+                        ),
+                      ),
                     ],
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/forgot-password");
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.forgotPassword,
+                      );
                     },
-                    child: Text("${loc.forgotPassword}?", style: AppTextStyle.body2.copyWith(color: AppColors.background)),
+                    child: Text(
+                      "${loc.forgotPassword}?",
+                      style: AppTextStyle.body2.copyWith(
+                        color: AppColors.background,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -126,12 +153,25 @@ class _LoginFormState extends State<LoginForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(loc.dontHaveAccount, style: AppTextStyle.small.copyWith(color: AppColors.background)),
+                  Text(
+                    loc.dontHaveAccount,
+                    style: AppTextStyle.small.copyWith(
+                      color: AppColors.background,
+                    ),
+                  ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/signup");
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.signup1,
+                      );
                     },
-                    child: Text(loc.signUp, style: AppTextStyle.small.copyWith(color: AppColors.secondary)),
+                    child: Text(
+                      loc.signUp,
+                      style: AppTextStyle.small.copyWith(
+                        color: AppColors.secondary,
+                      ),
+                    ),
                   ),
                 ],
               ),
