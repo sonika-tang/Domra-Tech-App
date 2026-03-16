@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:domra_tech/model/word_translation.dart';
 import '../service/word_service.dart';
 
 class WordRepository {
@@ -7,11 +8,37 @@ class WordRepository {
   WordRepository(this._wordService);
 
   // Search logic
-  Future<List<dynamic>> searchWords(String query) async {
-    final response = await _wordService.searchWords(query);
+  Future<List<WordTranslation>> searchWords(String query) async {
+    final data = await _wordService.searchWords(query);
+
+    return data.map<WordTranslation>((json) => WordTranslation.fromJson(json)).toList();
+  }
+
+  //Get all word
+  Future<List<WordTranslation>> getAllWords() async {
+    final response = await _wordService.getAllWords();
+
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)['data']; // Mapping the JSON data
+      final List data = jsonDecode(response.body)['data'];
+
+      return data.map((word) => WordTranslation.fromJson(word)).toList();
     }
+
+    return [];
+  }
+
+  // Get the recent added words
+  Future<List<WordTranslation>> getRecentWords() async {
+    final response = await _wordService.getAllWords(limit: 10);
+
+    if (response.statusCode == 200) {
+      final jsonBody = jsonDecode(response.body);
+
+      final List wordsJson = jsonBody["words"] ?? [];
+
+      return wordsJson.map((json) => WordTranslation.fromJson(json)).toList();
+    }
+
     return [];
   }
 

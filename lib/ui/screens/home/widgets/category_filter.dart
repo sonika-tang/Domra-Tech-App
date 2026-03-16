@@ -6,6 +6,7 @@ class CategoryFilter extends StatelessWidget {
   final List<Category> categories;
   final int selectedIndex;
   final Function(int) onCategorySelected;
+
   const CategoryFilter({super.key, required this.categories, required this.selectedIndex, required this.onCategorySelected});
 
   @override
@@ -17,6 +18,7 @@ class CategoryFilter extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           final isSelected = selectedIndex == index;
+          final category = categories[index];
 
           return GestureDetector(
             onTap: () => onCategorySelected(index),
@@ -26,7 +28,7 @@ class CategoryFilter extends StatelessWidget {
               decoration: BoxDecoration(color: isSelected ? AppColors.background : AppColors.lightGray, borderRadius: BorderRadius.circular(20)),
               child: Center(
                 child: Text(
-                  categories[index].categoryName,
+                  category.categoryName,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: isSelected ? AppColors.primary : AppColors.background, fontWeight: FontWeight.w500),
                 ),

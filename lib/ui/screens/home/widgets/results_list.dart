@@ -1,57 +1,67 @@
-import 'package:domra_tech/mockdata/word_translation_mock.dart';
 import 'package:domra_tech/model/word_translation.dart';
+import 'package:domra_tech/ui/screens/home/home_view_model.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen.dart';
 import 'package:domra_tech/ui/widgets/displays/word_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WordList extends StatefulWidget {
-  const WordList({super.key});
+  final int? categoryIndex; // Optional: filter by category
+  const WordList({super.key, this.categoryIndex});
 
   @override
   State<WordList> createState() => _WordListState();
 }
 
 class _WordListState extends State<WordList> {
-  final List<WordTranslation> words = mockWordTranslations;
-  final Set<int> favoriteWordIds = {};
+  final Set<int> _favoriteWordIds = {};
 
   void _toggleFavorite(int wordId) {
     setState(() {
-      if (favoriteWordIds.contains(wordId)) {
-        favoriteWordIds.remove(wordId);
+      if (_favoriteWordIds.contains(wordId)) {
+        _favoriteWordIds.remove(wordId);
       } else {
-        favoriteWordIds.add(wordId);
+        _favoriteWordIds.add(wordId);
       }
     });
   }
 
-  void _onShare(WordTranslation word) {
-    debugPrint("Share: ${word.englishWord}");
-    // Later you can use share_plus package
+  void _onClickWord(WordTranslation word) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => WordDetailScreen(word: word)));
   }
 
-  void _onClick(WordTranslation word) {
-    print("Navigating to ${word.englishWord}");
-    Navigator.push(context, MaterialPageRoute(builder: (context) => WordDetailScreen(word: word)));
+  void _onShareWord(WordTranslation word) {
+    debugPrint("Share: ${word.englishWord}");
+    // Implement share functionality here
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    final viewModel = context.watch<HomeViewModel>();
+    final words = viewModel.words;
+
+    if (viewModel.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (words.isEmpty) {
+      return const Center(child: Text("No words found."));
+    }
+
+    return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: words.length,
+      itemCount: words.length > 10 ? 10 : words.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         final word = words[index];
+        final isFavorite = _favoriteWordIds.contains(word.wordId);
 
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: WordCard(
-            wordTranslation: word,
-            isFavorite: favoriteWordIds.contains(word.wordId),
-            onClick: () => _onClick(word),
-            onFavorite: () => _toggleFavorite(word.wordId),
-            onShare: () => _onShare(word),
-          ),
+        return WordCard(
+          wordTranslation: word,
+          isFavorite: isFavorite,
+          onClick: () => _onClickWord(word),
+          onFavorite: () => _toggleFavorite(word.wordId),
+          onShare: () => _onShareWord(word),
         );
       },
     );
