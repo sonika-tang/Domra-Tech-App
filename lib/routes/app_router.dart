@@ -80,11 +80,17 @@ class AppRouter {
       case AppRoutes.signup1:
         return _slideRoute(const SignupScreen1(), settings);
 
+      // case AppRoutes.signup2:
+      //   return _slideRoute(const SignupScreen2(), settings);
+
+      // case AppRoutes.signup3:
+      //   return _slideRoute(const SignupScreen3(), settings);
+
       case AppRoutes.signup2:
-        return _slideRoute(const SignupScreen2(), settings);
+        return _slideRoute(SignupScreen2(signupData: args), settings);
 
       case AppRoutes.signup3:
-        return _slideRoute(const SignupScreen3(), settings);
+        return _slideRoute(SignupScreen3(signupData: args), settings);
 
       case AppRoutes.forgotPassword:
         return _slideRoute(const ForgotPasswordScreen(), settings);
@@ -112,7 +118,10 @@ class AppRouter {
         final query = args[RouteParams.searchQuery] as String? ?? '';
         final category = args[RouteParams.selectedCategory] as String?;
 
-        return _slideRoute(SearchResultsScreen(query: query, category: category), settings);
+        return _slideRoute(
+          SearchResultsScreen(query: query, category: category),
+          settings,
+        );
 
       //
       //
@@ -137,11 +146,19 @@ class AppRouter {
 
       case AppRoutes.contributionConfirmation:
         // Confirmation after WordRequest or CorrectionRequest submission
-        final type = args[RouteParams.contributionType] as String? ?? 'word_request';
+        final type =
+            args[RouteParams.contributionType] as String? ?? 'word_request';
         final wordRequestId = args[RouteParams.wordRequestId] as int?;
         final correctionId = args[RouteParams.correctionId] as int?;
 
-        return _scaleRoute(ContributionConfirmationScreen(type: type, wordRequestId: wordRequestId, correctionId: correctionId), settings);
+        return _scaleRoute(
+          ContributionConfirmationScreen(
+            type: type,
+            wordRequestId: wordRequestId,
+            correctionId: correctionId,
+          ),
+          settings,
+        );
 
       //
       //
@@ -208,13 +225,24 @@ class AppRouter {
         final planPrice = args[RouteParams.planPrice] as String? ?? '';
         final amount = args[RouteParams.paymentAmount] as double?;
 
-        return _slideRoute(ConfirmPlanScreen(planId: planId, planName: planName, planPrice: planPrice, amount: amount), settings);
+        return _slideRoute(
+          ConfirmPlanScreen(
+            planId: planId,
+            planName: planName,
+            planPrice: planPrice,
+            amount: amount,
+          ),
+          settings,
+        );
 
       case AppRoutes.subscriptionSuccess:
         // After PaymentModel status is processed via PaymentService.checkStatus()
         final planName = args[RouteParams.planName] as String? ?? '';
 
-        return _scaleRoute(SubscriptionSuccessScreen(planName: planName), settings);
+        return _scaleRoute(
+          SubscriptionSuccessScreen(planName: planName),
+          settings,
+        );
 
       //
       // DEFAULT - 404 ROUTE
@@ -238,7 +266,8 @@ class AppRouter {
   /// Used for: Onboarding screens, language selection
   static PageRoute<dynamic> _fadeRoute(Widget page, RouteSettings settings) {
     return PageRouteBuilder<dynamic>(
-      pageBuilder: (_, animation, __) => FadeTransition(opacity: animation, child: page),
+      pageBuilder: (_, animation, __) =>
+          FadeTransition(opacity: animation, child: page),
       settings: settings,
       transitionDuration: const Duration(milliseconds: 300),
     );
@@ -254,7 +283,10 @@ class AppRouter {
         const end = Offset.zero;
         const curve = Curves.easeInOut;
 
-        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
         final offsetAnimation = animation.drive(tween);
 
         return SlideTransition(position: offsetAnimation, child: child);
@@ -268,7 +300,8 @@ class AppRouter {
   /// Used for: Success/confirmation screens, dialogs
   static PageRoute<dynamic> _scaleRoute(Widget page, RouteSettings settings) {
     return PageRouteBuilder<dynamic>(
-      pageBuilder: (_, animation, __) => ScaleTransition(scale: animation, child: page),
+      pageBuilder: (_, animation, __) =>
+          ScaleTransition(scale: animation, child: page),
       settings: settings,
       transitionDuration: const Duration(milliseconds: 300),
     );
