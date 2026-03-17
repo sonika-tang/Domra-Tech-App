@@ -6,7 +6,13 @@ class InputTextField extends StatelessWidget {
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
 
-  const InputTextField({super.key, required this.title, required this.text, this.controller, this.validator});
+  const InputTextField({
+    super.key,
+    required this.title,
+    required this.text,
+    this.controller,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,10 @@ class InputTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //the title of the input  field
-        Text(title, style: textTheme.bodyMedium?.copyWith(color: colorTheme.secondary)),
+        Text(
+          title,
+          style: textTheme.bodyMedium?.copyWith(color: colorTheme.onSecondary),
+        ),
         const SizedBox(height: 8),
         //the input filed section
         TextFormField(
@@ -25,7 +34,9 @@ class InputTextField extends StatelessWidget {
           validator: validator,
           decoration: InputDecoration(
             hintText: text,
-            hintStyle: textTheme.bodySmall?.copyWith(color: colorTheme.onTertiaryContainer),
+            hintStyle: textTheme.bodySmall?.copyWith(
+              color: colorTheme.onTertiaryContainer,
+            ),
 
             filled: true,
             fillColor: Colors.white,
