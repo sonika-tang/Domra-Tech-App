@@ -48,6 +48,7 @@ class _SignupScreen3State extends State<SignupScreen3> {
             child: Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     loc.setPassword,
@@ -77,8 +78,21 @@ class _SignupScreen3State extends State<SignupScreen3> {
                         value: agreeTerms,
                         onChanged: (v) =>
                             setState(() => agreeTerms = v ?? false),
+                        activeColor: AppColors.secondary,
+                        checkColor: Colors.white,
+                        side: const BorderSide(color: Colors.white, width: 1),
                       ),
-                      Text('Agree Terms'),
+                      Text('Agree with ',
+                        style: AppTextStyle.small.copyWith(
+                          color: AppColors.background,
+                        ),
+                      ),
+                      Text(
+                        'Terms & Conditions',
+                        style: AppTextStyle.small.copyWith(
+                          color: AppColors.secondary,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.s24),

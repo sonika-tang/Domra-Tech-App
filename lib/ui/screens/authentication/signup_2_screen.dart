@@ -1,3 +1,5 @@
+import 'package:domra_tech/ui/screens/authentication/widgets/date_picker.dart';
+import 'package:domra_tech/ui/screens/authentication/widgets/dropdown.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/config/app_colors.dart';
@@ -6,7 +8,6 @@ import '../../../l10n/app_localizations.dart';
 import '../../../routes/app_routes.dart';
 import '../../widgets/actions/primary_button.dart';
 import '../../widgets/inputs/text_field.dart';
-
 
 class SignupScreen2 extends StatefulWidget {
   final Map<String, dynamic> signupData;
@@ -48,6 +49,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
             child: Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     loc.setupAccount,
@@ -68,38 +70,29 @@ class _SignupScreen2State extends State<SignupScreen2> {
                     controller: _lastNameController,
                   ),
                   const SizedBox(height: AppSpacing.s16),
-                  Column(
+                  Row(
                     children: [
-                      DropdownButtonFormField<String>(
-                        value: _gender,
-                        items: ["Male", "Female", "Other"]
-                            .map((g) => DropdownMenuItem(value: g, child: Text(g)))
-                            .toList(),
-                        onChanged: (val) => setState(() => _gender = val),
-                        decoration: InputDecoration(labelText: loc.gender),
+                      Expanded(
+                        child: StyledDropdown(
+                          title: "Select gender",
+                          hint: "Choose gender",
+                          value: _gender,
+                          items: ["Male", "Female", "Other"],
+                          onChanged: (val) => setState(() => _gender = val),
+                        ),
                       ),
-                      const SizedBox(height: AppSpacing.s16),
-                      TextButton(
-                        onPressed: () async {
-                          final picked = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime(2000),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now(),
-                          );
-                          if (picked != null) setState(() => _dob = picked);
-                        },
-                        child: Text(
-                          _dob == null
-                              ? loc.chooseDate
-                              : "${_dob!.day}/${_dob!.month}/${_dob!.year}",
-                          style: AppTextStyle.body2.copyWith(
-                            color: AppColors.background,
-                          ),
+                      const SizedBox(width: 16), 
+                      Expanded(
+                        child: StyledDatePicker(
+                          title: "Date of birth",
+                          hint: "Choose date",
+                          selectedDate: _dob,
+                          onDateSelected: (date) => setState(() => _dob = date),
                         ),
                       ),
                     ],
                   ),
+
                   const SizedBox(height: AppSpacing.s24),
                   PrimaryButton(
                     label: loc.next,
