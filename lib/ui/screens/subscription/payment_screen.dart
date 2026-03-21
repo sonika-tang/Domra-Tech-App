@@ -50,7 +50,6 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
       final paymentData = await _paymentService.generateBakongQR(
         widget.amount,
         _selectedCurrency, // Pass the currency toggle value here
-        widget.token,
       );
 
       // --- ADD THE PRINT HERE ---
@@ -76,7 +75,7 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
   void _startPolling(int id) {
     _pollingTimer?.cancel(); // Cancel any existing timer first
     _pollingTimer = Timer.periodic(const Duration(seconds: 3), (timer) async {
-      final status = await _paymentService.checkStatus(id, widget.token);
+      final status = await _paymentService.checkStatus(id);
 
       if (!mounted) {
         timer.cancel();
