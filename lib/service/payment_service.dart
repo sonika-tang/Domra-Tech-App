@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import '../model/payment.dart';
 import '../core/config/constants.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentService {
   final http.Client client;
@@ -19,17 +19,27 @@ class PaymentService {
 
   PaymentService(this.client);
 
+  Future<String> _getBestToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedToken = prefs.getString('jwt_token');
+
+    // If no one is logged in, use the admin "ghost" token for testing
+    return savedToken ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NDEwMzgzOSwiZXhwIjoxNzc0MTA3NDM5fQ.6gAYEWQSYxfeT0ppp6IVX7K7izEzpS-YjEVzEkzdmbE";
+  }
+
   Future<PaymentModel> generateBakongQR(
     double amount,
     String currency,
-    String token,
   ) async {
     try {
+      // Fetch the token dynamically inside the method
+      final token = await _getBestToken();
+
       final response = await client.post(
         Uri.parse('$baseUrl/payments/bakong/generate-qr'),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token', // Uncomment when ready
+          'Authorization': 'Bearer $token',
         },
         body: jsonEncode({'amount': amount, 'currency': currency}),
       );
@@ -47,10 +57,15 @@ class PaymentService {
     }
   }
 
-  Future<String> checkStatus(int paymentId, String token) async {
+  Future<String> checkStatus(int paymentId) async {
     try {
+      final token = await _getBestToken(); 
       final response = await client.get(
         Uri.parse('$baseUrl/payments/bakong/status/$paymentId'),
+        headers: {
+          'Authorization':
+              'Bearer $token', // Most backends need this for status too!
+        },
       );
 
       if (response.statusCode == 200) {
