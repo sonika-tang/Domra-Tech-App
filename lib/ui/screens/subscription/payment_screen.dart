@@ -34,7 +34,7 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
   void initState() {
     super.initState();
     _paymentService = PaymentService(http.Client());
-    //_fetchQR();
+    _fetchQR();
   }
 
   @override
@@ -43,39 +43,52 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
     super.dispose();
   }
 
-  // Future<void> _fetchQR() async {
-  //   setState(() => _isLoading = true);
-  //   try {
-  //     final response = await _paymentService.generateBakongQR(
-  //       widget.amount,
-  //       widget.token,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       setState(() {
-  //         _paymentData = PaymentModel.fromJson(jsonDecode(response.body));
-  //         _isLoading = false;
-  //       });
-  //       if (_paymentData?.paymentId != null)
-  //         _startPolling(_paymentData!.paymentId!);
-  //     }
-  //   } catch (e) {
-  //     setState(() => _isLoading = false);
-  //   }
-  // }
+  Future<void> _fetchQR() async {
+    setState(() => _isLoading = true);
+    try {
+      // Your service now returns a PaymentModel directly, not a Response
+      final paymentData = await _paymentService.generateBakongQR(
+        widget.amount,
+        _selectedCurrency, // Pass the currency toggle value here
+        widget.token,
+      );
 
-  // void _startPolling(int id) {
-  //   _pollingTimer?.cancel();
-  //   _pollingTimer = Timer.periodic(const Duration(seconds: 3), (timer) async {
-  //     final response = await _paymentService.checkStatus(id, widget.token);
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       if (data['data']['status'] == 'success') {
-  //         timer.cancel();
-  //         setState(() => _isSuccess = true);
-  //       }
-  //     }
-  //   });
-  // }
+      // --- ADD THE PRINT HERE ---
+      print("---------------------------------------");
+      print("DEBUG: QR String received from Backend:");
+      print(paymentData.qrString);
+      print("---------------------------------------");
+
+      setState(() {
+        _paymentData = paymentData;
+        _isLoading = false;
+      });
+
+      if (_paymentData?.paymentId != null) {
+        _startPolling(_paymentData!.paymentId!);
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
+      debugPrint("Error: $e");
+    }
+  }
+
+  void _startPolling(int id) {
+    _pollingTimer?.cancel(); // Cancel any existing timer first
+    _pollingTimer = Timer.periodic(const Duration(seconds: 3), (timer) async {
+      final status = await _paymentService.checkStatus(id, widget.token);
+
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
+      if (status == 'success') {
+        timer.cancel();
+        setState(() => _isSuccess = true);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,8 +189,13 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
           ].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
           onChanged: (val) {
             if (val != null && val != _selectedCurrency) {
-              setState(() => _selectedCurrency = val);
-              //_fetchQR();
+              _pollingTimer
+                  ?.cancel(); // Stop checking the old payment immediately
+              setState(() {
+                _selectedCurrency = val;
+                _paymentData = null; // Clear old QR data while loading new one
+              });
+              _fetchQR();
             }
           },
         ),

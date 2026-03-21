@@ -17,25 +17,29 @@ class PaymentModel {
     this.billNumber,
   });
 
-  // Factory to convert Node.js JSON to Dart Object
   factory PaymentModel.fromJson(Map<String, dynamic> json) {
-    // Check if data is nested inside a 'data' key (common in Node responses)
-    final source = json['data'] ?? json;
+    // 1. Handle nested 'data' key or 'result' key common in Node.js
+    final source = json['data'] ?? json['result'] ?? json;
 
     return PaymentModel(
-      paymentId: source['paymentId'],
-      qrString: source['qrString'],
-      deepLink: source['deepLink'],
-      md5Hash: source['md5Hash'],
-      status: source['status'] ?? 'pending',
-      // Ensure amount is double regardless if Node sends it as int or string
-      amount: (source['amount'] is num) 
-          ? source['amount'].toDouble() 
-          : double.tryParse(source['amount'].toString()) ?? 0.0,
-      billNumber: source['externalTransactionId'],
+      // 2. Safely parse ID (In case Node sends it as a String or BigInt)
+      paymentId: source['paymentId'] is int
+          ? source['paymentId']
+          : int.tryParse(source['paymentId'].toString()),
+
+      qrString: source['qrString']?.toString(),
+      deepLink: source['deepLink']?.toString(),
+      md5Hash: source['md5Hash']?.toString(),
+      status: source['status']?.toString() ?? 'pending',
+
+      // 3. Your current amount logic is great, keep it!
+      amount: (source['amount'] is num)
+          ? source['amount'].toDouble()
+          : double.tryParse(source['amount']?.toString() ?? '0') ?? 0.0,
+
+      billNumber: source['externalTransactionId']?.toString(),
     );
   }
-
   // Method to convert Dart Object back to JSON (useful for local storage/logs)
   Map<String, dynamic> toJson() {
     return {

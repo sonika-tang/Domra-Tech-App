@@ -12,7 +12,10 @@ class PaymentService {
 
   // Since you are running ONLY on browser:
   // "localhost" is correct for reaching your Node.js server on the same machine.
-  final String baseUrl = "http://localhost:3000/api";
+  static const String devBaseUrl = "http://localhost:3000/api";
+  static const String prodBaseUrl = "http://18.136.212.149:8080/api";
+
+  final String baseUrl = devBaseUrl;
 
   PaymentService(this.client);
 
@@ -26,12 +29,13 @@ class PaymentService {
         Uri.parse('$baseUrl/payments/bakong/generate-qr'),
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': 'Bearer $token', // Uncomment when ready
+          'Authorization': 'Bearer $token', // Uncomment when ready
         },
         body: jsonEncode({'amount': amount, 'currency': currency}),
       );
 
       if (response.statusCode == 201) {
+        print("RAW BODY: ${response.body}");
         final Map<String, dynamic> data = jsonDecode(response.body);
         return PaymentModel.fromJson(data);
       } else {

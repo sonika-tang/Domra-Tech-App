@@ -104,7 +104,7 @@ class _NewSubscriptionScreenState extends State<SubscriptionScreen> {
 
   void _handlePayment(double amount) {
     debugPrint("Initiating Bakong payment for: \$ $amount");
-    const String token = "YOUR_SESSION_TOKEN";
+    const String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc0MDg1MTU5LCJleHAiOjE3NzQwODg3NTl9.239yZgKjDHquSnfR04OvPkHnCYFHC78JVD-DrA_kKwA";
 
     Navigator.push(
       context,
