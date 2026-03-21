@@ -36,7 +36,10 @@ class WordCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_buildWordColumn(textTheme, colorScheme), _buildActionButtons()],
+            children: [
+              Expanded(child: _buildWordColumn(textTheme, colorScheme)),
+              _buildActionButtons(),
+            ],
           ),
         ),
       ),
@@ -64,9 +67,14 @@ class WordCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(wordTranslation.englishWord!, style: textTheme.bodyLarge),
+        Text(wordTranslation.englishWord!, style: textTheme.bodyLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
         const SizedBox(height: AppSpacing.s4),
-        Text(wordTranslation.khmerWord, style: textTheme.bodyLarge?.copyWith(color: colorScheme.primary)),
+        Text(
+          wordTranslation.khmerWord,
+          style: textTheme.bodyLarge?.copyWith(color: colorScheme.primary),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       ],
     );
   }

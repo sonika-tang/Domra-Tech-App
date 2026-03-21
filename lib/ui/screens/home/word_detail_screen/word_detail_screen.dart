@@ -50,7 +50,7 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //TRANSLATE WORD
-                  _buildWordSection(),
+                  Expanded(child: _buildWordSection()),
                   //BUTTON : FAVORITE AND SHARE
                   _buildActionsSection(),
                 ],
@@ -71,8 +71,8 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
 
               // Reference Section
               Text(loc.reference, style: AppTextStyle.buttonText),
-              _buildReferenceItem("គណៈកម្មការវិទ្យាសាស្ត្រ និងបច្ចេកវិទ្យា."),
-              _buildReferenceItem("www.facebook.com"),
+              _buildReferenceItem(widget.word.referenceText!),
+              _buildReferenceItem(widget.word.reference!),
 
               const SizedBox(height: 40),
               // Bottom Request Button
@@ -136,32 +136,31 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Normal text (NOT clickable)
           Expanded(
-            child: GestureDetector(
-              onTap: () async {
-                final uri = Uri.parse(link);
-                if (await canLaunchUrl(uri)) {
-                  await launchUrl(uri, mode: LaunchMode.externalApplication);
-                } else {
-                  // Handle error (e.g., show a snackbar)
-                  debugPrint("Could not launch $link");
-                }
-              },
-              child: Text(
-                link,
-                style: TextStyle(color: AppColors.primary, decoration: TextDecoration.underline),
-              ),
-            ),
+            child: Text(link, style: AppTextStyle.body2.copyWith(color: AppColors.gray)),
           ),
+
+          // Only [LINK] is clickable
           GestureDetector(
             onTap: () async {
-              final uri = Uri.parse(link);
+              String formattedLink = link;
+
+              // ensure valid URL
+              if (!link.startsWith('http')) {
+                formattedLink = 'https://$link';
+              }
+
+              final uri = Uri.parse(formattedLink);
+
               if (await canLaunchUrl(uri)) {
                 await launchUrl(uri, mode: LaunchMode.externalApplication);
+              } else {
+                debugPrint("Could not launch $formattedLink");
               }
             },
             child: const Text(
-              "[Link]",
+              "[LINK]",
               style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
             ),
           ),
@@ -186,7 +185,12 @@ class _WordDetailScreenState extends State<WordDetailScreen> {
 
   //Word title
   Widget _wordTitle(String title) {
-    return Text(title, style: AppTextStyle.body1.copyWith(color: AppColors.primary));
+    return Text(
+      title,
+      style: AppTextStyle.body1.copyWith(color: AppColors.primary),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 
   //Action button section
