@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../core/config/constants.dart';
 
 class AuthService {
@@ -28,13 +29,28 @@ class AuthService {
     print("Firebase ID Token: $token");
     if (token == null) throw Exception("No Firebase user logged in");
 
-    return await client.post(
+    // Capture the response
+    final response = await client.post(
       Uri.parse('$baseUrl/auth/firebase-login'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
     );
+
+    // save jwt token to the sharedPreferences
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      final String? backendJwt = data['token'];
+
+      if (backendJwt != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('jwt_token', backendJwt);
+        print("Success: Backend JWT saved to SharedPreferences.");
+      }
+    }
+
+    return response;
   }
 
   // Traditional backend register
