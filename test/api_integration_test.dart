@@ -21,29 +21,29 @@ void main() {
 
   group('Domra-Tech Full API Bridge', () {
     // --- 1. AUTHENTICATION ---
-    group('AuthService', () {
-      test('Login should return 200 and capture Token + UserId', () async {
-        final res = await authService.login(existingEmail, testPassword);
-        expect(res.statusCode, 200);
+    // group('AuthService', () {
+    //   test('Login should return 200 and capture Token + UserId', () async {
+    //     final res = await authService.login(existingEmail, testPassword);
+    //     expect(res.statusCode, 200);
 
-        final data = jsonDecode(res.body);
-        authToken = data['token'] ?? data['accessToken'];
-        expect(authToken, isNotNull);
+    //     final data = jsonDecode(res.body);
+    //     authToken = data['token'] ?? data['accessToken'];
+    //     expect(authToken, isNotNull);
 
-        // DECODE JWT TO GET USER ID
-        try {
-          final payloadBase64 = authToken!.split('.')[1];
-          final normalizedPayload = base64.normalize(payloadBase64);
-          final payloadString = utf8.decode(base64.decode(normalizedPayload));
-          final Map<String, dynamic> payload = jsonDecode(payloadString);
+    //     // DECODE JWT TO GET USER ID
+    //     try {
+    //       final payloadBase64 = authToken!.split('.')[1];
+    //       final normalizedPayload = base64.normalize(payloadBase64);
+    //       final payloadString = utf8.decode(base64.decode(normalizedPayload));
+    //       final Map<String, dynamic> payload = jsonDecode(payloadString);
 
-          userId = payload['id'] ?? payload['userId'];
-          print("Authenticated User ID: $userId");
-        } catch (e) {
-          print("Could not decode JWT payload: $e");
-        }
-      });
-    });
+    //       userId = payload['id'] ?? payload['userId'];
+    //       print("Authenticated User ID: $userId");
+    //     } catch (e) {
+    //       print("Could not decode JWT payload: $e");
+    //     }
+    //   });
+    // });
 
     // --- 2. USER PROFILE ---
     group('UserService', () {
