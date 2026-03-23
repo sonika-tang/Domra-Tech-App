@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:domra_tech/model/word_translation.dart';
-import '../service/word_service.dart';
+import '../../service/word_service.dart';
 
 class WordRepository {
   final WordService _wordService;
@@ -25,6 +25,18 @@ class WordRepository {
     }
 
     return [];
+  }
+
+  // Get word by Id
+  Future<WordTranslation?> getWordById(int wordId) async {
+    final response = await _wordService.getWordById(wordId.toString());
+    
+    if (response.statusCode == 200) {
+      final jsonBody = jsonDecode(response.body);
+      final wordData = jsonBody['data'] ?? jsonBody; // Adjust according to actual backend response
+      return WordTranslation.fromJson(wordData);
+    }
+    return null;
   }
 
   // Get the recent added words

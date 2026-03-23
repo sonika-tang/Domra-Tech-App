@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/word_request.dart';
 import '../../model/correction_request.dart';
+import '../../service/request_service.dart';
+import '../../service/firebase_storage_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 /// Contribution state model
 /// Holds all contribution-related state (WordRequest & CorrectionRequest)
@@ -70,6 +74,11 @@ class ContributionState {
 /// Contribution state notifier
 /// Manages all contribution-related operations
 class ContributionNotifier extends ChangeNotifier {
+  final RequestService _requestService;
+  final FirebaseStorageService _storageService = FirebaseStorageService();
+
+  ContributionNotifier(this._requestService);
+
   ContributionState _state = const ContributionState();
 
   ContributionState get state => _state;
@@ -145,46 +154,47 @@ class ContributionNotifier extends ChangeNotifier {
   }
 
   /// Submit a new word request
-  Future<bool> submitWordRequest(Map<String, dynamic> wordData) async {
+  Future<bool> submitWordRequest(Map<String, dynamic> wordData, {XFile? imageFile}) async {
     try {
       _setState(state.withLoading());
 
-      // Simulate API call
-      await Future.delayed(const Duration(milliseconds: 800));
+      String? imageUrl;
+      if (imageFile != null) {
+        imageUrl = await _storageService.uploadImage(imageFile, 'word_requests');
+        if (imageUrl != null) {
+          wordData['photoUrl'] = imageUrl; 
+        }
+      }
 
-      final newRequest = WordRequest(
-        wordRequestId: state.wordRequests.length + 1,
-        newEnglishWord: wordData['englishWord'] as String,
-        newKhmerWord: wordData['khmerWord'] as String,
-        newFrenchWord: wordData['frenchWord'] as String?,
-        newDefinition: wordData['definition'] as String?,
-        newExample: wordData['example'] as String?,
-        reference: wordData['reference'] as String?,
-        userId: 1, // Should come from auth state
-        status: 'pending',
-        check: false,
-        createdAt: DateTime.now(),
-      );
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw Exception("You must be logged in to submit a request.");
+      }
+      
+      final token = await user.getIdToken();
+      if (token == null) throw Exception("Authentication token is missing.");
 
-      final updatedRequests = [...state.wordRequests, newRequest];
+      final response = await _requestService.createWordRequest(wordData, token);
 
-      _setState(
-        state.copyWith(
-          wordRequests: updatedRequests,
-          isLoading: false,
-          error: null,
-          submissionStatus: SubmissionStatus.success,
-          totalContributions: updatedRequests.length + state.corrections.length,
-          lastUpdated: DateTime.now(),
-        ),
-      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        _setState(
+          state.copyWith(
+            isLoading: false,
+            error: null,
+            submissionStatus: SubmissionStatus.success,
+            lastUpdated: DateTime.now(),
+          ),
+        );
 
-      // Reset status after a delay
-      Future.delayed(const Duration(seconds: 2), () {
-        _setState(state.copyWith(submissionStatus: SubmissionStatus.idle));
-      });
+        // Reset status after a delay
+        Future.delayed(const Duration(seconds: 2), () {
+          _setState(state.copyWith(submissionStatus: SubmissionStatus.idle));
+        });
 
-      return true;
+        return true;
+      } else {
+        throw Exception("Failed with status code: ${response.statusCode}");
+      }
     } catch (e) {
       _setState(
         state.copyWith(
@@ -198,45 +208,40 @@ class ContributionNotifier extends ChangeNotifier {
   }
 
   /// Submit a correction request
-  Future<bool> submitCorrection(Map<String, dynamic> correctionData) async {
+  Future<bool> submitCorrection(Map<String, dynamic> correctionData, {XFile? imageFile}) async {
     try {
       _setState(state.withLoading());
 
-      // Simulate API call
-      await Future.delayed(const Duration(milliseconds: 700));
+      String? imageUrl;
+      if (imageFile != null) {
+        imageUrl = await _storageService.uploadImage(imageFile, 'corrections');
+        if (imageUrl != null) {
+          correctionData['photoUrl'] = imageUrl; 
+        }
+      }
 
-      final newCorrection = CorrectionRequest(
-        correctionId: state.corrections.length + 1,
-        userId: 1, // Should come from auth state
-        wordId: correctionData['wordId'] as int,
-        correctEnglishWord: correctionData['correctEnglish'] as String?,
-        correctKhmerWord: correctionData['correctKhmer'] as String?,
-        correctFrenchWord: correctionData['correctFrench'] as String?,
-        reference: correctionData['reference'] as String?,
-        status: 'pending',
-        createdAt: DateTime.now(),
-      );
+      // createCorrectionRequest in RequestService does not currently take a token.
+      final response = await _requestService.createCorrectionRequest(correctionData);
+      
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        _setState(
+          state.copyWith(
+            isLoading: false,
+            error: null,
+            submissionStatus: SubmissionStatus.success,
+            lastUpdated: DateTime.now(),
+          ),
+        );
 
-      final updatedCorrections = [...state.corrections, newCorrection];
+        // Reset status after a delay
+        Future.delayed(const Duration(seconds: 2), () {
+          _setState(state.copyWith(submissionStatus: SubmissionStatus.idle));
+        });
 
-      _setState(
-        state.copyWith(
-          corrections: updatedCorrections,
-          isLoading: false,
-          error: null,
-          submissionStatus: SubmissionStatus.success,
-          totalContributions:
-              state.wordRequests.length + updatedCorrections.length,
-          lastUpdated: DateTime.now(),
-        ),
-      );
-
-      // Reset status after a delay
-      Future.delayed(const Duration(seconds: 2), () {
-        _setState(state.copyWith(submissionStatus: SubmissionStatus.idle));
-      });
-
-      return true;
+        return true;
+      } else {
+        throw Exception("Failed with status code: ${response.statusCode}");
+      }
     } catch (e) {
       _setState(
         state.copyWith(

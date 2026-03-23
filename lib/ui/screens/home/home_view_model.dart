@@ -1,5 +1,5 @@
 import 'package:domra_tech/model/word_translation.dart';
-import 'package:domra_tech/repo/word_repository.dart';
+import 'package:domra_tech/data/repo/word_repository.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier {

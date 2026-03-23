@@ -1,4 +1,4 @@
-import 'package:domra_tech/repo/category_repository.dart';
+import 'package:domra_tech/data/repo/category_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:domra_tech/model/category.dart';
 

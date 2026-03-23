@@ -1,4 +1,4 @@
-import 'package:domra_tech/repo/category_repository.dart';
+import 'package:domra_tech/data/repo/category_repository.dart';
 import 'package:domra_tech/ui/screens/home/states/category_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

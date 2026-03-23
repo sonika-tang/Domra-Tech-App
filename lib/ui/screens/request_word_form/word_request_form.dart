@@ -1,9 +1,16 @@
 import 'package:domra_tech/core/config/app_text_style.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
-import 'package:domra_tech/model/word_translation.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:domra_tech/ui/screens/request_word_form/confirmation_screen.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import '../../../state/models/contribution_state.dart';
+import '../../../service/word_service.dart';
+import '../../../data/repo/word_repository.dart';
+import 'package:http/http.dart' as http;
 
 class WordRequestForm extends StatefulWidget {
   final int wordId;
@@ -23,6 +30,10 @@ class _WordRequestFormState extends State<WordRequestForm> {
   final _exampleController = TextEditingController();
   final _referenceController = TextEditingController();
 
+  XFile? _selectedImage;
+  String? _imageUrl;
+  final ImagePicker _picker = ImagePicker();
+
   bool _loading = true;
 
   @override
@@ -32,24 +43,37 @@ class _WordRequestFormState extends State<WordRequestForm> {
   }
 
   Future<void> _fetchWord(int wordId) async {
-    // Mocking the fetch process
-    await Future.delayed(const Duration(milliseconds: 500));
-    final word = WordTranslation(
-      wordId: wordId,
-      englishWord: "Machine learning (ml)",
-      khmerWord: "សិក្សាម៉ាស៊ីន",
-      frenchWord: "machine learning (m.)",
-      definition: "",
-      example: "",
-      reference: "",
-    );
+    try {
+      final wordRepo = WordRepository(WordService(http.Client()));
+      final word = await wordRepo.getWordById(wordId);
 
-    setState(() {
-      _englishController.text = word.englishWord ?? "";
-      _khmerController.text = word.khmerWord;
-      _frenchController.text = word.frenchWord ?? "";
-      _loading = false;
-    });
+      if (word != null) {
+        setState(() {
+          _englishController.text = word.englishWord ?? "";
+          _khmerController.text = word.khmerWord;
+          _frenchController.text = word.frenchWord ?? "";
+          _definitionController.text = word.definition ?? "";
+          _exampleController.text = word.example ?? "";
+          _referenceController.text = word.reference ?? "";
+          _imageUrl = word.imageURL;
+          _loading = false;
+        });
+      } else {
+        setState(() => _loading = false);
+      }
+    } catch (e) {
+      debugPrint("Error fetching word: $e");
+      setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _selectedImage = image;
+      });
+    }
   }
 
   @override
@@ -70,7 +94,9 @@ class _WordRequestFormState extends State<WordRequestForm> {
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
+          : Consumer<ContributionNotifier>(
+              builder: (context, notifier, child) {
+                return SingleChildScrollView(
               padding: const EdgeInsets.all(20.0),
               child: Form(
                 key: _formKey,
@@ -102,22 +128,42 @@ class _WordRequestFormState extends State<WordRequestForm> {
                     const SizedBox(height: 40),
 
                     // --- Submit Button ---
-                    PrimaryButton(
-                      label: "Submit Update",
-                      // Custom color to match the orange in your image
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // 1. Perform your API call here
+                    notifier.state.isLoading 
+                      ? const Center(child: CircularProgressIndicator())
+                      : PrimaryButton(
+                          label: "Submit Update",
+                          // Custom color to match the orange in your image
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              final data = {
+                                'wordId': widget.wordId,
+                                'correctEnglish': _englishController.text.isEmpty ? null : _englishController.text,
+                                'correctKhmer': _khmerController.text.isEmpty ? null : _khmerController.text,
+                                'correctFrench': _frenchController.text.isEmpty ? null : _frenchController.text,
+                                'definition': _definitionController.text.isEmpty ? null : _definitionController.text,
+                                'reference': _referenceController.text.isEmpty ? null : _referenceController.text,
+                                'example': _exampleController.text.isEmpty ? null : _exampleController.text,
+                              };
 
-                          // 2. Navigate to the confirmation screen
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ConfirmationScreen()));
-                        }
-                      },
-                    ),
+                              final success = await notifier.submitCorrection(data, imageFile: _selectedImage);
+
+                              if (mounted) {
+                                if (success) {
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Improvement submitted!'), backgroundColor: Colors.green));
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ConfirmationScreen()));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(notifier.state.error ?? 'Submission failed'), backgroundColor: Colors.red));
+                                }
+                              }
+                            }
+                          },
+                        ),
                   ],
                 ),
               ),
-            ),
+            );
+          },
+        ),
     );
   }
 
@@ -162,19 +208,36 @@ class _WordRequestFormState extends State<WordRequestForm> {
 
   // Dotted Image Picker Box
   Widget _buildImagePicker() {
-    return Container(
-      height: 150,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFF3F51B5).withOpacity(0.5), style: BorderStyle.solid),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Center(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(color: const Color(0xFFEFF2F9), borderRadius: BorderRadius.circular(12)),
-          child: const Icon(Icons.image, size: 60, color: Color(0xFF3F51B5)),
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Container(
+        height: 150,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color(0xFF3F51B5).withOpacity(0.5), style: BorderStyle.solid),
+          borderRadius: BorderRadius.circular(12),
         ),
+        child: _selectedImage != null 
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: kIsWeb
+                  ? Image.network(_selectedImage!.path, fit: BoxFit.cover, width: double.infinity)
+                  : Image.file(File(_selectedImage!.path), fit: BoxFit.cover, width: double.infinity),
+            )
+          : _imageUrl != null && _imageUrl!.isNotEmpty
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(_imageUrl!, fit: BoxFit.cover, width: double.infinity,
+                    errorBuilder: (context, error, stackTrace) => const Center(child: Icon(Icons.broken_image, size: 50, color: Colors.grey)),
+                  ),
+                )
+              : Center(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(color: const Color(0xFFEFF2F9), borderRadius: BorderRadius.circular(12)),
+                child: const Icon(Icons.add_photo_alternate, size: 60, color: Color(0xFF3F51B5)),
+              ),
+            ),
       ),
     );
   }

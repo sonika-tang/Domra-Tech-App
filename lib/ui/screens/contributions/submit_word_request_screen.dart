@@ -1,7 +1,11 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../state/models/contribution_state.dart';
+import '../home/home_screen.dart';
 
 class SubmitWordRequestScreen extends StatefulWidget {
   const SubmitWordRequestScreen({super.key});
@@ -19,6 +23,18 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
   final _definitionController = TextEditingController();
   final _referenceController = TextEditingController();
   final _exampleController = TextEditingController();
+
+  XFile? _selectedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _selectedImage = image;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -46,7 +62,7 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
     };
 
     final notifier = Provider.of<ContributionNotifier>(context, listen: false);
-    final success = await notifier.submitWordRequest(data);
+    final success = await notifier.submitWordRequest(data, imageFile: _selectedImage);
 
     if (mounted) {
       if (success) {
@@ -56,7 +72,11 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.pop(context); // Go back after success
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          (route) => false,
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -113,31 +133,41 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
                   const SizedBox(height: 24),
                   
                   // Image upload placeholder
-                  Container(
-                    width: double.infinity,
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF0F0FA),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: const Color(0xFF3B5998).withValues(alpha: .3),
-                        width: 1,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    child: Center(
-                      child: Container(
-                        padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF3B5998),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.image,
-                          color: Colors.white,
-                          size: 48,
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF0F0FA),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: const Color(0xFF3B5998).withValues(alpha: .3),
+                          width: 1,
+                          style: BorderStyle.solid,
                         ),
                       ),
+                      child: _selectedImage != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: kIsWeb
+                                  ? Image.network(_selectedImage!.path, fit: BoxFit.cover, width: double.infinity)
+                                  : Image.file(File(_selectedImage!.path), fit: BoxFit.cover, width: double.infinity),
+                            )
+                          : Center(
+                              child: Container(
+                                padding: const EdgeInsets.all(24),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF3B5998),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Icon(
+                                  Icons.add_photo_alternate,
+                                  color: Colors.white,
+                                  size: 48,
+                                ),
+                              ),
+                            ),
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -153,14 +183,16 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
                           borderRadius: BorderRadius.circular(24),
                         ),
                       ),
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: state.isLoading 
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'Submit',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
                 ],
