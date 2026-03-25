@@ -10,9 +10,9 @@ import 'package:domra_tech/ui/screens/authentication/signup_1_screen.dart';
 import 'package:domra_tech/ui/screens/authentication/signup_2_screen.dart';
 import 'package:domra_tech/ui/screens/authentication/signup_3_screen.dart';
 import 'package:domra_tech/ui/screens/authentication/welcome_screen.dart';
-import 'package:domra_tech/ui/screens/contributions/contribution_confirmation_screen.dart';
-import 'package:domra_tech/ui/screens/contributions/submit_correction_screen.dart';
+import 'package:domra_tech/ui/screens/contributions/contribution_success_screen.dart';
 import 'package:domra_tech/ui/screens/contributions/submit_word_request_screen.dart';
+import 'package:domra_tech/ui/screens/contributions/word_request_form.dart';
 import 'package:domra_tech/ui/screens/home/search_result_screen.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen.dart';
 import 'package:domra_tech/ui/screens/main_shell.dart';
@@ -137,28 +137,20 @@ class AppRouter {
         // Creates WordRequest with: userId, newEnglishWord, newFrenchWord, etc.
         return _slideRoute(const SubmitWordRequestScreen(), settings);
 
-      case AppRoutes.submitCorrection:
-        // Submit via RequestService.createCorrectionRequest()
-        // Creates CorrectionRequest with: userId, wordId, correctEnglish, etc.
-        final wordId = args[RouteParams.correctionWordId] as int?;
+      // case AppRoutes.submitCorrection:
+      //   // Submit via RequestService.createCorrectionRequest()
+      //   // Creates CorrectionRequest with: userId, wordId, correctEnglish, etc.
+      //   final wordId = args[RouteParams.correctionWordId] as int?;
 
-        return _slideRoute(SubmitCorrectionScreen(wordId: wordId), settings);
+      //   return _slideRoute(
+      //     WordRequestForm(wordId: wordId, word: wordId),
+      //     settings,
+      //   );
 
       case AppRoutes.contributionConfirmation:
         // Confirmation after WordRequest or CorrectionRequest submission
-        final type =
-            args[RouteParams.contributionType] as String? ?? 'word_request';
-        final wordRequestId = args[RouteParams.wordRequestId] as int?;
-        final correctionId = args[RouteParams.correctionId] as int?;
 
-        return _scaleRoute(
-          ContributionConfirmationScreen(
-            type: type,
-            wordRequestId: wordRequestId,
-            correctionId: correctionId,
-          ),
-          settings,
-        );
+        return _scaleRoute(const ContributionSuccessScreen(), settings);
 
       //
       //

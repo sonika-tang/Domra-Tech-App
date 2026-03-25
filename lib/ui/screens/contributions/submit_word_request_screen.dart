@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../state/models/contribution_state.dart';
-import '../home/home_screen.dart';
 
 class SubmitWordRequestScreen extends StatefulWidget {
   const SubmitWordRequestScreen({super.key});
@@ -53,12 +52,12 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
     }
 
     final data = {
-      'englishWord': _englishController.text,
-      'khmerWord': _khmerController.text,
-      'frenchWord': _frenchController.text.isEmpty ? null : _frenchController.text,
-      'definition': _definitionController.text.isEmpty ? null : _definitionController.text,
+      'newEnglishWord': _englishController.text,
+      'newKhmerWord': _khmerController.text,
+      'newFrenchWord': _frenchController.text.isEmpty ? null : _frenchController.text,
+      'newDefinition': _definitionController.text.isEmpty ? null : _definitionController.text,
       'reference': _referenceController.text.isEmpty ? null : _referenceController.text,
-      'example': _exampleController.text.isEmpty ? null : _exampleController.text,
+      'newExample': _exampleController.text.isEmpty ? null : _exampleController.text,
     };
 
     final notifier = Provider.of<ContributionNotifier>(context, listen: false);
@@ -66,17 +65,7 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
 
     if (mounted) {
       if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Word request submitted successfully!'),
-            backgroundColor: Colors.green,
-          ),
-        );
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-          (route) => false,
-        );
+        Navigator.pushNamed(context, '/contribution-confirmation');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

@@ -2,8 +2,8 @@ import 'package:domra_tech/core/config/app_colors.dart';
 import 'package:domra_tech/core/config/app_text_style.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:domra_tech/model/word_translation.dart';
+import 'package:domra_tech/ui/screens/contributions/word_request_form.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen_view_model.dart';
-import 'package:domra_tech/ui/screens/request_word_form/word_request_form.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ class WordDetailScreen extends StatelessWidget {
   const WordDetailScreen({super.key, required this.word});
 
   void onRequest(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => WordRequestForm(wordId: word.wordId)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => WordRequestForm(word: word)));
   }
 
   @override

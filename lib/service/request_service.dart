@@ -6,6 +6,20 @@ class RequestService {
   final http.Client client;
   RequestService(this.client);
 
+  Future<http.Response> getWordRequests(String token) async {
+    return await client.get(
+      Uri.parse('$baseUrl/wordRequests'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+  }
+
+  Future<http.Response> getMyCorrections(String token) async {
+    return await client.get(
+      Uri.parse('$baseUrl/correctionRequests'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+  }
+
   Future<http.Response> createWordRequest(
     Map<String, dynamic> data,
     String token,
