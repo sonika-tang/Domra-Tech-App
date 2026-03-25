@@ -80,7 +80,8 @@ class UserNotifier extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final user = User.fromJson(data['user'] ?? data);
+        // final user = User.fromJson(data['user'] ?? data);
+        final user = User.fromJson(data);
 
         _setState(
           state.copyWith(
@@ -92,10 +93,12 @@ class UserNotifier extends ChangeNotifier {
         );
         return true;
       } else {
+        final errorMsg =
+            jsonDecode(response.body)['message'] ?? 'Unknown error';
         _setState(
           state.copyWith(
             isLoading: false,
-            error: 'Failed to fetch user profile: ${response.statusCode}',
+            error: 'Failed to fetch user profile: $errorMsg',
           ),
         );
         return false;
