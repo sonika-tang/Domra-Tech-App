@@ -110,7 +110,7 @@ void main() {
             "wordId": realWordId,
             "suggestedCorrection": "Dynamic correction test",
             "reason": "Testing the bridge",
-          });
+          }, authToken!);
 
           expect(
             corrReqRes.statusCode,

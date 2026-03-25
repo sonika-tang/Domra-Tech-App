@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../../model/word_request.dart';
 import '../../model/correction_request.dart';
 import '../../service/request_service.dart';
 import '../../service/firebase_storage_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Contribution state model
 /// Holds all contribution-related state (WordRequest & CorrectionRequest)
@@ -166,12 +166,7 @@ class ContributionNotifier extends ChangeNotifier {
         }
       }
 
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) {
-        throw Exception("You must be logged in to submit a request.");
-      }
-      
-      final token = await user.getIdToken();
+      final token = await const FlutterSecureStorage().read(key: 'jwt_token');
       if (token == null) throw Exception("Authentication token is missing.");
 
       final response = await _requestService.createWordRequest(wordData, token);
@@ -220,8 +215,10 @@ class ContributionNotifier extends ChangeNotifier {
         }
       }
 
-      // createCorrectionRequest in RequestService does not currently take a token.
-      final response = await _requestService.createCorrectionRequest(correctionData);
+      final token = await const FlutterSecureStorage().read(key: 'jwt_token');
+      if (token == null) throw Exception("Authentication token is missing.");
+
+      final response = await _requestService.createCorrectionRequest(correctionData, token);
       
       if (response.statusCode == 200 || response.statusCode == 201) {
         _setState(

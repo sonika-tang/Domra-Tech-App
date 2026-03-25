@@ -46,10 +46,14 @@ class RequestService {
 
   Future<http.Response> createCorrectionRequest(
     Map<String, dynamic> data,
+    String token,
   ) async {
     return await client.post(
       Uri.parse('$baseUrl/correctionRequests'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
       body: jsonEncode(data),
     );
   }

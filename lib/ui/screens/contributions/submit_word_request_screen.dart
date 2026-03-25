@@ -113,7 +113,7 @@ class _SubmitWordRequestScreenState extends State<SubmitWordRequestScreen> {
                   const SizedBox(height: 16),
                   
                   _buildLabel('Khmer word'),
-                  _buildTextField(_khmerController, 'Khmer Word', required: true),
+                  _buildTextField(_khmerController, 'Khmer Word'),
                   const SizedBox(height: 16),
                   
                   _buildLabel('French word'),

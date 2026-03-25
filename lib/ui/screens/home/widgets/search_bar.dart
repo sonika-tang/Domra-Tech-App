@@ -31,6 +31,15 @@ class _SearchBarSectionState extends State<SearchBarSection> {
     });
 
     context.read<HomeViewModel>().clearSearch();
+    //context.read<HomeViewModel>().stopVoiceSearch();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      context.read<HomeViewModel>().initSpeech();
+    });
   }
 
   @override
@@ -57,10 +66,29 @@ class _SearchBarSectionState extends State<SearchBarSection> {
                   icon: const Icon(Icons.close, color: AppColors.primary),
                   onPressed: _clearSearch,
                 )
-              : Container(
-                  margin: const EdgeInsets.all(6),
-                  decoration: const BoxDecoration(color: Color(0xFFE0E7FF), shape: BoxShape.circle),
-                  child: const Icon(Icons.mic, size: 20, color: AppColors.primary),
+              : Consumer<HomeViewModel>(
+                  builder: (context, vm, _) {
+                    return IconButton(
+                      icon: Icon(vm.isListening ? Icons.mic : Icons.mic_none, color: AppColors.primary),
+                      onPressed: () async {
+                        if (vm.isListening) {
+                          vm.stopVoiceSearch();
+                        } else {
+                          _controller.clear();
+                          setState(() => isSearching = false);
+
+                          await vm.startVoiceSearch((text) {
+                            _controller.value = TextEditingValue(
+                              text: text,
+                              selection: TextSelection.collapsed(offset: text.length),
+                            );
+
+                            setState(() => isSearching = text.isNotEmpty);
+                          });
+                        }
+                      },
+                    );
+                  },
                 ),
         ),
       ),

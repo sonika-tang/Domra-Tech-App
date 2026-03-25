@@ -1,30 +1,37 @@
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../core/config/constants.dart';
 
 class FirebaseStorageService {
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-
   Future<String?> uploadImage(XFile imageFile, String folderPath) async {
     try {
-      final String fileName = '${DateTime.now().millisecondsSinceEpoch}_${imageFile.name}';
-      final Reference ref = _storage.ref().child('$folderPath/$fileName');
-
-      UploadTask uploadTask;
-      if (kIsWeb) {
-        final bytes = await imageFile.readAsBytes();
-        uploadTask = ref.putData(bytes, SettableMetadata(contentType: 'image/jpeg'));
-      } else {
-        uploadTask = ref.putFile(File(imageFile.path));
+      // Get signed URL from backend
+      final res = await http.post(Uri.parse('$baseUrl/upload-url'));
+      if (res.statusCode != 200) {
+        print('Error getting upload url: ${res.body}');
+        return null;
       }
-      
-      final TaskSnapshot snapshot = await uploadTask;
-      final String downloadUrl = await snapshot.ref.getDownloadURL();
+      final data = jsonDecode(res.body);
+      final uploadUrl = data['uploadUrl'];
+      final fileUrl = data['fileUrl'];
 
-      return downloadUrl;
+      // Upload bytes to signed URL
+      final bytes = await imageFile.readAsBytes();
+      final uploadRes = await http.put(
+        Uri.parse(uploadUrl),
+        headers: {'Content-Type': 'image/png'},
+        body: bytes,
+      );
+
+      if (uploadRes.statusCode == 200) {
+        return fileUrl;
+      } else {
+        print('Upload failed: ${uploadRes.statusCode} - ${uploadRes.body}');
+        return null;
+      }
     } catch (e) {
-      print('Error uploading image to Firebase Storage: $e');
+      print('Error uploading image to backend: $e');
       return null;
     }
   }
