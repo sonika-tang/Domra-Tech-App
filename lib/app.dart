@@ -24,6 +24,14 @@ class DomraTech extends StatelessWidget {
               ? 'NotoSansKhmer'
               : 'Roboto',
         ),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android:
+                CupertinoPageTransitionsBuilder(), // swipe back
+            TargetPlatform.iOS:
+                CupertinoPageTransitionsBuilder(), // default iOS
+          },
+        ),
       ),
       locale: languageProvider.locale,
       localizationsDelegates: const [

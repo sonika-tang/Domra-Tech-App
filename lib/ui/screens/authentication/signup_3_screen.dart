@@ -4,6 +4,7 @@ import '../../../core/config/app_colors.dart';
 import '../../../core/config/app_text_style.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../routes/app_routes.dart';
+import '../../../state/models/user_state.dart';
 import '../../../state/provider/auth_provider.dart';
 import '../../widgets/actions/primary_button.dart';
 import '../../widgets/inputs/password_field.dart';
@@ -48,6 +49,7 @@ class _SignupScreen3State extends State<SignupScreen3> {
             child: Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     loc.setPassword,
@@ -77,8 +79,22 @@ class _SignupScreen3State extends State<SignupScreen3> {
                         value: agreeTerms,
                         onChanged: (v) =>
                             setState(() => agreeTerms = v ?? false),
+                        activeColor: AppColors.secondary,
+                        checkColor: Colors.white,
+                        side: const BorderSide(color: Colors.white, width: 1),
                       ),
-                      Text('Agree Terms'),
+                      Text(
+                        'Agree with ',
+                        style: AppTextStyle.small.copyWith(
+                          color: AppColors.background,
+                        ),
+                      ),
+                      Text(
+                        'Terms & Conditions',
+                        style: AppTextStyle.small.copyWith(
+                          color: AppColors.secondary,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.s24),
@@ -90,10 +106,25 @@ class _SignupScreen3State extends State<SignupScreen3> {
                           ...widget.signupData,
                           "password": _passwordController.text.trim(),
                         };
+
                         try {
-                          final response = await authProvider.authService
-                              .register(userData);
-                          if (response.statusCode == 200) {
+                          final authProvider = Provider.of<AuthProvider>(
+                            context,
+                            listen: false,
+                          );
+                          final fbUser = await authProvider.signupWithFirebase(
+                            email: userData["email"],
+                            password: userData["password"],
+                            firstName: userData["firstName"],
+                            lastName: userData["lastName"],
+                            gender: userData["gender"],
+                            dob: userData["dob"],
+                          );
+
+                          if (fbUser != null && authProvider.jwt != null) {
+                            await context.read<UserNotifier>().fetchUserProfile(
+                              authProvider.jwt!,
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text("Signup successful"),
@@ -105,9 +136,7 @@ class _SignupScreen3State extends State<SignupScreen3> {
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Error: ${response.body}"),
-                              ),
+                              const SnackBar(content: Text("Signup failed")),
                             );
                           }
                         } catch (e) {

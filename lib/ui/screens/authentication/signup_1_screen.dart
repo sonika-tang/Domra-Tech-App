@@ -4,6 +4,7 @@ import '../../../core/config/app_colors.dart';
 import '../../../core/config/app_text_style.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../routes/app_routes.dart';
+import '../../../state/models/user_state.dart';
 import '../../../state/provider/auth_provider.dart';
 import '../../widgets/actions/primary_button.dart';
 import '../../widgets/inputs/text_field.dart';
@@ -87,7 +88,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          'or ContinueWith',
+                          'or Continue with',
                           style: AppTextStyle.body2.copyWith(
                             color: AppColors.background,
                           ),
@@ -107,11 +108,18 @@ class _SignupScreen1State extends State<SignupScreen1> {
                         iconSize: 40,
                         onPressed: () async {
                           try {
-                            final token = await Provider.of<AuthProvider>(
+                            final authProvider = Provider.of<AuthProvider>(
                               context,
                               listen: false,
-                            ).signInWithGoogle();
-                            if (token != null) {
+                            );
+                            final jwt = await authProvider
+                                .signInWithGoogle(); // returns backend JWT
+                            if (jwt != null) {
+                              // Fetch profile
+                              await context
+                                  .read<UserNotifier>()
+                                  .fetchUserProfile(jwt);
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("Google signup successful"),
@@ -143,6 +151,33 @@ class _SignupScreen1State extends State<SignupScreen1> {
                             ),
                           );
                         },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.s24),
+                  // Have account?
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        loc.haveAccount,
+                        style: AppTextStyle.small.copyWith(
+                          color: AppColors.background,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.login,
+                          );
+                        },
+                        child: Text(
+                          loc.login,
+                          style: AppTextStyle.small.copyWith(
+                            color: AppColors.secondary,
+                          ),
+                        ),
                       ),
                     ],
                   ),
