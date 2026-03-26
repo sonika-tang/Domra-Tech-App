@@ -80,7 +80,8 @@ class UserNotifier extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final user = User.fromJson(data['user'] ?? data);
+        // final user = User.fromJson(data['user'] ?? data);
+        final user = User.fromJson(data);
 
         _setState(
           state.copyWith(
@@ -92,10 +93,12 @@ class UserNotifier extends ChangeNotifier {
         );
         return true;
       } else {
+        final errorMsg =
+            jsonDecode(response.body)['message'] ?? 'Unknown error';
         _setState(
           state.copyWith(
             isLoading: false,
-            error: 'Failed to fetch user profile: ${response.statusCode}',
+            error: 'Failed to fetch user profile: $errorMsg',
           ),
         );
         return false;
@@ -116,54 +119,62 @@ class UserNotifier extends ChangeNotifier {
     Map<String, dynamic> updates,
     String token,
   ) async {
+    // Capture user BEFORE transitioning to loading state
+    final currentUser = _state.user;
     try {
       _setState(state.withLoading());
 
-      bool isSuccess = false;
+      bool serverSuccess = false;
+      String? serverError;
       try {
         final response = await userService.updateProfile(updates, token);
         if (response.statusCode == 200 || response.statusCode == 201) {
-          isSuccess = true;
+          serverSuccess = true;
+        } else {
+          serverError = 'Server returned ${response.statusCode}';
+          debugPrint('updateProfile error: ${response.body}');
         }
-      } catch (_) {
-        // Backend not reachable, ignore to fallback to mock update
-        isSuccess = true;
+      } catch (e) {
+        // Backend not reachable – apply optimistic update
+        debugPrint('updateProfile network error: $e');
+        serverSuccess = true;
       }
 
-      if (isSuccess) {
-        // Optimistically update the local user model combining old state and new updates
-        if (state.user != null) {
+      if (serverSuccess || currentUser != null) {
+        // Apply optimistic local update even on server error so the UI
+        // reflects what the user entered (backend may be temporarily down).
+        if (currentUser != null) {
           final updatedUser = User(
-            userId: state.user!.userId,
-            email: state.user!.email, // Email usually doesn't change here
-            firstName: updates['firstName'] as String? ?? state.user!.firstName,
-            lastName: updates['lastName'] as String? ?? state.user!.lastName,
-            gender: updates['gender'] as String? ?? state.user!.gender,
+            userId: currentUser.userId,
+            email: currentUser.email,
+            firstName: updates['firstName'] as String? ?? currentUser.firstName,
+            lastName: updates['lastName'] as String? ?? currentUser.lastName,
+            gender: updates['gender'] as String? ?? currentUser.gender,
             dateOfBirth:
-                updates['dateOfBirth'] as String? ?? state.user!.dateOfBirth,
+                updates['dateOfBirth'] as String? ?? currentUser.dateOfBirth,
             profileURL:
-                updates['profileURL'] as String? ?? state.user!.profileURL,
-            role: state.user!.role,
-            status: state.user!.status,
-            googleId: state.user!.googleId,
+                updates['profileURL'] as String? ?? currentUser.profileURL,
+            role: currentUser.role,
+            status: currentUser.status,
+            googleId: currentUser.googleId,
           );
 
           _setState(
             state.copyWith(
               user: updatedUser,
               isLoading: false,
-              error: null,
+              error: serverSuccess ? null : serverError,
               isEditing: false,
               lastUpdated: DateTime.now(),
             ),
           );
         }
-        return true;
+        return serverSuccess;
       } else {
         _setState(
           state.copyWith(
             isLoading: false,
-            error: 'Failed to update profile. Server error.',
+            error: serverError ?? 'Failed to update profile. Server error.',
           ),
         );
         return false;
@@ -193,34 +204,22 @@ class UserNotifier extends ChangeNotifier {
         'newPassword': newPassword,
       };
 
-      bool isSuccess = false;
       try {
         final response = await userService.changePassword(data, token);
+        debugPrint('changePassword status: ${response.statusCode} body: ${response.body}');
         if (response.statusCode == 200 || response.statusCode == 201) {
-          isSuccess = true;
+          _setState(state.copyWith(isLoading: false, error: null, lastUpdated: DateTime.now()));
+          return true;
+        } else {
+          final errorMsg = response.body.isNotEmpty ? response.body : 'Server error ${response.statusCode}';
+          _setState(state.copyWith(isLoading: false, error: errorMsg));
+          return false;
         }
-      } catch (_) {
-        // Backend not reachable, ignore to fallback to mock success
-        isSuccess = true;
-      }
-
-      if (isSuccess) {
-        _setState(
-          state.copyWith(
-            isLoading: false,
-            error: null,
-            lastUpdated: DateTime.now(),
-          ),
-        );
+      } catch (e) {
+        // Network unreachable – treat as success (offline/mock mode)
+        debugPrint('changePassword network error: $e');
+        _setState(state.copyWith(isLoading: false, error: null, lastUpdated: DateTime.now()));
         return true;
-      } else {
-        _setState(
-          state.copyWith(
-            isLoading: false,
-            error: 'Failed to change password. Server error.',
-          ),
-        );
-        return false;
       }
     } catch (e) {
       _setState(

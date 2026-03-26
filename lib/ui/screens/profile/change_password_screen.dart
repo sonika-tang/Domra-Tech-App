@@ -332,8 +332,11 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       return;
     }
 
-    // Get Firebase token for API call
-    final token = await authProvider.getIdToken() ?? 'mock_fallback_token';
+    final token = authProvider.jwt;
+    if (token == null) {
+      _showError(context, 'Session expired. Please log in again.');
+      return;
+    }
 
     final success = await userProvider.changePassword(
       currentPasswordController.text,

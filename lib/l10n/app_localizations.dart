@@ -218,6 +218,42 @@ abstract class AppLocalizations {
   /// **'Forget Password'**
   String get forgetPassword;
 
+  /// No description provided for @invalidEmailFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get invalidEmailFormat;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordTooShort;
+
+  /// No description provided for @termsAndConditionsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Condition'**
+  String get termsAndConditionsLink;
+
+  /// No description provided for @agreeToTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'By logging in you agree to our'**
+  String get agreeToTerms;
+
   /// No description provided for @dontHaveAccount.
   ///
   /// In en, this message translates to:

@@ -22,6 +22,12 @@
   "enterPassword": "បញ្ចូលលេខសម្ងាត់របស់អ្នក",
   "rememberMe": "ចងចាំខ្ញុំ",
   "forgetPassword": "ភ្លេចលេខសម្ងាត់",
+  "invalidEmailFormat": "សូមបញ្ចូលអ៊ីមែលដែលត្រឹមត្រូវ",
+  "emailRequired": "តម្រូវឲ្យមានអ៊ីមែល",
+  "passwordRequired": "តម្រូវឲ្យមានលេខសម្ងាត់",
+  "passwordTooShort": "លេខសម្ងាត់ត្រូវតែមានច្រើនជាង ៦ តួ",
+  "termsAndConditionsLink": "លក្ខខណ្ឌប្រើប្រាស់",
+  "agreeToTerms": "យល់ព្រមលក្ខខណ្ឌប្រើប្រាស់",
   "dontHaveAccount": "មិនទាន់មានគណនីមែនទេ?",
 
   "continueWith": "ឬបន្តជាមួយ",

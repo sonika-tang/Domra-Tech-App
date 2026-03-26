@@ -317,8 +317,8 @@ extension NavigationHelper on BuildContext {
   }
 
   /// Navigate to login and clear everything (logout)
-  void logoutAndGoToLogin() {
-    Navigator.pushNamedAndRemoveUntil(this, AppRoutes.login, (route) => false);
+  void logoutAndGoToWelcome() {
+    Navigator.pushNamedAndRemoveUntil(this, AppRoutes.welcome, (route) => false);
   }
 
   /// Replace current screen with new one

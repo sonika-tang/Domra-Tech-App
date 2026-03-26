@@ -25,11 +25,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     final userState = context.read<UserNotifier>().state;
-    firstNameController = TextEditingController(text: userState.user?.firstName ?? 'oeng'); // dummy mockup default if empty
-    lastNameController = TextEditingController(text: userState.user?.lastName ?? 'Gechty');
-    emailController = TextEditingController(text: userState.user?.email ?? 'gechtyoeng@gmail.com');
-    genderController = TextEditingController(text: 'female');
-    dobController = TextEditingController(text: '2025/07/07');
+    firstNameController = TextEditingController(
+      text: userState.user?.firstName ?? '',
+    );
+    lastNameController = TextEditingController(
+      text: userState.user?.lastName ?? '',
+    );
+    emailController = TextEditingController(text: userState.user?.email ?? '');
+    genderController = TextEditingController(
+      text: userState.user?.gender ?? '',
+    );
+    dobController = TextEditingController(
+      text: userState.user?.dateOfBirth ?? '',
+    );
   }
 
   @override
@@ -43,9 +51,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         title: Text(
           t.editProfile,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        leading: IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back_ios, size: 20)),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_ios, size: 20),
+        ),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
@@ -58,7 +72,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Avatar with Camera Icon
                 InkWell(
@@ -67,17 +80,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: Stack(
                     alignment: Alignment.bottomRight,
                     children: [
-                      Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey[400],
-                          border: Border.all(color: colorScheme.primary, width: 2),
-                          // If there's an actual profileURL:
-                          // image: (userState.user?.profileURL != null)
-                          // ? DecorationImage(image: NetworkImage(userState.user!.profileURL!), fit: BoxFit.cover) : null,
-                        ),
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundImage: userState.user?.profileURL != null
+                            ? NetworkImage(userState.user!.profileURL!)
+                            : null,
+                        child: userState.user?.profileURL == null
+                            ? const Icon(Icons.person, size: 60)
+                            : null,
                       ),
                       Positioned(
                         bottom: 4,
@@ -85,10 +95,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(4),
                           decoration: const BoxDecoration(
-                            color: Colors.transparent, // Background transparent per mockup
+                            color: Colors
+                                .transparent, // Background transparent per mockup
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(Icons.camera_alt_outlined, color: colorScheme.primary, size: 28),
+                          child: Icon(
+                            Icons.camera_alt_outlined,
+                            color: colorScheme.primary,
+                            size: 28,
+                          ),
                         ),
                       ),
                     ],
@@ -114,8 +129,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 if (userState.error != null) ...[
                   Container(
                     padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(color: colorScheme.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
-                    child: Text(userState.error!, style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.error)),
+                    decoration: BoxDecoration(
+                      color: colorScheme.error.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      userState.error!,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: colorScheme.error,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20),
                 ],
@@ -125,17 +148,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: userState.isLoading ? null : () => _handleSaveProfile(context, userProvider),
+                    onPressed: userState.isLoading
+                        ? null
+                        : () => _handleSaveProfile(context, userProvider),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colorScheme.secondary,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                       elevation: 0,
                     ),
                     child: userState.isLoading
-                        ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
                         : Text(
                             t.saveChange,
-                            style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
                   ),
                 ),
@@ -147,27 +185,56 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Future<void> _handleSaveProfile(BuildContext context, UserNotifier userProvider) async {
-    final token = await context.read<AuthProvider>().getIdToken() ?? 'mock_fallback_token';
+  Future<void> _handleSaveProfile(
+    BuildContext context,
+    UserNotifier userProvider,
+  ) async {
+    final jwt = context.read<AuthProvider>().jwt;
+    if (jwt == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Session expired. Please log in again.')),
+      );
+      return;
+    }
 
-    final success = await userProvider.updateUserProfile({
-      'firstName': firstNameController.text,
-      'lastName': lastNameController.text,
-      'gender': genderController.text,
-      'dateOfBirth': dobController.text,
-    }, token);
+    await userProvider.updateUserProfile({
+      'firstName': firstNameController.text.trim(),
+      'lastName': lastNameController.text.trim(),
+      'gender': genderController.text.trim(),
+      'dateOfBirth': dobController.text.trim(),
+    }, jwt);
 
-    if (success && context.mounted) {
+    // Navigate back and show success if no error in the state
+    if (context.mounted) {
       final t = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(t.profileUpdatedSuccessfully), backgroundColor: AppColors.success));
-      context.goBack();
+      final error = userProvider.state.error;
+      if (error == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(t.profileUpdatedSuccessfully),
+            backgroundColor: AppColors.success,
+          ),
+        );
+        context.goBack();
+      } else {
+        // Still navigate back (local update was applied), just warn about sync
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${t.profileUpdatedSuccessfully} (sync pending)'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+        context.goBack();
+      }
     }
   }
 
   void _handleGenderSelection(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (BuildContext context) {
         final t = AppLocalizations.of(context)!;
         return SafeArea(
@@ -202,6 +269,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
+  // Future<void> _handleDobSelection(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now(),
+  //   );
+  //   if (picked != null) {
+  //     setState(() {
+  //       dobController.text = "${picked.year}-${picked.month}-${picked.day}";
+  //     });
+  //   }
+  // }
+
   Future<void> _handleDobSelection(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -230,6 +311,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
+  // void _handleImageSelection(BuildContext context) async {
+  //   final jwt = context.read<AuthProvider>().jwt;
+  //   if (jwt != null) {
+  //     final success = await context.read<UserNotifier>().uploadProfilePicture(
+  //       'assets/imgs/simulated_new_avatar.png',
+  //       jwt,
+  //     );
+  //     if (success && context.mounted) {
+  //       final t = AppLocalizations.of(context)!;
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(t.profilePictureUpdated),
+  //           backgroundColor: AppColors.success,
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
   void _handleImageSelection(BuildContext context) {
     // Since image_picker isn't natively listed in pubspec, we'll implement a fallback mock dialog
     // that invokes the uploadProfilePicture on the provider.
@@ -241,17 +340,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           title: Text(t.changeProfilePicture),
           content: Text(t.selectNewImage),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: Text(t.cancel)),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(t.cancel),
+            ),
             ElevatedButton(
               onPressed: () async {
                 Navigator.pop(context);
 
-                final token = await context.read<AuthProvider>().getIdToken();
-                if (token != null) {
-                  final success = await context.read<UserNotifier>().uploadProfilePicture('assets/imgs/simulated_new_avatar.png', token);
+                final jwt = context.read<AuthProvider>().jwt;
+                if (jwt != null) {
+                  final success = await context
+                      .read<UserNotifier>()
+                      .uploadProfilePicture(
+                        'assets/imgs/simulated_new_avatar.png',
+                        jwt,
+                      );
                   if (success && context.mounted) {
                     final t2 = AppLocalizations.of(context)!;
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(t2.profilePictureUpdated), backgroundColor: AppColors.success));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(t2.profilePictureUpdated),
+                        backgroundColor: AppColors.success,
+                      ),
+                    );
                   }
                 }
               },

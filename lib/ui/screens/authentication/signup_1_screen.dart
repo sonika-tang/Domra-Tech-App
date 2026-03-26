@@ -19,169 +19,193 @@ class SignupScreen1 extends StatefulWidget {
 class _SignupScreen1State extends State<SignupScreen1> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  static final _emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Column(
         children: [
-          const Spacer(),
-          Image.asset(
-            "assets/imgs/Domra_Tech-logo-Transparent.png",
-            height: 200,
-          ),
-          const Spacer(),
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.s24),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+          // Logo area – fills available space above the form
+          Expanded(
+            child: Center(
+              child: Image.asset(
+                "assets/imgs/Domra_Tech-logo-Transparent.png",
+                height: size.height * 0.28,
+                fit: BoxFit.contain,
               ),
             ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Title
-                  Text(
-                    loc.signUp,
-                    style: AppTextStyle.heading1.copyWith(
-                      color: AppColors.background,
+          ),
+
+          // Form panel pinned to bottom
+          SafeArea(
+            top: false,
+            child: Container(
+              padding: const EdgeInsets.all(AppSpacing.s24),
+              decoration: const BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+              ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Title
+                    Text(
+                      loc.signUp,
+                      style: AppTextStyle.heading1.copyWith(
+                        color: AppColors.background,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.s24),
+                    const SizedBox(height: AppSpacing.s24),
 
-                  // Email field
-                  InputTextField(
-                    title: loc.email,
-                    text: loc.enterEmail,
-                    controller: _emailController,
-                    validator: (v) =>
-                        v == null || v.isEmpty ? "Email required" : null,
-                  ),
-                  const SizedBox(height: AppSpacing.s24),
+                    // Email field with format validation
+                    InputTextField(
+                      title: loc.email,
+                      text: loc.enterEmail,
+                      controller: _emailController,
+                      validator: (v) {
+                        if (v == null || v.trim().isEmpty) {
+                          return loc.emailRequired;
+                        }
+                        if (!_emailRegex.hasMatch(v.trim())) {
+                          return loc.invalidEmailFormat;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.s24),
 
-                  // Next button
-                  PrimaryButton(
-                    label: loc.next,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.signup2,
-                          arguments: {"email": _emailController.text.trim()},
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.s24),
+                    // Next button
+                    PrimaryButton(
+                      label: loc.next,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.signup2,
+                            arguments: {"email": _emailController.text.trim()},
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.s24),
 
-                  // Divider
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: AppColors.background)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          'or Continue with',
-                          style: AppTextStyle.body2.copyWith(
+                    // Divider
+                    Row(
+                      children: [
+                        Expanded(child: Divider(color: AppColors.background)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            loc.continueWith,
+                            style: AppTextStyle.body2.copyWith(
+                              color: AppColors.background,
+                            ),
+                          ),
+                        ),
+                        Expanded(child: Divider(color: AppColors.background)),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.s16),
+
+                    // Social login buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.g_mobiledata),
+                          iconSize: 40,
+                          onPressed: () async {
+                            try {
+                              final authProvider = Provider.of<AuthProvider>(
+                                context,
+                                listen: false,
+                              );
+                              final jwt = await authProvider.signInWithGoogle();
+                              if (jwt != null) {
+                                await context
+                                    .read<UserNotifier>()
+                                    .fetchUserProfile(jwt);
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("Google signup successful"),
+                                    ),
+                                  );
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    AppRoutes.home,
+                                  );
+                                }
+                              }
+                            } catch (e) {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Google error: $e")),
+                                );
+                              }
+                            }
+                          },
+                        ),
+                        const SizedBox(width: 24),
+                        IconButton(
+                          icon: const Icon(Icons.facebook),
+                          iconSize: 40,
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    "Facebook signup not yet implemented"),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.s24),
+
+                    // Already have account?
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          loc.haveAccount,
+                          style: AppTextStyle.small.copyWith(
                             color: AppColors.background,
                           ),
                         ),
-                      ),
-                      Expanded(child: Divider(color: AppColors.background)),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.s16),
-
-                  // Social login buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.g_mobiledata),
-                        iconSize: 40,
-                        onPressed: () async {
-                          try {
-                            final authProvider = Provider.of<AuthProvider>(
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
                               context,
-                              listen: false,
+                              AppRoutes.login,
                             );
-                            final jwt = await authProvider
-                                .signInWithGoogle(); // returns backend JWT
-                            if (jwt != null) {
-                              // Fetch profile
-                              await context
-                                  .read<UserNotifier>()
-                                  .fetchUserProfile(jwt);
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Google signup successful"),
-                                ),
-                              );
-                              Navigator.pushReplacementNamed(
-                                context,
-                                AppRoutes.home,
-                              );
-                            }
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Google error: $e")),
-                            );
-                          }
-                        },
-                      ),
-                      const SizedBox(width: 24),
-                      IconButton(
-                        icon: const Icon(Icons.facebook),
-                        iconSize: 40,
-                        onPressed: () {
-                          // TODO: implement Facebook signup
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                "Facebook signup not yet implemented",
-                              ),
+                          },
+                          child: Text(
+                            loc.login,
+                            style: AppTextStyle.small.copyWith(
+                              color: AppColors.secondary,
                             ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.s24),
-                  // Have account?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        loc.haveAccount,
-                        style: AppTextStyle.small.copyWith(
-                          color: AppColors.background,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            AppRoutes.login,
-                          );
-                        },
-                        child: Text(
-                          loc.login,
-                          style: AppTextStyle.small.copyWith(
-                            color: AppColors.secondary,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

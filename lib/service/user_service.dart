@@ -6,10 +6,13 @@ class UserService {
   final http.Client client;
   UserService(this.client);
 
-  Future<http.Response> getProfile(String token) async {
-    return await client.get(
-      Uri.parse('$baseUrl/profile'),
-      headers: {'Authorization': 'Bearer $token'},
+  Future<http.Response> getProfile(String token) {
+    return client.get(
+      Uri.parse("$baseUrl/profile"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
     );
   }
 
