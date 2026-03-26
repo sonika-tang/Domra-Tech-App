@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../service/auth_service.dart';
+import '../../service/auth_service.dart';
 
 class AuthRepository {
   final AuthService _authService;

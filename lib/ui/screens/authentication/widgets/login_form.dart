@@ -29,12 +29,31 @@ class _LoginFormState extends State<LoginForm> {
   bool rememberMe = false;
 
   @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(_onInput);
+    _passwordController.addListener(_onInput);
+  }
+
+  void _onInput() => widget.onInputChanged?.call();
+
+  // Simple email regex
+  static final _emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.s24),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.primary,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(12),
@@ -47,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              //Title
+              // Title
               Text(
                 loc.login,
                 style: AppTextStyle.heading1.copyWith(
@@ -63,8 +82,11 @@ class _LoginFormState extends State<LoginForm> {
                 text: loc.enterEmail,
                 controller: _emailController,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Email is required";
+                  if (value == null || value.trim().isEmpty) {
+                    return loc.emailRequired;
+                  }
+                  if (!_emailRegex.hasMatch(value.trim())) {
+                    return loc.invalidEmailFormat;
                   }
                   return null;
                 },
@@ -72,14 +94,17 @@ class _LoginFormState extends State<LoginForm> {
 
               const SizedBox(height: AppSpacing.s16),
 
-              //Password filed
+              // Password field
               InputPasswordField(
                 title: loc.password,
                 hint: loc.enterPassword,
                 controller: _passwordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Password is required";
+                    return loc.passwordRequired;
+                  }
+                  if (value.length < 6) {
+                    return loc.passwordTooShort;
                   }
                   return null;
                 },
@@ -87,6 +112,7 @@ class _LoginFormState extends State<LoginForm> {
 
               const SizedBox(height: AppSpacing.s16),
 
+              // Remember me + Forgot password
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -102,7 +128,6 @@ class _LoginFormState extends State<LoginForm> {
                         activeColor: AppColors.secondary,
                         checkColor: Colors.white,
                         side: const BorderSide(
-                          // border color
                           color: Colors.white,
                           width: 1,
                         ),
@@ -131,6 +156,19 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ],
               ),
+
+              // Server-side error message
+              if (widget.errorMessage != null) ...[
+                const SizedBox(height: AppSpacing.s8),
+                Text(
+                  widget.errorMessage!,
+                  style: AppTextStyle.small.copyWith(
+                    color: Colors.redAccent.shade100,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+
               const SizedBox(height: AppSpacing.s16),
 
               // Login button
@@ -140,14 +178,12 @@ class _LoginFormState extends State<LoginForm> {
                   if (_formKey.currentState!.validate()) {
                     final email = _emailController.text.trim();
                     final password = _passwordController.text.trim();
-
-                    // Call backend / Firebase
                     widget.onSubmit(email, password);
                   }
                 },
               ),
 
-              const SizedBox(height: AppSpacing.s24),
+              const SizedBox(height: AppSpacing.s16),
 
               // Sign up prompt
               Row(

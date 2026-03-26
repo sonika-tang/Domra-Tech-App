@@ -22,9 +22,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final authProvider = context.read<AuthProvider>();
-      final token = await authProvider.getIdToken();
-      if (token != null) {
-        context.read<UserNotifier>().fetchUserProfile(token);
+      final jwt = authProvider.jwt;
+      if (jwt != null) {
+        context.read<UserNotifier>().fetchUserProfile(jwt);
       }
     });
   }
@@ -80,71 +80,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           }
 
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                // Profile Header
-                ProfileHeader(userState: userState),
+          // final user = userState.user;
 
-                const SizedBox(height: 24),
-
-                // Menu Items
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      ProfileMenuItem(
-                        icon: Icons.language,
-                        label: t.language,
-                        onPressed: () => context.goToChangeLanguage(),
-                      ),
-                      const SizedBox(height: 12),
-                      ProfileMenuItem(
-                        icon: Icons.history,
-                        label: t.contributionHistory,
-                        onPressed: () => context.goToHistoryAll(),
-                      ),
-                      const SizedBox(height: 12),
-                      ProfileMenuItem(
-                        icon: Icons.lock,
-                        label: t.changePassword,
-                        onPressed: () => context.goToChangePassword(),
-                      ),
-                      const SizedBox(height: 12),
-                      ProfileMenuItem(
-                        icon: Icons.info_outline,
-                        label: t.termOfCondition,
-                        onPressed: () => context.goToTermsAndConditions(),
-                      ),
-                      const SizedBox(height: 12),
-                      ProfileMenuItem(
-                        icon: Icons.shopping_cart_outlined,
-                        label: t.subscriptionPlans,
-                        onPressed: () => context.goToSubscriptionPlans(),
-                      ),
-                    ],
+          return RefreshIndicator(
+            onRefresh: () async {
+              final jwt = authProvider.jwt;
+              if (jwt != null) {
+                await userProvider.refresh(jwt);
+              }
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  ProfileHeader(userState: userState),
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        ProfileMenuItem(
+                          icon: Icons.language,
+                          label: t.language,
+                          onPressed: () => context.goToChangeLanguage(),
+                        ),
+                        const SizedBox(height: 12),
+                        ProfileMenuItem(
+                          icon: Icons.history,
+                          label: t.viewHistory,
+                          onPressed: () => context.goToHistoryAll(),
+                        ),
+                        const SizedBox(height: 12),
+                        ProfileMenuItem(
+                          icon: Icons.lock,
+                          label: t.changePassword,
+                          onPressed: () => context.goToChangePassword(),
+                        ),
+                        const SizedBox(height: 12),
+                        ProfileMenuItem(
+                          icon: Icons.info_outline,
+                          label: t.termOfCondition,
+                          onPressed: () => context.goToTermsAndConditions(),
+                        ),
+                        const SizedBox(height: 12),
+                        ProfileMenuItem(
+                          icon: Icons.shopping_cart_outlined,
+                          label: t.subscriptionPlans,
+                          onPressed: () => context.goToSubscriptionPlans(),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 32),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Divider(
-                    color: colorScheme.outline.withValues(alpha: 0.2),
-                    thickness: 1,
+                  const SizedBox(height: 32),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Divider(
+                      color: colorScheme.outline.withValues(alpha: 0.2),
+                      thickness: 1,
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 16),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: _buildLogoutButton(context, authProvider, theme),
-                ),
-
-                const SizedBox(height: 24),
-              ],
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: _buildLogoutButton(context, authProvider, theme),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
           );
         },
@@ -169,8 +171,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             borderRadius: BorderRadius.circular(30),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: [
               Icon(Icons.exit_to_app, color: AppColors.error, size: 22),
               const SizedBox(width: 12),
@@ -213,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.pop(context);
               authProvider.logout();
               context.read<UserNotifier>().clearUserData();
-              context.logoutAndGoToLogin();
+              context.logoutAndGoToWelcome();
             },
             child: Text(
               AppLocalizations.of(context)!.logout,

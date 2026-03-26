@@ -22,6 +22,12 @@
   "enterPassword": "Enter your Password",
   "rememberMe": "Remember me",
   "forgetPassword": "Forget Password",
+  "invalidEmailFormat": "Please enter a valid email address",
+  "emailRequired": "Email is required",
+  "passwordRequired": "Password is required",
+  "passwordTooShort": "Password must be at least 6 characters",
+  "termsAndConditionsLink": "Terms of Condition",
+  "agreeToTerms": "By logging in you agree to our",
   "dontHaveAccount": "Don’t Have an Account?",
 
   "continueWith": "or continue with",

@@ -72,6 +72,24 @@ class AppLocalizationsKm extends AppLocalizations {
   String get forgetPassword => 'ភ្លេចលេខសម្ងាត់';
 
   @override
+  String get invalidEmailFormat => 'សូមបញ្ចូលអ៊ីមែលដែលត្រឹមត្រូវ';
+
+  @override
+  String get emailRequired => 'តម្រូវឲ្យមានអ៊ីមែល';
+
+  @override
+  String get passwordRequired => 'តម្រូវឲ្យមានលេខសម្ងាត់';
+
+  @override
+  String get passwordTooShort => 'លេខសម្ងាត់ត្រូវតែមានច្រើនជាង ៦ តួ';
+
+  @override
+  String get termsAndConditionsLink => 'លក្ខខណ្ឌប្រើប្រាស់';
+
+  @override
+  String get agreeToTerms => 'យល់ព្រមលក្ខខណ្ឌប្រើប្រាស់';
+
+  @override
   String get dontHaveAccount => 'មិនទាន់មានគណនីមែនទេ?';
 
   @override

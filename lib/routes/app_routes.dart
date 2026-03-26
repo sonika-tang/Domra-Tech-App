@@ -2,9 +2,9 @@
 class AppRoutes {
   AppRoutes._(); // Prevent instantiation
 
-  // 
+  //
   // ONBOARDING ROUTES
-  // 
+  //
   /// First onboarding screen - Welcome to Domra
   static const String onboarding1 = '/onboarding1';
 
@@ -14,9 +14,9 @@ class AppRoutes {
   /// Third onboarding screen - Benefits/Conclusion
   static const String onboarding3 = '/onboarding3';
 
-  // 
+  //
   // AUTHENTICATION ROUTES
-  // 
+  //
   /// Language selection screen before authentication
   static const String chooseLanguage = '/choose-language';
 
@@ -41,9 +41,9 @@ class AppRoutes {
   /// Reset password screen
   static const String resetPassword = '/reset-password';
 
-  // 
+  //
   // HOME & MAIN APP ROUTES
-  // 
+  //
   /// Main home screen with word dictionary - Uses WordTranslation
   static const String home = '/home';
 
@@ -53,9 +53,9 @@ class AppRoutes {
   /// Search results screen - Search WordTranslation
   static const String searchResults = '/search-results';
 
-  // 
+  //
   // CONTRIBUTION ROUTES
-  // 
+  //
   /// Contribution guidelines screen
   static const String contributionGuideline = '/contribution-guideline';
 
@@ -68,15 +68,15 @@ class AppRoutes {
   /// Confirmation screen after submitting WordRequest or CorrectionRequest
   static const String contributionConfirmation = '/contribution-confirmation';
 
-  // 
+  //
   // FAVORITE ROUTES
-  // 
+  //
   /// Favorites screen - List of Favorite entries (wordId + userId)
   static const String favorites = '/favorites';
 
-  // 
+  //
   // PROFILE ROUTES
-  // 
+  //
   /// Main profile screen - Shows User information
   static const String profile = '/profile';
 
@@ -101,9 +101,9 @@ class AppRoutes {
   /// Terms and conditions screen
   static const String termsAndConditions = '/terms-and-conditions';
 
-  // 
+  //
   // SUBSCRIPTION ROUTES
-  // 
+  //
   /// Subscription plans overview screen
   static const String subscriptionPlans = '/subscription-plans';
 

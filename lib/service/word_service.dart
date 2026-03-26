@@ -33,13 +33,13 @@ class WordService {
     return await client.get(Uri.parse('$baseUrl/wordcards/$wordId'));
   }
 
-  Future<http.Response> getSharePage(String wordId) async {
-    return await client.get(Uri.parse('$baseUrl/share/$wordId'));
-  }
+  // Future<http.Response> getSharePage(String wordId) async {
+  //   return await client.get(Uri.parse('$baseUrl/share/$wordId'));
+  // }
 
-  Future<http.Response> getShareData(String wordId) async {
-    return await client.get(Uri.parse('$baseUrl/words/$wordId/share'));
-  }
+  // Future<http.Response> getShareData(String wordId) async {
+  //   return await client.get(Uri.parse('$baseUrl/words/$wordId/share'));
+  // }
 
   Future<http.Response> getAllFavorites(String token) async {
     return await client.get(Uri.parse('$baseUrl/favorites'), headers: {'Authorization': 'Bearer $token'});

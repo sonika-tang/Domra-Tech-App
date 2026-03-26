@@ -4,8 +4,9 @@ import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:domra_tech/ui/widgets/displays/contribute_term_card.dart';
 import 'package:flutter/material.dart';
 
+import 'package:domra_tech/routes/navigation_helper.dart';
+
 import 'improve_translation_guideline_screen.dart';
-import 'submit_correction_screen.dart';
 import 'submit_word_request_screen.dart';
 import 'word_request_guideline_screen.dart';
 
@@ -46,7 +47,8 @@ class ContributionGuidelineScreen extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ImproveTranslationGuidelineScreen()));
                 },
                 onRequestNow: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SubmitCorrectionScreen()));
+                  // Navigate to Home screen with navigation bar
+                  context.goToHome(clearStack: true);
                 },
                 primaryButtonLabel: loc.improveNow,
                 secondaryButtonLabel: loc.guideline,

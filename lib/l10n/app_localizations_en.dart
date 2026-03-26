@@ -71,6 +71,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forgetPassword => 'Forget Password';
 
   @override
+  String get invalidEmailFormat => 'Please enter a valid email address';
+
+  @override
+  String get emailRequired => 'Email is required';
+
+  @override
+  String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 6 characters';
+
+  @override
+  String get termsAndConditionsLink => 'Terms of Condition';
+
+  @override
+  String get agreeToTerms => 'By logging in you agree to our';
+
+  @override
   String get dontHaveAccount => 'Don’t Have an Account?';
 
   @override

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:domra_tech/service/user_service.dart';
+import 'package:domra_tech/service/request_service.dart';
 
 /// Global list of providers for MultiProvider
 /// This list is used in main.dart to set up all state notifiers
@@ -12,7 +13,7 @@ List<ChangeNotifierProvider> getStateProviders() {
     /// Contributions provider
     /// Manages: word requests, corrections, submission status
     ChangeNotifierProvider<ContributionNotifier>(
-      create: (context) => ContributionNotifier(),
+      create: (context) => ContributionNotifier(RequestService(http.Client())),
     ),
 
     /// User profile provider

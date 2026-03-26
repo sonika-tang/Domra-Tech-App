@@ -3,7 +3,7 @@ import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'widgets/guideline_step_widget.dart';
-import 'submit_correction_screen.dart';
+import 'package:domra_tech/routes/navigation_helper.dart';
 
 class ImproveTranslationGuidelineScreen extends StatelessWidget {
   const ImproveTranslationGuidelineScreen({super.key});
@@ -45,7 +45,7 @@ class ImproveTranslationGuidelineScreen extends StatelessWidget {
             child: PrimaryButton(
               label: loc.improveNow,
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SubmitCorrectionScreen()));
+                context.goToHome(clearStack: true);
               },
             ),
           ),

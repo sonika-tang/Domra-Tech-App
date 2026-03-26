@@ -11,8 +11,9 @@ import 'app.dart';
 import 'service/auth_service.dart';
 import 'service/user_service.dart';
 import 'service/word_service.dart';
+import 'service/request_service.dart';
 
-import 'package:domra_tech/repo/word_repository.dart';
+import 'package:domra_tech/data/repo/word_repository.dart';
 
 import 'state/models/contribution_state.dart';
 import 'state/models/favorite_state.dart';
@@ -32,6 +33,7 @@ void main() async {
   final authService = AuthService(httpClient);
   final userService = UserService(httpClient);
   final wordService = WordService(httpClient);
+  final requestService = RequestService(httpClient);
 
   // Repositories
   final wordRepository = WordRepository(wordService);
@@ -49,7 +51,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserNotifier(userService: userService)),
 
         /// Contribution
-        ChangeNotifierProvider(create: (_) => ContributionNotifier()),
+        ChangeNotifierProvider(create: (_) => ContributionNotifier(requestService)),
 
         /// Favorites
         ChangeNotifierProvider(create: (_) => FavoriteNotifier(wordService)),
