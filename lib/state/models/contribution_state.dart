@@ -97,7 +97,9 @@ class ContributionNotifier extends ChangeNotifier {
 
       final token = await const FlutterSecureStorage().read(key: 'jwt');
       if (token == null) {
-        _setState(state.copyWith(isLoading: false, error: 'Not authenticated.'));
+        _setState(
+          state.copyWith(isLoading: false, error: 'Not authenticated.'),
+        );
         return false;
       }
 
@@ -111,8 +113,12 @@ class ContributionNotifier extends ChangeNotifier {
       List<WordRequest> wordRequests = [];
       if (wrRes.statusCode == 200) {
         final body = jsonDecode(wrRes.body);
-        final list = body is List ? body : (body['data'] ?? body['wordRequests'] ?? []);
-        wordRequests = (list as List).map((e) => WordRequest.fromJson(e as Map<String, dynamic>)).toList();
+        final list = body is List
+            ? body
+            : (body['data'] ?? body['wordRequests'] ?? []);
+        wordRequests = (list as List)
+            .map((e) => WordRequest.fromJson(e as Map<String, dynamic>))
+            .toList();
       }
 
       // parse corrections
@@ -120,8 +126,12 @@ class ContributionNotifier extends ChangeNotifier {
       List<CorrectionRequest> corrections = [];
       if (crRes.statusCode == 200) {
         final body = jsonDecode(crRes.body);
-        final list = body is List ? body : (body['data'] ?? body['correctionRequests'] ?? []);
-        corrections = (list as List).map((e) => CorrectionRequest.fromJson(e as Map<String, dynamic>)).toList();
+        final list = body is List
+            ? body
+            : (body['data'] ?? body['correctionRequests'] ?? []);
+        corrections = (list as List)
+            .map((e) => CorrectionRequest.fromJson(e as Map<String, dynamic>))
+            .toList();
       }
 
       _setState(
@@ -148,15 +158,21 @@ class ContributionNotifier extends ChangeNotifier {
   }
 
   /// Submit a new word request
-  Future<bool> submitWordRequest(Map<String, dynamic> wordData, {XFile? imageFile}) async {
+  Future<bool> submitWordRequest(
+    Map<String, dynamic> wordData, {
+    XFile? imageFile,
+  }) async {
     try {
       _setState(state.withLoading());
 
       String? imageUrl;
       if (imageFile != null) {
-        imageUrl = await _storageService.uploadImage(imageFile, 'word_requests');
+        imageUrl = await _storageService.uploadImage(
+          imageFile,
+          'word_requests',
+        );
         if (imageUrl != null) {
-          wordData['imageURL'] = imageUrl; 
+          wordData['imageURL'] = imageUrl;
         }
       }
 
@@ -168,8 +184,9 @@ class ContributionNotifier extends ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final newRequest = WordRequest.fromJson(responseData);
-        
-        final updatedWordRequests = List<WordRequest>.from(state.wordRequests)..insert(0, newRequest);
+
+        final updatedWordRequests = List<WordRequest>.from(state.wordRequests)
+          ..insert(0, newRequest);
 
         _setState(
           state.copyWith(
@@ -203,31 +220,46 @@ class ContributionNotifier extends ChangeNotifier {
   }
 
   /// Submit a correction request
-  Future<bool> submitCorrection(Map<String, dynamic> correctionData, {XFile? imageFile}) async {
+  Future<bool> submitCorrection(
+    Map<String, dynamic> correctionData, {
+    XFile? imageFile,
+  }) async {
     try {
       _setState(state.withLoading());
 
+      // Upload image if provided
       String? imageUrl;
       if (imageFile != null) {
         imageUrl = await _storageService.uploadImage(imageFile, 'corrections');
         if (imageUrl != null) {
-          correctionData['imageURL'] = imageUrl; 
+          correctionData['imageURL'] = imageUrl;
         }
       }
 
+      // Get JWT
       final token = await const FlutterSecureStorage().read(key: 'jwt');
       if (token == null) throw Exception("Authentication token is missing.");
+
+      // Get userId
+      final userId = await const FlutterSecureStorage().read(key: 'userId');
+      if (userId == null) throw Exception("User ID is missing.");
+      correctionData['userId'] = int.parse(userId);
 
       debugPrint('--- SUBMITTING CORRECTION REQUEST ---');
       debugPrint('Payload: $correctionData');
 
-      final response = await _requestService.createCorrectionRequest(correctionData, token);
-      
+      final response = await _requestService.createCorrectionRequest(
+        correctionData,
+        token,
+      );
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final newCorrection = CorrectionRequest.fromJson(responseData);
-        
-        final updatedCorrections = List<CorrectionRequest>.from(state.corrections)..insert(0, newCorrection);
+
+        final updatedCorrections = List<CorrectionRequest>.from(
+          state.corrections,
+        )..insert(0, newCorrection);
 
         _setState(
           state.copyWith(

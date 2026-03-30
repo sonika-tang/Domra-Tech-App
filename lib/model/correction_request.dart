@@ -7,6 +7,7 @@ class CorrectionRequest {
   final String? correctKhmerWord;
   final String? reference;
   final String? status;
+  final String? imageURL;
   final DateTime? createdAt;
 
   CorrectionRequest({
@@ -17,6 +18,7 @@ class CorrectionRequest {
     this.correctFrenchWord,
     this.correctKhmerWord,
     this.reference,
+    this.imageURL,
     this.status,
     this.createdAt,
   });
@@ -31,6 +33,7 @@ class CorrectionRequest {
       correctKhmerWord: json['correctKhmerWord'],
       reference: json['reference'],
       status: json['status'],
+      imageURL: json['imageURL'],
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
           : null,
