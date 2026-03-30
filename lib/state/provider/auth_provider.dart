@@ -36,6 +36,7 @@ class AuthProvider extends ChangeNotifier {
     _jwt = data['jwt'];
 
     await _storage.write(key: "jwt", value: _jwt);
+    await _storage.write(key: "userId", value: _user!.userId.toString());
 
     notifyListeners();
     return _user;
@@ -70,6 +71,7 @@ class AuthProvider extends ChangeNotifier {
     _jwt = data['jwt'];
 
     await _storage.write(key: "jwt", value: _jwt);
+    await _storage.write(key: "userId", value: _user!.userId.toString());
     notifyListeners();
 
     return fbUser;
@@ -94,6 +96,7 @@ class AuthProvider extends ChangeNotifier {
     _user = User.fromJson(data['user']);
 
     await _storage.write(key: "jwt", value: _jwt);
+    await _storage.write(key: "userId", value: _user!.userId.toString());
 
     notifyListeners();
     return _jwt;

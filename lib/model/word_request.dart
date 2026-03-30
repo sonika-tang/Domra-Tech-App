@@ -8,6 +8,7 @@ class WordRequest {
   final String? reference;
   final int userId;
   final String? status;
+  final String? imageURL;
   final bool check;
   final DateTime? createdAt;
 
@@ -21,6 +22,7 @@ class WordRequest {
     this.reference,
     required this.userId,
     this.status,
+    this.imageURL,
     required this.check,
     this.createdAt,
   });
@@ -36,6 +38,7 @@ class WordRequest {
       reference: json['reference'],
       userId: json['userId'],
       status: json['status'],
+      imageURL: json['imageURL'],
       check: json['check'] ?? false,
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'])
