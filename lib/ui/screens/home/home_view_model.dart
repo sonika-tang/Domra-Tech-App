@@ -1,6 +1,5 @@
 import 'package:domra_tech/model/word_translation.dart';
 import 'package:domra_tech/data/repo/word_repository.dart';
-import 'package:domra_tech/service/language_service.dart';
 import 'package:domra_tech/service/speech_service.dart';
 import 'package:flutter/material.dart';
 
@@ -22,10 +21,10 @@ class HomeViewModel extends ChangeNotifier {
   // final LanguageService _languageService = LanguageService(); //use later
 
   bool _isListening = false;
-  String _detectedLanguage = "english";
+  //String _detectedLanguage = "english";
 
   bool get isListening => _isListening;
-  String get detectedLanguage => _detectedLanguage;
+  //String get detectedLanguage => _detectedLanguage;
 
   //initial speech
   Future<void> initSpeech() async {
@@ -124,6 +123,32 @@ class HomeViewModel extends ChangeNotifier {
 
   void clearSearch() async {
     _words = await _wordRepository.getRecentWords();
+    notifyListeners();
+  }
+
+  int? _currentCategoryId;
+
+  int? get currentCategoryId => _currentCategoryId;
+
+  Future<void> filterByCategory(int categoryId) async {
+    _currentCategoryId = categoryId;
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      if (categoryId == 0) {
+        _words = await _wordRepository.getAllWords();
+      } else {
+        print(currentCategoryId);
+        _words = await _wordRepository.getWordsByCategory(categoryId);
+        print(_words);
+      }
+    } catch (e) {
+      _error = e.toString();
+    }
+
+    _isLoading = false;
     notifyListeners();
   }
 }

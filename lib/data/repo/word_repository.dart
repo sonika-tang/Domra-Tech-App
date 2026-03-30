@@ -28,15 +28,18 @@ class WordRepository {
   }
 
   // Get word by Id
-  Future<WordTranslation?> getWordById(int wordId) async {
-    final response = await _wordService.getWordById(wordId.toString());
-    
+  Future<List<WordTranslation>> getWordsByCategory(int categoryId) async {
+    final response = await _wordService.getWordsByCategory(categoryId.toString());
+
     if (response.statusCode == 200) {
       final jsonBody = jsonDecode(response.body);
-      final wordData = jsonBody['data'] ?? jsonBody; // Adjust according to actual backend response
-      return WordTranslation.fromJson(wordData);
+
+      final List wordsJson = jsonBody["words"] ?? [];
+
+      return wordsJson.map((json) => WordTranslation.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load words by category');
     }
-    return null;
   }
 
   // Get the recent added words
