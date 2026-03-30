@@ -6,9 +6,32 @@ import 'package:domra_tech/ui/screens/home/widgets/category_filter.dart';
 import 'package:domra_tech/ui/screens/home/widgets/results_list.dart';
 import 'package:domra_tech/ui/screens/home/widgets/search_bar.dart';
 import 'package:domra_tech/ui/screens/home/states/category_notifier.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:domra_tech/state/models/favorite_state.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Fetch favorites once when HomeScreen is initialized
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final token = await _storage.read(key: 'jwt');
+
+      if (token != null) {
+        await context.read<FavoriteNotifier>().fetchFavorites(token);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +71,7 @@ class HomeScreen extends StatelessWidget {
                               selectedIndex: categoryNotifier.selectedIndex,
                               onCategorySelected: (index) async {
                                 categoryNotifier.selectCategory(index);
-
                                 final selectedCategory = categoryNotifier.categories[index];
-
                                 await homeVM.filterByCategory(selectedCategory.categoryId);
                               },
                             ),

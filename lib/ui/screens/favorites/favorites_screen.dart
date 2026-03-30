@@ -1,9 +1,9 @@
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import '../../../core/config/app_text_style.dart';
 import '../../../state/models/favorite_state.dart';
-import '../../../state/provider/auth_provider.dart';
 import '../../widgets/displays/word_card.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -14,16 +14,24 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+
   @override
   void initState() {
     super.initState();
-    // Fetch favorites once the widget is mounted so we have a valid context.
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final authProvider = context.read<AuthProvider>();
       final favoriteNotifier = context.read<FavoriteNotifier>();
-      final token = await authProvider.getIdToken();
-      await favoriteNotifier.fetchFavorites(token);
+      final token = await _storage.read(key: 'jwt');
+
+      if (token != null && token.isNotEmpty) {
+        await favoriteNotifier.fetchFavorites(token);
+      }
     });
+  }
+
+  Future<String?> _getToken() async {
+    return await _storage.read(key: 'jwt');
   }
 
   @override
@@ -36,10 +44,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       appBar: AppBar(
         title: Text(
           t.navFavorite,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -62,21 +67,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 child: Text(
                   state.error!,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.error,
-                  ),
+                  style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.error),
                 ),
               ),
             );
           }
 
           if (state.favorites.isEmpty) {
-            return Center(
-              child: Text(
-                'No favorites yet',
-                style: theme.textTheme.bodyMedium,
-              ),
-            );
+            return Center(child: Text('No favorites yet', style: theme.textTheme.bodyMedium));
           }
 
           return ListView.builder(
@@ -84,28 +82,21 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             itemCount: state.favorites.length,
             itemBuilder: (context, index) {
               final word = state.favorites[index];
+
               return Padding(
                 padding: const EdgeInsets.only(bottom: AppSpacing.s12),
                 child: WordCard(
                   wordTranslation: word,
                   isFavorite: true,
-                  onClick: () {
-                    // TODO: Navigate to word detail page when implemented.
-                  },
+                  onClick: () {},
                   onFavorite: () async {
-                    final authProvider = context.read<AuthProvider>();
-                    final token = await authProvider.getIdToken();
-                    await context.read<FavoriteNotifier>().removeFavorite(
-                      word.wordId,
-                      token,
-                    );
+                    final token = await _getToken();
+                    if (token != null) {
+                      await context.read<FavoriteNotifier>().removeFavorite(word.wordId, token);
+                    }
                   },
                   onShare: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Share feature coming soon'),
-                      ),
-                    );
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Share feature coming soon')));
                   },
                 ),
               );

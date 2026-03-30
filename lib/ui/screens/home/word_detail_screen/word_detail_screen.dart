@@ -2,10 +2,12 @@ import 'package:domra_tech/core/config/app_colors.dart';
 import 'package:domra_tech/core/config/app_text_style.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:domra_tech/model/word_translation.dart';
+import 'package:domra_tech/state/models/favorite_state.dart';
 import 'package:domra_tech/ui/screens/contributions/word_request_form.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen_view_model.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,6 +15,10 @@ class WordDetailScreen extends StatelessWidget {
   final WordTranslation word;
 
   const WordDetailScreen({super.key, required this.word});
+  Future<String?> _getToken() async {
+    const storage = FlutterSecureStorage();
+    return await storage.read(key: 'jwt');
+  }
 
   void onRequest(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => WordRequestForm(word: word)));
@@ -49,7 +55,7 @@ class WordDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(child: _buildWordSection(vm.word)),
-                        _buildActionsSection(vm),
+                        _buildActionsSection(context, vm),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.s24),
@@ -86,16 +92,27 @@ class WordDetailScreen extends StatelessWidget {
   }
 
   // FAVORITE AND SHARE BUTTONS
-  Widget _buildActionsSection(WordDetailViewModel vm) {
+  Widget _buildActionsSection(BuildContext context, WordDetailViewModel vm) {
     return Row(
       children: [
         IconButton(
           onPressed: vm.shareWord,
           icon: const Icon(Icons.ios_share, color: AppColors.primary),
         ),
-        IconButton(
-          onPressed: vm.toggleFavorite,
-          icon: Icon(vm.isFavorite ? Icons.favorite : Icons.favorite_border, color: vm.isFavorite ? Colors.red : AppColors.primary),
+        Consumer<FavoriteNotifier>(
+          builder: (context, favoriteNotifier, _) {
+            final isFav = favoriteNotifier.state.favorites.any((w) => w.wordId == word.wordId);
+
+            return IconButton(
+              onPressed: () async {
+                final token = await _getToken();
+                if (token != null) {
+                  await favoriteNotifier.toggleFavorite(word.wordId, token);
+                }
+              },
+              icon: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.red : AppColors.primary),
+            );
+          },
         ),
       ],
     );
