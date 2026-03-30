@@ -486,4 +486,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterConfirmPasswordHint => 'Enter confirm password';
+
+  @override
+  String get ds => 'Data Science';
+
+  @override
+  String get cs => 'Computer Science';
+
+  @override
+  String get programming => 'Programming';
+
+  @override
+  String get webDev => 'Web Development';
+
+  @override
+  String get ai => 'Artificial Intelligence';
+
+  @override
+  String get ml => 'Machine Learning';
+
+  @override
+  String get general => 'General';
 }

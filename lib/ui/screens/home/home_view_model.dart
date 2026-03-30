@@ -138,7 +138,7 @@ class HomeViewModel extends ChangeNotifier {
 
     try {
       if (categoryId == 0) {
-        _words = await _wordRepository.getAllWords();
+        _words = await _wordRepository.getRecentWords();
       } else {
         print(currentCategoryId);
         _words = await _wordRepository.getWordsByCategory(categoryId);

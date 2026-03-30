@@ -489,4 +489,25 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get enterConfirmPasswordHint => 'បញ្ចូលរលេខសម្ងាត់ដែរបស់អ្នក';
+
+  @override
+  String get ds => 'វិទ្យាសាស្ត្រទិន្នន័យ';
+
+  @override
+  String get cs => 'វិទ្យាសាស្ត្រកុំព្យូទ័រ';
+
+  @override
+  String get programming => 'សំណេរកម្មវិធី';
+
+  @override
+  String get webDev => 'ការអភិវឌ្ឍគេហទំព័រ';
+
+  @override
+  String get ai => 'បញ្ញាសិប្បនិម្មិត';
+
+  @override
+  String get ml => 'សិក្ខាម៉ាស៊ីន';
+
+  @override
+  String get general => 'ប្រភេទទាំងអស់';
 }

@@ -25,11 +25,17 @@ class CategoryFilter extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(right: 8),
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(color: isSelected ? AppColors.primary : AppColors.lightGray, borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(
+                color: isSelected ? AppColors.background : AppColors.lightGray,
+                borderRadius: BorderRadius.circular(20),
+                border: isSelected
+                    ? Border.all(color: AppColors.primary, width: 2) // Outline when selected
+                    : null, // No border when not selected
+              ),
               alignment: Alignment.center,
               child: Text(
-                category.categoryName,
-                style: TextStyle(color: isSelected ? Colors.white : AppColors.background, fontWeight: FontWeight.w500),
+                category.translatedName(context),
+                style: TextStyle(color: isSelected ? AppColors.primary : AppColors.background, fontWeight: FontWeight.w500),
               ),
             ),
           );
