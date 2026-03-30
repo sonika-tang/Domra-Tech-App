@@ -130,6 +130,7 @@ class AuthService {
   // PASSWORD RECOVERY
   // ===========================================================================
 
+  /// Forgot password: sends reset link to email
   Future<http.Response> forgotPassword(String email) async {
     return await client.post(
       Uri.parse('$baseUrl/auth/forgot-password'),
@@ -138,11 +139,20 @@ class AuthService {
     );
   }
 
-  Future<http.Response> resetPassword(String newPassword, String token) async {
+  /// Reset password: requires token from reset link
+  Future<http.Response> resetPassword(
+    String token,
+    String password,
+    String confirmPassword,
+  ) async {
     return await client.post(
       Uri.parse('$baseUrl/auth/reset-password'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'password': newPassword, 'token': token}),
+      body: jsonEncode({
+        'token': token,
+        'password': password,
+        'confirmPassword': confirmPassword,
+      }),
     );
   }
 }

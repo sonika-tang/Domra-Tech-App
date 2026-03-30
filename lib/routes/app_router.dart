@@ -97,7 +97,10 @@ class AppRouter {
 
       case AppRoutes.resetPassword:
         final email = args[RouteParams.email] as String? ?? '';
-        return _slideRoute(ResetPasswordScreen(email: email), settings);
+        return _slideRoute(
+          ResetPasswordScreen(email: email, token: ''),
+          settings,
+        );
 
       //
       //
