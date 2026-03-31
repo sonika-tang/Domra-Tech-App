@@ -25,21 +25,12 @@ class WordService {
     return await client.get(Uri.parse('$baseUrl/words?limit=10'));
   }
 
-  Future<http.Response> getWordById(String wordId) async {
-    return await client.get(Uri.parse('$baseUrl/words/$wordId'));
+  ///Get words by categorie
+ Future<http.Response> getWordsByCategory(String categoryId) async {
+    final uri = Uri.parse('$baseUrl/words').replace(queryParameters: {'categoryId': categoryId});
+
+    return await client.get(uri);
   }
-
-  Future<http.Response> getWordCard(String wordId) async {
-    return await client.get(Uri.parse('$baseUrl/wordcards/$wordId'));
-  }
-
-  // Future<http.Response> getSharePage(String wordId) async {
-  //   return await client.get(Uri.parse('$baseUrl/share/$wordId'));
-  // }
-
-  // Future<http.Response> getShareData(String wordId) async {
-  //   return await client.get(Uri.parse('$baseUrl/words/$wordId/share'));
-  // }
 
   Future<http.Response> getAllFavorites(String token) async {
     return await client.get(Uri.parse('$baseUrl/favorites'), headers: {'Authorization': 'Bearer $token'});

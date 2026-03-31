@@ -68,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, AppRoutes.home);
                     },
-                    child: Text("Continue as Guest", style: AppTextStyle.body2.copyWith(color: AppColors.background)),
+                    child: Text(loc.guest, style: AppTextStyle.body2.copyWith(color: AppColors.background)),
                   ),
                 ],
               ),

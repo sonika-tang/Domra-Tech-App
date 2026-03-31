@@ -1,3 +1,4 @@
+import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmPlanScreen extends StatelessWidget {
@@ -15,8 +16,11 @@ class ConfirmPlanScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Confirm')),
-    body: Center(child: Text('PaymentModel: $planName at $planPrice')),
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+    return Scaffold(
+    appBar: AppBar(title: Text(loc.confirm)),
+    body: Center(child: Text('${loc.subscriptionPlans}: $planName at $planPrice')),
   );
+  }
 }

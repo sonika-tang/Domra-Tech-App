@@ -12,8 +12,10 @@ class CategoryRepository {
     final response = await _service.getAllCategories();
     if (response.statusCode == 200) {
       final List jsonBody = jsonDecode(response.body);
+      print(jsonBody);
       return jsonBody.map((json) => Category.fromJson(json)).toList();
     }
+
     return [];
   }
 }

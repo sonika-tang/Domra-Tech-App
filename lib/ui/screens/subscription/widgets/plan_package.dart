@@ -1,3 +1,4 @@
+import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class PlanPackageBenefits extends StatelessWidget {
@@ -7,11 +8,12 @@ class PlanPackageBenefits extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final loc = AppLocalizations.of(context)!;
 
     final List<String> globalFeatures = [
-      'Get the offline Mode',
-      'Use app without Ads',
-      'Get unlimited access to all features',
+      loc.feature2,
+      loc.feature1,
+      loc.feature3,
     ];
 
     return Container(
@@ -23,7 +25,7 @@ class PlanPackageBenefits extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "What's included",
+            loc.whatInclude,
             style: textTheme.headlineSmall?.copyWith(
               color: colorScheme.primary,
               fontWeight: FontWeight.bold,

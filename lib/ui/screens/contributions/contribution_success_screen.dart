@@ -64,7 +64,7 @@ class ContributionSuccessScreen extends StatelessWidget {
                         // Let's use pushReplacement or popUntil to avoid weird back stacks
                         Navigator.pushNamedAndRemoveUntil(
                           context, 
-                          '/history-all', // Assumes a '/history' route exists, or we will update the router
+                          '/history-all',
                           (route) => route.settings.name == '/home' || route.isFirst
                         );
                       },
@@ -77,7 +77,7 @@ class ContributionSuccessScreen extends StatelessWidget {
                         elevation: 0,
                       ),
                       child: const Text(
-                        'view history',
+                        'View History',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

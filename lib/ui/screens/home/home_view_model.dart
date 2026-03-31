@@ -1,6 +1,5 @@
 import 'package:domra_tech/model/word_translation.dart';
 import 'package:domra_tech/data/repo/word_repository.dart';
-import 'package:domra_tech/service/language_service.dart';
 import 'package:domra_tech/service/speech_service.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +10,12 @@ class HomeViewModel extends ChangeNotifier {
 
   List<WordTranslation> _words = [];
   bool _isLoading = false;
+  bool _isOfflineData = false;
   String? _error;
 
   List<WordTranslation> get words => _words;
   bool get isLoading => _isLoading;
+  bool get isOfflineData => _isOfflineData;
   String? get error => _error;
 
   //voice search
@@ -22,10 +23,10 @@ class HomeViewModel extends ChangeNotifier {
   // final LanguageService _languageService = LanguageService(); //use later
 
   bool _isListening = false;
-  String _detectedLanguage = "english";
+  //String _detectedLanguage = "english";
 
   bool get isListening => _isListening;
-  String get detectedLanguage => _detectedLanguage;
+  //String get detectedLanguage => _detectedLanguage;
 
   //initial speech
   Future<void> initSpeech() async {
@@ -68,12 +69,14 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> fetchAllwords() async {
     _isLoading = true;
     _error = null;
+    _isOfflineData = false;
 
     notifyListeners();
     try {
       final result = await _wordRepository.getAllWords();
       debugPrint('API returned: $result');
       _words = result;
+      _isOfflineData = _wordRepository.isLastFetchFromCache;
     } catch (e) {
       debugPrint('Failed to fetch words: $e');
       _error = e.toString();
@@ -86,6 +89,7 @@ class HomeViewModel extends ChangeNotifier {
   //Fetch recent words
   Future<void> fetchRecentWords() async {
     _isLoading = true;
+    _isOfflineData = false;
     notifyListeners();
 
     try {
@@ -96,6 +100,7 @@ class HomeViewModel extends ChangeNotifier {
       debugPrint("Repository returned: ${result.length}");
 
       _words = result;
+      _isOfflineData = _wordRepository.isLastFetchFromCache;
     } catch (e) {
       debugPrint("Error fetching words: $e");
       _words = [];
@@ -114,9 +119,11 @@ class HomeViewModel extends ChangeNotifier {
     }
 
     _isLoading = true;
+    _isOfflineData = false;
     notifyListeners();
 
     _words = await _wordRepository.searchWords(query);
+    _isOfflineData = _wordRepository.isLastFetchFromCache;
 
     _isLoading = false;
     notifyListeners();
@@ -124,6 +131,32 @@ class HomeViewModel extends ChangeNotifier {
 
   void clearSearch() async {
     _words = await _wordRepository.getRecentWords();
+    notifyListeners();
+  }
+
+  int? _currentCategoryId;
+
+  int? get currentCategoryId => _currentCategoryId;
+
+  Future<void> filterByCategory(int categoryId) async {
+    _currentCategoryId = categoryId;
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      if (categoryId == 0) {
+        _words = await _wordRepository.getRecentWords();
+      } else {
+        print(currentCategoryId);
+        _words = await _wordRepository.getWordsByCategory(categoryId);
+        print(_words);
+      }
+    } catch (e) {
+      _error = e.toString();
+    }
+
+    _isLoading = false;
     notifyListeners();
   }
 }

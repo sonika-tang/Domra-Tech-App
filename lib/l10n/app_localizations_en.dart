@@ -53,6 +53,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get guest => 'Continue as Guest';
 
   @override
+  String get submitUpdate => 'Submit Update';
+
+  @override
   String get email => 'Email';
 
   @override
@@ -486,4 +489,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterConfirmPasswordHint => 'Enter confirm password';
+
+  @override
+  String get ds => 'Data Science';
+
+  @override
+  String get cs => 'Computer Science';
+
+  @override
+  String get programming => 'Programming';
+
+  @override
+  String get webDev => 'Web Development';
+
+  @override
+  String get ai => 'Artificial Intelligence';
+
+  @override
+  String get ml => 'Machine Learning';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get khr => 'KHR';
+
+  @override
+  String get usd => 'USD';
+
+  @override
+  String get scanQr => 'Scan with any bank app';
+
+  @override
+  String get payWithBakong => 'Pay in Bakong app';
 }

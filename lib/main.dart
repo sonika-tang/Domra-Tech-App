@@ -1,6 +1,9 @@
+import 'package:domra_tech/data/repo/category_repository.dart';
 import 'package:domra_tech/firebase_options.dart';
+import 'package:domra_tech/service/category_service.dart';
 import 'package:domra_tech/state/provider/auth_provider.dart';
 import 'package:domra_tech/state/provider/language_provider.dart';
+import 'package:domra_tech/ui/screens/home/states/category_notifier.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -58,6 +61,11 @@ void main() async {
 
         /// Home words (recent / search / etc.)
         ChangeNotifierProvider(create: (_) => HomeViewModel(wordRepository)..fetchRecentWords()),
+
+        /// Word categories
+        ChangeNotifierProvider(
+          create: (_) => CategoryNotifier(repository: CategoryRepository(service: CategoryService(http.Client()))),
+        ),
       ],
       child: const DomraTech(),
     ),
