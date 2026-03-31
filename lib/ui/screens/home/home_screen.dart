@@ -59,6 +59,23 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 /// WORD RESULT LIST
+                if (homeVM.isOfflineData)
+                  Container(
+                    width: double.infinity,
+                    color: Colors.orange.shade100,
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.offline_bolt, size: 16, color: Colors.orange),
+                        SizedBox(width: 8),
+                        Text(
+                          "Offline mode: Data may be outdated",
+                          style: TextStyle(color: Colors.orange, fontSize: 13, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
                 const Expanded(child: WordList()),
               ],
             );
