@@ -127,7 +127,12 @@ class _SignupScreen1State extends State<SignupScreen1> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.g_mobiledata),
+                          icon: Image.asset(
+                            "assets/imgs/google.png",
+                            width: 32,
+                            height: 32,
+                            fit: BoxFit.contain,
+                          ),
                           iconSize: 40,
                           onPressed: () async {
                             try {

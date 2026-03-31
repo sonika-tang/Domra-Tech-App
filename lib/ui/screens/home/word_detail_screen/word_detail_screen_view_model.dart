@@ -7,14 +7,6 @@ class WordDetailViewModel extends ChangeNotifier {
 
   WordDetailViewModel(this.word);
 
-  bool _isFavorite = false;
-  bool get isFavorite => _isFavorite;
-
-  void toggleFavorite() {
-    _isFavorite = !_isFavorite;
-    notifyListeners();
-  }
-
   void shareWord() {
     ShareService.shareWord(word);
   }
