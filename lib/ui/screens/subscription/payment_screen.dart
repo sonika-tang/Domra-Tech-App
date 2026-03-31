@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -43,49 +44,16 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
     super.dispose();
   }
 
-  // Future<void> _fetchQR() async {
-  //   setState(() => _isLoading = true);
-  //   try {
-  //     final response = await _paymentService.generateBakongQR(
-  //       widget.amount,
-  //       widget.token,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       setState(() {
-  //         _paymentData = PaymentModel.fromJson(jsonDecode(response.body));
-  //         _isLoading = false;
-  //       });
-  //       if (_paymentData?.paymentId != null)
-  //         _startPolling(_paymentData!.paymentId!);
-  //     }
-  //   } catch (e) {
-  //     setState(() => _isLoading = false);
-  //   }
-  // }
-
-  // void _startPolling(int id) {
-  //   _pollingTimer?.cancel();
-  //   _pollingTimer = Timer.periodic(const Duration(seconds: 3), (timer) async {
-  //     final response = await _paymentService.checkStatus(id, widget.token);
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       if (data['data']['status'] == 'success') {
-  //         timer.cancel();
-  //         setState(() => _isSuccess = true);
-  //       }
-  //     }
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       // Background inherits from your AppTheme, matching NewSubscriptionScreen
       appBar: AppBar(
-        title: const Text('New Subscription'),
+        title: Text(loc.subscriptionPlans),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, size: 20, color: Colors.white),
@@ -107,8 +75,8 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
               children: [
                 Text(
                   _selectedCurrency == "USD"
-                      ? "\$ ${widget.amount.toStringAsFixed(2)}"
-                      : "${(widget.amount * 4100).toStringAsFixed(0)} KHR",
+                      ? "${widget.amount.toStringAsFixed(2)} ${loc.usd}"
+                      : "${(widget.amount * 4100).toStringAsFixed(0)} ${loc.khr}",
                   style: textTheme.displaySmall?.copyWith(
                     color: colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -124,14 +92,14 @@ class _BakongPaymentScreenState extends State<BakongPaymentScreen> {
             BakongQrView(
               qrData: _paymentData?.qrString,
               isLoading: _isLoading,
-              statusText: _isSuccess ? "Success!" : "Scan with any Bank App",
+              statusText: _isSuccess ? loc.paymentSuccess : loc.scanQr,
             ),
 
             const Spacer(),
 
             // Logic: DeepLink (if pending) or Done (if success)
             PrimaryButton(
-              label: _isSuccess ? "Done" : "Pay in Bakong App",
+              label: _isSuccess ? loc.finish : loc.payWithBakong,
               onPressed: () {
                 if (_isSuccess) {
                   Navigator.pop(context);

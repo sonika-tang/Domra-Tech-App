@@ -3,7 +3,7 @@ import 'package:domra_tech/core/config/app_text_style.dart';
 import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:domra_tech/model/word_translation.dart';
 import 'package:domra_tech/state/models/favorite_state.dart';
-import 'package:domra_tech/ui/screens/contributions/word_request_form.dart';
+import 'package:domra_tech/ui/screens/contributions/word_correction_form.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen_view_model.dart';
 import 'package:domra_tech/ui/widgets/actions/primary_button.dart';
 import 'package:flutter/material.dart';

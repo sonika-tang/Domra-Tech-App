@@ -13,7 +13,7 @@ class ImproveTranslationGuidelineScreen extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(loc.improveTranslation, style: TextStyle(color: Colors.white)),
+        title: Text(loc.wordCorrection, style: TextStyle(color: Colors.white)),
         leading: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_new)),
         centerTitle: true,
         backgroundColor: AppColors.primary,

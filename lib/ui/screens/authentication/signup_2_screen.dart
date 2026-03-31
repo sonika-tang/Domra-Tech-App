@@ -100,10 +100,10 @@ class _SignupScreen2State extends State<SignupScreen2> {
                       children: [
                         Expanded(
                           child: StyledDropdown(
-                            title: "Select gender",
-                            hint: "Choose gender",
+                            title: loc.gender,
+                            hint: loc.gender,
                             value: _gender,
-                            items: ["Male", "Female", "Other"],
+                            items: [loc.male, loc.female, loc.other],
                             onChanged: (val) =>
                                 setState(() => _gender = val),
                           ),
@@ -111,8 +111,8 @@ class _SignupScreen2State extends State<SignupScreen2> {
                         const SizedBox(width: 16),
                         Expanded(
                           child: StyledDatePicker(
-                            title: "Date of birth",
-                            hint: "Choose date",
+                            title: loc.dob,
+                            hint: loc.chooseDate,
                             selectedDate: _dob,
                             onDateSelected: (date) =>
                                 setState(() => _dob = date),

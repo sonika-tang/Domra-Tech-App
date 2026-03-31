@@ -15,6 +15,7 @@
   "login": "Login",
   "signUp": "Sign Up",
   "guest": "Continue as Guest",
+  "submitUpdate": "Submit Update",
 
   "email": "Email",
   "enterEmail": "Enter your Email",
@@ -179,5 +180,9 @@
   "webDev": "Web Development",
   "ai": "Artificial Intelligence",
   "ml": "Machine Learning",
-  "general": "General"
+  "general": "General",
+  "khr": "KHR",
+  "usd": "USD",
+  "scanQr": "Scan with any bank app",
+  "payWithBakong": "Pay in Bakong app"
 }

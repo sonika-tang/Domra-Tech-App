@@ -12,7 +12,7 @@ import 'package:domra_tech/ui/screens/authentication/signup_3_screen.dart';
 import 'package:domra_tech/ui/screens/authentication/welcome_screen.dart';
 import 'package:domra_tech/ui/screens/contributions/contribution_success_screen.dart';
 import 'package:domra_tech/ui/screens/contributions/submit_word_request_screen.dart';
-import 'package:domra_tech/ui/screens/contributions/word_request_form.dart';
+import 'package:domra_tech/ui/screens/contributions/word_correction_form.dart';
 import 'package:domra_tech/ui/screens/home/search_result_screen.dart';
 import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen.dart';
 import 'package:domra_tech/ui/screens/main_shell.dart';

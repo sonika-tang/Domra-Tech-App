@@ -53,6 +53,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get guest => 'Continue as Guest';
 
   @override
+  String get submitUpdate => 'Submit Update';
+
+  @override
   String get email => 'Email';
 
   @override
@@ -507,4 +510,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get general => 'General';
+
+  @override
+  String get khr => 'KHR';
+
+  @override
+  String get usd => 'USD';
+
+  @override
+  String get scanQr => 'Scan with any bank app';
+
+  @override
+  String get payWithBakong => 'Pay in Bakong app';
 }
