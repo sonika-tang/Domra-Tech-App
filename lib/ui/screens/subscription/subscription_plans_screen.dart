@@ -24,45 +24,42 @@ class _NewSubscriptionScreenState extends State<SubscriptionScreen> {
     final loc = AppLocalizations.of(context)!;
 
     final List<SubscriptionPlan> mockPlans = [
-  SubscriptionPlan(
-    id: 'weekly_01',
-    title: loc.weekly,
-    priceLabel: '\$0.25/w',
-    priceAmount: 0.25,
-  ),
-    SubscriptionPlan(
-    id: 'monthly_01',
-    title: loc.monthly,
-    priceLabel: '\$0.99/m',
-    priceAmount: 0.99,
-  ),
-    SubscriptionPlan(
-    id: 'yearly_01',
-    title: loc.yearly,
-    priceLabel: '\$11.50/yr',
-    priceAmount: 11.50,
-  ),
-];
+      SubscriptionPlan(
+        id: 'weekly_01',
+        title: loc.weekly,
+        priceLabel: '\$0.25/w',
+        priceAmount: 0.25,
+      ),
+      SubscriptionPlan(
+        id: 'monthly_01',
+        title: loc.monthly,
+        priceLabel: '\$0.99/m',
+        priceAmount: 0.99,
+      ),
+      SubscriptionPlan(
+        id: 'yearly_01',
+        title: loc.yearly,
+        priceLabel: '\$11.50/yr',
+        priceAmount: 11.50,
+      ),
+    ];
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           loc.subscriptionPlans,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: AppColors.primary,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      // LayoutBuilder detects the available screen height
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
             child: ConstrainedBox(
-              // Forces the content to be at least as tall as the screen
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: IntrinsicHeight(
-                // IntrinsicHeight allows Spacer() to work inside a ScrollView
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24.0,
@@ -97,12 +94,9 @@ class _NewSubscriptionScreenState extends State<SubscriptionScreen> {
                         ),
                       ),
 
-                      // This Spacer now works correctly thanks to IntrinsicHeight
                       const Spacer(),
-                      SizedBox(height: 24,),
-
+                      const SizedBox(height: 24),
                       const PlanPackageBenefits(),
-
                       const SizedBox(height: 40),
 
                       PrimaryButton(
@@ -128,12 +122,11 @@ class _NewSubscriptionScreenState extends State<SubscriptionScreen> {
 
   void _handlePayment(double amount) {
     debugPrint("Initiating Bakong payment for: \$ $amount");
-    const String token = "YOUR_SESSION_TOKEN";
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BakongPaymentScreen(amount: amount, token: token),
+        builder: (context) => BakongPaymentScreen(amount: amount),
       ),
     );
   }
