@@ -110,20 +110,35 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Search limit properties
+  bool _hasReachedSearchLimit = false;
+  bool get hasReachedSearchLimit => _hasReachedSearchLimit;
+
   //Search query
   Future<void> searchWords(String query) async {
     if (query.isEmpty) {
-      _words = [];
-      notifyListeners();
+      _hasReachedSearchLimit = false;
+      await fetchRecentWords();
       return;
     }
 
     _isLoading = true;
     _isOfflineData = false;
+    _hasReachedSearchLimit = false;
     notifyListeners();
 
-    _words = await _wordRepository.searchWords(query);
-    _isOfflineData = _wordRepository.isLastFetchFromCache;
+    try {
+      _words = await _wordRepository.searchWords(query);
+      _isOfflineData = _wordRepository.isLastFetchFromCache;
+    } catch (e) {
+      if (e.toString().contains('RATE_LIMIT_EXCEEDED')) {
+        _hasReachedSearchLimit = true;
+        _words = [];
+      } else {
+        _error = e.toString();
+        _words = [];
+      }
+    }
 
     _isLoading = false;
     notifyListeners();

@@ -30,16 +30,17 @@ class PaymentService {
   Future<PaymentModel> generateBakongQR(
     double amount,
     String currency,
+    String jwt,
   ) async {
     try {
       // Fetch the token dynamically inside the method
-      final token = await _getBestToken();
+      // final token = await _getBestToken();
 
       final response = await client.post(
         Uri.parse('$baseUrl/payments/bakong/generate-qr'),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $jwt',
         },
         body: jsonEncode({'amount': amount, 'currency': currency}),
       );
@@ -57,14 +58,14 @@ class PaymentService {
     }
   }
 
-  Future<String> checkStatus(int paymentId) async {
+  Future<String> checkStatus(int paymentId, String jwt) async {
     try {
-      final token = await _getBestToken(); 
+      // final token = await _getBestToken(); 
       final response = await client.get(
         Uri.parse('$baseUrl/payments/bakong/status/$paymentId'),
         headers: {
           'Authorization':
-              'Bearer $token', // Most backends need this for status too!
+              'Bearer $jwt', // Most backends need this for status too!
         },
       );
 

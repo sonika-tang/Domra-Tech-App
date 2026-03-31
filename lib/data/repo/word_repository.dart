@@ -96,7 +96,7 @@ class WordRepository {
     }
 
     _isLastFetchFromCache = false;
-    final response = await _wordService.getAllWords(limit: 10);
+    final response = await _wordService.getAllWords();
 
     if (response.statusCode == 200) {
       final jsonBody = jsonDecode(response.body);

@@ -90,7 +90,6 @@ class DatabaseHelper {
       'cached_words',
       where: 'cachedAt > ?',
       whereArgs: [oneDayAgo],
-      limit: 20,
     );
 
     if (maps.isEmpty) {

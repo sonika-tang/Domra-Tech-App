@@ -4,6 +4,7 @@ import 'package:domra_tech/l10n/app_localizations.dart';
 import 'package:domra_tech/ui/screens/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 
 class SearchBarSection extends StatefulWidget {
   const SearchBarSection({super.key});
@@ -15,13 +16,25 @@ class SearchBarSection extends StatefulWidget {
 class _SearchBarSectionState extends State<SearchBarSection> {
   final TextEditingController _controller = TextEditingController();
   bool isSearching = false;
+  Timer? _debounce;
 
   void _onSearchChanged(String value) {
     setState(() {
       isSearching = value.isNotEmpty;
     });
 
-    context.read<HomeViewModel>().searchWords(value);
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
+      context.read<HomeViewModel>().searchWords(value);
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _controller.dispose();
+    super.dispose();
   }
 
   void _clearSearch() {

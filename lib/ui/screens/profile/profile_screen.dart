@@ -163,16 +163,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       color: Colors.transparent,
       child: InkWell(
         onTap: () => _showLogoutConfirmation(context, authProvider),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(12),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
           decoration: BoxDecoration(
             color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
             children: [
-              Icon(Icons.exit_to_app, color: AppColors.error, size: 22),
+              Icon(Icons.exit_to_app, color: AppColors.error, size: 24),
               const SizedBox(width: 12),
               Text(
                 AppLocalizations.of(context)!.logout,

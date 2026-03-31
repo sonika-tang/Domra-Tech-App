@@ -1,20 +1,56 @@
 import 'package:http/http.dart' as http;
 import '../core/config/constants.dart';
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class WordService {
   final http.Client client;
+  final _storage = const FlutterSecureStorage();
+
   WordService(this.client);
 
-  //Search word by query
   Future<List<dynamic>> searchWords(String query) async {
-    final response = await client.get(Uri.parse('$baseUrl/words/search?q=$query'));
+    final jwt = await _storage.read(key: "jwt");
+    final headers = <String, String>{};
+    if (jwt != null) {
+      headers['Authorization'] = 'Bearer $jwt';
+    }
 
-    return jsonDecode(response.body);
+    final response = await client.get(
+      Uri.parse('$baseUrl/words/search?q=$query'),
+      headers: headers,
+    );
+
+    if (response.statusCode == 429 || response.statusCode == 403) {
+      throw Exception('RATE_LIMIT_EXCEEDED');
+    }
+
+    final decoded = jsonDecode(response.body);
+    
+    // If the backend returns a Map (like {"data": [...] } or {"words": [...] })
+    if (decoded is Map) {
+      if (decoded.containsKey('words')) return decoded['words'] as List<dynamic>;
+      if (decoded.containsKey('data')) return decoded['data'] as List<dynamic>;
+      // if error struct
+      if (response.statusCode != 200) {
+        if (decoded['message']?.toString().toLowerCase().contains('limit') == true) {
+           throw Exception('RATE_LIMIT_EXCEEDED');
+        }
+        throw Exception(decoded['message'] ?? 'Search failed');
+      }
+      return []; // Return empty if format unknown
+    }
+
+    // If it's directly a list 
+    if (decoded is List) {
+      return decoded;
+    }
+
+    return [];
   }
   //Get all words
-  Future<http.Response> getAllWords({int page = 1, int limit = 10, String categoryId = "all"}) async {
-    final queryParams = {'page': page.toString(), 'limit': limit.toString(), if (categoryId != 'all') 'categoryId': categoryId};
+  Future<http.Response> getAllWords({int page = 1, String categoryId = "all"}) async {
+    final queryParams = {'page': page.toString(), if (categoryId != 'all') 'categoryId': categoryId};
 
     final uri = Uri.parse('$baseUrl/words').replace(queryParameters: queryParams);
     return await client.get(uri);
@@ -22,7 +58,7 @@ class WordService {
 
   //Get recent words
   Future<http.Response> getRecentWords() async {
-    return await client.get(Uri.parse('$baseUrl/words?limit=10'));
+    return await client.get(Uri.parse('$baseUrl/words'));
   }
 
   ///Get words by categorie

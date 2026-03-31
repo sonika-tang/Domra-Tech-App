@@ -24,13 +24,15 @@ class ContributionSuccessScreen extends StatelessWidget {
                 child: const Center(
                   child: Icon(
                     Icons.check_circle_outline,
-                    color: Color(0xFF4CB050), // Standard material green matching design
+                    color: Color(
+                      0xFF4CB050,
+                    ), // Standard material green matching design
                     size: 80,
                   ),
                 ),
               ),
               const SizedBox(height: 32),
-              
+
               // Title Text
               const Text(
                 'Request submitted successfully!',
@@ -42,19 +44,15 @@ class ContributionSuccessScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              
+
               // Subtitle Text
               const Text(
                 'Our team will review your\ncontribution soon.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  height: 1.4,
-                ),
+                style: TextStyle(color: Colors.grey, fontSize: 16, height: 1.4),
               ),
               const SizedBox(height: 48),
-              
+
               // Action Buttons Row
               Row(
                 children: [
@@ -62,11 +60,17 @@ class ContributionSuccessScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         // Let's use pushReplacement or popUntil to avoid weird back stacks
-                        Navigator.pushNamedAndRemoveUntil(
-                          context, 
-                          '/history-all',
-                          (route) => route.settings.name == '/home' || route.isFirst
-                        );
+                        // Navigator.pushNamedAndRemoveUntil(
+                        //   context,
+                        //   '/history-all',
+                        //   (route) => route.settings.name == '/home' || route.isFirst
+                        // );
+                        Navigator.pushReplacementNamed(context, '/history-all');
+                        // Navigator.pushNamedAndRemoveUntil(
+                        //   context,
+                        //   '/history-all',
+                        //   ModalRoute.withName('/profile'),
+                        // );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF3B5998),

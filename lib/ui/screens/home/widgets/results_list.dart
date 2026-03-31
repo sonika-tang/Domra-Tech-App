@@ -45,7 +45,7 @@ class WordList extends StatelessWidget {
 
         return ListView.separated(
           padding: const EdgeInsets.all(16),
-          itemCount: words.length > 10 ? 10 : words.length,
+          itemCount: words.length,
           separatorBuilder: (_, __) => const SizedBox(height: 16),
           itemBuilder: (context, index) {
             final word = words[index];

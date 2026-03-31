@@ -30,6 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
       if (token != null) {
         await context.read<FavoriteNotifier>().fetchFavorites(token);
       }
+      
+      // Load initial words
+      if (mounted) {
+        await context.read<HomeViewModel>().fetchRecentWords();
+      }
     });
   }
 
@@ -80,24 +85,64 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
                 /// WORD RESULT LIST
-                if (homeVM.isOfflineData)
-                  Container(
-                    width: double.infinity,
-                    color: Colors.orange.shade100,
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.wifi_off_outlined, size: 16, color: Colors.orange),
-                        SizedBox(width: 8),
-                        Text(
-                          "Offline mode: Data may be outdated",
-                          style: TextStyle(color: Colors.orange, fontSize: 13, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                if (homeVM.hasReachedSearchLimit)
+                  Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.lock_outline, size: 64, color: AppColors.primary),
+                            const SizedBox(height: 16),
+                            const Text(
+                              "You've reached your free search limit!", 
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              "Subscribe to premium for unlimited access to the lexicon.",
+                              style: TextStyle(color: Colors.grey),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 24),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/subscription-plans');
+                              },
+                              child: const Text("Upgrade Now", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                            )
+                          ]
+                        )
+                      )
+                    )
+                  )
+                else ...[
+                  if (homeVM.isOfflineData)
+                    Container(
+                      width: double.infinity,
+                      color: Colors.orange.shade100,
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.wifi_off_outlined, size: 16, color: Colors.orange),
+                          SizedBox(width: 8),
+                          Text(
+                            "Offline mode: Data may be outdated",
+                            style: TextStyle(color: Colors.orange, fontSize: 13, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                const Expanded(child: WordList()),
+                  const Expanded(child: WordList()),
+                ]
               ],
             );
           },
