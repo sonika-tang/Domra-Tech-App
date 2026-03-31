@@ -10,10 +10,12 @@ class HomeViewModel extends ChangeNotifier {
 
   List<WordTranslation> _words = [];
   bool _isLoading = false;
+  bool _isOfflineData = false;
   String? _error;
 
   List<WordTranslation> get words => _words;
   bool get isLoading => _isLoading;
+  bool get isOfflineData => _isOfflineData;
   String? get error => _error;
 
   //voice search
@@ -67,12 +69,14 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> fetchAllwords() async {
     _isLoading = true;
     _error = null;
+    _isOfflineData = false;
 
     notifyListeners();
     try {
       final result = await _wordRepository.getAllWords();
       debugPrint('API returned: $result');
       _words = result;
+      _isOfflineData = _wordRepository.isLastFetchFromCache;
     } catch (e) {
       debugPrint('Failed to fetch words: $e');
       _error = e.toString();
@@ -85,6 +89,7 @@ class HomeViewModel extends ChangeNotifier {
   //Fetch recent words
   Future<void> fetchRecentWords() async {
     _isLoading = true;
+    _isOfflineData = false;
     notifyListeners();
 
     try {
@@ -95,6 +100,7 @@ class HomeViewModel extends ChangeNotifier {
       debugPrint("Repository returned: ${result.length}");
 
       _words = result;
+      _isOfflineData = _wordRepository.isLastFetchFromCache;
     } catch (e) {
       debugPrint("Error fetching words: $e");
       _words = [];
@@ -113,9 +119,11 @@ class HomeViewModel extends ChangeNotifier {
     }
 
     _isLoading = true;
+    _isOfflineData = false;
     notifyListeners();
 
     _words = await _wordRepository.searchWords(query);
+    _isOfflineData = _wordRepository.isLastFetchFromCache;
 
     _isLoading = false;
     notifyListeners();
