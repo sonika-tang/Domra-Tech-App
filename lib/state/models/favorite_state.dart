@@ -83,27 +83,25 @@ class FavoriteNotifier extends ChangeNotifier {
   }
 
   // Optimistic toggle favorite
-  Future<void> toggleFavorite(int wordId, String token) async {
-    final alreadyFav = isFavorite(wordId);
+ Future<void> toggleFavorite(WordTranslation word, String token) async {
+    final alreadyFav = isFavorite(word.wordId);
 
-    // Optimistically update state
     if (alreadyFav) {
-      _state = _state.copyWith(favorites: _state.favorites.where((w) => w.wordId != wordId).toList());
+      _state = _state.copyWith(favorites: _state.favorites.where((w) => w.wordId != word.wordId).toList());
     } else {
-      _state = _state.copyWith(favorites: [..._state.favorites]);
+      _state = _state.copyWith(favorites: [..._state.favorites, word]);
     }
+
     notifyListeners();
 
-    // Call API
     try {
       if (alreadyFav) {
-        await _wordService.deleteFavorite(wordId.toString(), token);
+        await _wordService.deleteFavorite(word.wordId.toString(), token);
       } else {
-        await _wordService.createFavorite(wordId.toString(), token);
+        await _wordService.createFavorite(word.wordId.toString(), token);
       }
     } catch (e) {
-      // Revert state if API fails
-      await fetchFavorites(token);
+      await fetchFavorites(token); // revert if API fails
     }
   }
 }

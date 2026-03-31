@@ -59,7 +59,7 @@ class WordList extends StatelessWidget {
                 final token = await _getToken();
                 if (token != null) {
                   // Toggle favorite in notifier
-                  await favoriteNotifier.toggleFavorite(word.wordId, token);
+                  await favoriteNotifier.toggleFavorite(word, token);
                   // No local state needed; UI rebuilds via Consumer
                 }
               },

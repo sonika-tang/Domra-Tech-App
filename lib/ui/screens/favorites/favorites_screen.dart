@@ -1,4 +1,7 @@
 import 'package:domra_tech/l10n/app_localizations.dart';
+import 'package:domra_tech/model/word_translation.dart';
+import 'package:domra_tech/service/word_share_service.dart';
+import 'package:domra_tech/ui/screens/home/word_detail_screen/word_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +35,15 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Future<String?> _getToken() async {
     return await _storage.read(key: 'jwt');
+  }
+
+  void _onShareWord(WordTranslation word) {
+    debugPrint("Share: ${word.englishWord}");
+    ShareService.shareWord(word);
+  }
+
+  void _onClickWord(BuildContext context, WordTranslation word) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => WordDetailScreen(word: word)));
   }
 
   @override
@@ -82,22 +94,21 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             itemCount: state.favorites.length,
             itemBuilder: (context, index) {
               final word = state.favorites[index];
+              final favoriteNotifier = context.read<FavoriteNotifier>();
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: AppSpacing.s12),
                 child: WordCard(
                   wordTranslation: word,
-                  isFavorite: true,
-                  onClick: () {},
+                  isFavorite: favoriteNotifier.isFavorite(word.wordId),
+                  onClick: () => _onClickWord(context, word),
                   onFavorite: () async {
                     final token = await _getToken();
                     if (token != null) {
-                      await context.read<FavoriteNotifier>().removeFavorite(word.wordId, token);
+                      await favoriteNotifier.toggleFavorite(word, token);
                     }
                   },
-                  onShare: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Share feature coming soon')));
-                  },
+                  onShare: () => _onShareWord(word),
                 ),
               );
             },

@@ -107,7 +107,7 @@ class WordDetailScreen extends StatelessWidget {
               onPressed: () async {
                 final token = await _getToken();
                 if (token != null) {
-                  await favoriteNotifier.toggleFavorite(word.wordId, token);
+                  await favoriteNotifier.toggleFavorite(word, token);
                 }
               },
               icon: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.red : AppColors.primary),
