@@ -15,6 +15,7 @@
   "login": "Login",
   "signUp": "Sign Up",
   "guest": "Continue as Guest",
+  "submitUpdate": "Submit Update",
 
   "email": "Email",
   "enterEmail": "Enter your Email",
@@ -171,5 +172,17 @@
   "newPassword": "New password",
   "confirmPasswordHint": "Confirm password",
   "enterNewPasswordHint": "Enter new password",
-  "enterConfirmPasswordHint": "Enter confirm password"
+  "enterConfirmPasswordHint": "Enter confirm password",
+  "all": "All",
+  "ds": "Data Science",
+  "cs": "Computer Science",
+  "programming": "Programming",
+  "webDev": "Web Development",
+  "ai": "Artificial Intelligence",
+  "ml": "Machine Learning",
+  "general": "General",
+  "khr": "KHR",
+  "usd": "USD",
+  "scanQr": "Scan with any bank app",
+  "payWithBakong": "Pay in Bakong app"
 }

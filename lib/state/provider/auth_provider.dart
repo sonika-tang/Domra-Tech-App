@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -35,6 +36,7 @@ class AuthProvider extends ChangeNotifier {
     _jwt = data['jwt'];
 
     await _storage.write(key: "jwt", value: _jwt);
+    await _storage.write(key: "userId", value: _user!.userId.toString());
 
     notifyListeners();
     return _user;
@@ -69,6 +71,7 @@ class AuthProvider extends ChangeNotifier {
     _jwt = data['jwt'];
 
     await _storage.write(key: "jwt", value: _jwt);
+    await _storage.write(key: "userId", value: _user!.userId.toString());
     notifyListeners();
 
     return fbUser;
@@ -93,9 +96,63 @@ class AuthProvider extends ChangeNotifier {
     _user = User.fromJson(data['user']);
 
     await _storage.write(key: "jwt", value: _jwt);
+    await _storage.write(key: "userId", value: _user!.userId.toString());
 
     notifyListeners();
     return _jwt;
+  }
+
+
+  // -------------------------------------------------------
+  // INIT DYNAMIC LINKS
+  // -------------------------------------------------------
+  void initDynamicLinks(BuildContext context) {
+    FirebaseDynamicLinks.instance.onLink.listen((PendingDynamicLinkData? data) {
+      final Uri? deepLink = data?.link;
+      if (deepLink != null) {
+        if (deepLink.path.contains('/auth/reset-password')) {
+          final token = deepLink.queryParameters['token'];
+          if (token != null) {
+            Navigator.pushNamed(context, '/reset-password', arguments: token);
+          }
+        }
+        if (deepLink.path.contains('/auth/verify-email')) {
+          final token = deepLink.queryParameters['token'];
+          if (token != null) {
+            Navigator.pushNamed(context, '/verify-email', arguments: token);
+          }
+        }
+      }
+    });
+  }
+
+  // -------------------------------------------------------
+  // PASSWORD RECOVERY
+  // -------------------------------------------------------
+  Future<bool> forgotPassword(String email) async {
+    try {
+      final response = await _authService.forgotPassword(email);
+      return response.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> resetPassword(
+    String token,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    try {
+      final response = await _authService.resetPassword(
+        token,
+        newPassword,
+        confirmPassword,
+      );
+      return response.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
   }
 
   // -------------------------------------------------------

@@ -51,7 +51,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get signUp => 'ចុះឈ្មោះ';
 
   @override
-  String get guest => 'បន្តក្នុងនាមជាភ្ញៀវ';
+  String get guest => 'បន្តជាភ្ញៀវ';
+
+  @override
+  String get submitUpdate => 'ស្នើសុំកែតម្រូវ';
 
   @override
   String get email => 'អ៊ីមែល';
@@ -114,7 +117,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get enterLastName => 'បញ្ចូលនាមត្រកូលរបស់អ្នក';
 
   @override
-  String get gender => 'ជ្រើសរើសភេទរបស់អ្នក';
+  String get gender => 'ភេទ';
 
   @override
   String get select => 'ជ្រើសរើស';
@@ -126,7 +129,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get male => 'ប្រុស';
 
   @override
-  String get dob => 'ថ្ងៃខែឆ្នាំកំណើត';
+  String get dob => 'ថ្ងៃ ខែ ឆ្នាំកំណើត';
 
   @override
   String get chooseDate => 'ជ្រើសរើសកាលបរិច្ឆេទ';
@@ -177,7 +180,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get navContribute => 'ចូលរួមចំណែក';
 
   @override
-  String get navFavorite => 'សំណព្វ';
+  String get navFavorite => 'ចំណូលចិត្ត';
 
   @override
   String get navProfile => 'ប្រវត្តិរូប';
@@ -244,17 +247,17 @@ class AppLocalizationsKm extends AppLocalizations {
   String get requestNow => 'ស្នើសុំឥឡូវនេះ';
 
   @override
-  String get improveNow => 'កែលម្អឥឡូវនេះ';
+  String get improveNow => 'កែតម្រូវឥឡូវនេះ';
 
   @override
   String get g1Step1 => 'ជំហានទី០១ - បញ្ចូលពាក្យ';
 
   @override
   String get g1Step1Sub =>
-      'វាយពាក្យថ្មីដែលអ្នកចង់ស្នើសុំជាភាសាអង់គ្លេស ខ្មែរ ឬបារាំង។';
+      'បញ្ចូលពាក្យថ្មីដែលអ្នកចង់ស្នើសុំជាភាសាអង់គ្លេស ខ្មែរ ឬបារាំង។';
 
   @override
-  String get g1Step2 => 'ជំហានទី០២ - បន្ថែមអត្ថន័យ (ស្រេចចិត្ត)';
+  String get g1Step2 => 'ជំហានទី០២ - បន្ថែមអត្ថន័យ (មិនចាំបាច់)';
 
   @override
   String get g1Step2Sub =>
@@ -271,21 +274,21 @@ class AppLocalizationsKm extends AppLocalizations {
   String get g2Step1 => 'ជំហានទី០១ - ស្វែងរកការបកប្រែ';
 
   @override
-  String get g2Step1Sub => 'ចូលទៅកាន់ទំព័រដើម និងស្វែងរកពាក្យដែលអ្នកចង់បាន។';
+  String get g2Step1Sub => 'ចូលទៅកាន់ទំព័រដើម និងស្វែងរកពាក្យដែលអ្នកចង់កែ។';
 
   @override
-  String get g2Step2 => 'ជំហានទី០២ - ផ្ដល់យោបល់សម្រាប់កំណែដែលប្រសើរជាង';
+  String get g2Step2 => 'ជំហានទី០២ - ស្នើកែតម្រូវពាក្យដែលប្រសើជាងនេះ';
 
   @override
   String get g2Step2Sub =>
-      'បញ្ចូលពាក្យដែលបានកែតម្រូវ ឬនិយមន័យដែលបានកែលម្អ រួមជាមួយការពន្យល់ខ្លីៗ។';
+      'បញ្ចូលពាក្យដែលចង់កែតម្រូវ ឬនិយមន័យដែលចង់កែលម្អ រួមជាមួយការពន្យល់ខ្លីៗ។';
 
   @override
   String get g2Step3 => 'ជំហានទី០៣ - បញ្ជូនការកែលម្អរបស់អ្នក';
 
   @override
   String get g2Step3Sub =>
-      'ចុចបញ្ជូនការកែប្រែ ហើយក្រុមការងាររបស់យើងនឹងផ្ទៀងផ្ទាត់ និងអនុវត្តការកែលម្អនេះ។';
+      'ចុចបញ្ជូនការកែប្រែ ហើយក្រុមការងាររបស់យើងនឹងផ្ទៀងផ្ទាត់ និងត្រួតពិនិត្យកែលម្អនេះ។';
 
   @override
   String get editProfile => 'កែសម្រួលប្រវត្តិរូប';
@@ -315,7 +318,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get newWord => 'ពាក្យថ្មី';
 
   @override
-  String get wordCorrection => 'ការកែតម្រូវពាក្យ';
+  String get wordCorrection => ' ស្នើសុំកែតម្រូវពាក្យ';
 
   @override
   String get language => 'ភាសា';
@@ -330,7 +333,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get termOfCondition => 'លក្ខខណ្ឌប្រើប្រាស់';
 
   @override
-  String get subscriptionPlans => 'គម្រោងជាវ';
+  String get subscriptionPlans => 'ជាវគម្រោង';
 
   @override
   String get browsePlans => 'ពិនិត្យមើលគម្រោងជាវរបស់យើង';
@@ -375,7 +378,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get feature1 => 'ទទួលបានការចូលប្រើប្រាស់មុខងារទាំងអស់';
 
   @override
-  String get feature2 => 'មុខងារប្រើប្រាស់ដោយគ្មានអ៊ីនធឺណិត';
+  String get feature2 => 'មុខងារប្រើប្រាស់ដោយគ្មានអ៉ីនធឺណិត';
 
   @override
   String get feature3 => 'ប្រើប្រាស់កម្មវិធីដោយគ្មានពាណិជ្ជកម្ម';
@@ -461,7 +464,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get other => 'ផ្សេងៗ';
 
   @override
-  String get continueBtn => 'បន្ត្រាក់';
+  String get continueBtn => 'បន្ត';
 
   @override
   String get pleaseEnterCurrentPassword => 'សូមបញ្ចូលលេខសម្ងាត់បច្ចុប្បន្ន';
@@ -470,23 +473,56 @@ class AppLocalizationsKm extends AppLocalizations {
   String get pleaseEnterNewPassword => 'សូមបញ្ចូលលេខសម្ងាត់ថ្មី';
 
   @override
-  String get pleaseConfirmPassword => 'សូមបញ្ជាក់ប្រកលេខសម្ងាត់របស់អ្នក';
+  String get pleaseConfirmPassword => 'សូមបញ្ជាក់លេខសម្ងាត់របស់អ្នក';
 
   @override
-  String get passwordsDoNotMatch => 'លេខសម្ងាត់មិនត្រងគ្នាស័រគ្ន';
+  String get passwordsDoNotMatch => 'លេខសម្ងាត់មិនដូចគ្នា';
 
   @override
-  String get passwordMinLength => 'លេខសម្ងាត់ត្រូវការមានយ័ងៜចតᚷែងតិចច្រើន 6';
+  String get passwordMinLength => 'លេខសម្ងាត់ត្រូវការមានយ៉ាងច្រើន 6 ខ្ទង់';
 
   @override
   String get newPassword => 'លេខសម្ងាត់ថ្មី';
 
   @override
-  String get confirmPasswordHint => 'បញ្ជាក់ប្រកលេខសម្ងាត់';
+  String get confirmPasswordHint => 'បញ្ជាក់លេខសម្ងាត់';
 
   @override
   String get enterNewPasswordHint => 'បញ្ចូលលេខសម្ងាត់ថ្មី';
 
   @override
-  String get enterConfirmPasswordHint => 'បញ្ចូលរលេខសម្ងាត់ដែរបស់អ្នក';
+  String get enterConfirmPasswordHint => 'បញ្ចូលលេខសម្ងាត់របស់អ្នក';
+
+  @override
+  String get ds => 'វិទ្យាសាស្ត្រទិន្នន័យ';
+
+  @override
+  String get cs => 'វិទ្យាសាស្ត្រកុំព្យូទ័រ';
+
+  @override
+  String get programming => 'សំណេរកម្មវិធី';
+
+  @override
+  String get webDev => 'ការអភិវឌ្ឍគេហទំព័រ';
+
+  @override
+  String get ai => 'បញ្ញាសិប្បនិម្មិត';
+
+  @override
+  String get ml => 'សិក្ខាម៉ាស៊ីន';
+
+  @override
+  String get general => 'ទូទៅ';
+
+  @override
+  String get khr => 'រៀល';
+
+  @override
+  String get usd => 'ដុល្លារ';
+
+  @override
+  String get scanQr => 'ស្កេនជាមួយធនាគារ';
+
+  @override
+  String get payWithBakong => 'ទូទាត់ជាមួយបាគង';
 }

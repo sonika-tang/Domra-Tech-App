@@ -182,6 +182,12 @@ abstract class AppLocalizations {
   /// **'Continue as Guest'**
   String get guest;
 
+  /// No description provided for @submitUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Update'**
+  String get submitUpdate;
+
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
@@ -1033,6 +1039,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter confirm password'**
   String get enterConfirmPasswordHint;
+
+  /// No description provided for @ds.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Science'**
+  String get ds;
+
+  /// No description provided for @cs.
+  ///
+  /// In en, this message translates to:
+  /// **'Computer Science'**
+  String get cs;
+
+  /// No description provided for @programming.
+  ///
+  /// In en, this message translates to:
+  /// **'Programming'**
+  String get programming;
+
+  /// No description provided for @webDev.
+  ///
+  /// In en, this message translates to:
+  /// **'Web Development'**
+  String get webDev;
+
+  /// No description provided for @ai.
+  ///
+  /// In en, this message translates to:
+  /// **'Artificial Intelligence'**
+  String get ai;
+
+  /// No description provided for @ml.
+  ///
+  /// In en, this message translates to:
+  /// **'Machine Learning'**
+  String get ml;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @khr.
+  ///
+  /// In en, this message translates to:
+  /// **'KHR'**
+  String get khr;
+
+  /// No description provided for @usd.
+  ///
+  /// In en, this message translates to:
+  /// **'USD'**
+  String get usd;
+
+  /// No description provided for @scanQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan with any bank app'**
+  String get scanQr;
+
+  /// No description provided for @payWithBakong.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay in Bakong app'**
+  String get payWithBakong;
 }
 
 class _AppLocalizationsDelegate

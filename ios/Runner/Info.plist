@@ -2,8 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>com.googleusercontent.apps.222024203248-v546o33h5clsoensc5p9o8370rp4rq11</string>
+		</array>
+	</dict>
+	</array>
 	<key>NSCameraUsageDescription</key>
-<string>This app uses camera for language detection</string>
+	<string>This app uses camera for language detection</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires microphone access to record your voice for speech recognition.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
